@@ -11,4 +11,3 @@ This project was originally done in matlab, I revise the [matlab codes](https://
 ## Data used
 
 This project uses data of CRSP and Compustat, retrieved from [WRDS](https://wrds-www.wharton.upenn.edu/).
-de
