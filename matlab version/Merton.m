@@ -39,72 +39,72 @@ Estimates.RetTimesLevLag = Estimates.RetExcess.*(1-Estimates.LevLag) + Estimates
 
 function t = EstimateMerton(t,DebtCol)
 
-    %this is the function called by mainMerton.m to estimate the parameters of the model
-    % (d,'Debt')
-    %definition of debt, in pseudo code it ltq, can be changed to total debt using dlcq + dlttq
-    t.Debt = eval(strcat('t.',DebtCol));
+%this is the function called by mainMerton.m to estimate the parameters of the model
+% (d,'Debt')
+%definition of debt, in pseudo code it ltq, can be changed to total debt using dlcq + dlttq
+t.Debt = eval(strcat('t.',DebtCol));
 
-    %initial value for asset volatility
-    t.vV = t.EquityVolatility.*t.Equity./(t.Equity + t.Debt);
+%initial value for asset volatility
+t.vV = t.EquityVolatility.*t.Equity./(t.Equity + t.Debt);
 
-    %options for optimization
-    options = optimset('LargeScale','off','MaxFunEvals',1e+03,'MaxIter',1e+03,'TolX',1e-6);
+%options for optimization
+options = optimset('LargeScale','off','MaxFunEvals',1e+03,'MaxIter',1e+03,'TolX',1e-6);
 
-    %assign fields for output
-    t.AssetValue = t.vV*NaN;
-    t.AssetVolatility = t.AssetValue;
-    t.dedv = t.AssetValue;
+%assign fields for output
+t.AssetValue = t.vV*NaN;
+t.AssetVolatility = t.AssetValue;
+t.dedv = t.AssetValue;
 
-    for i=1:length(t.Debt)
-        tic
-        disp(i)    
-        if isnan(t.Equity(i)) || isnan(t.Debt(i)) || isnan(t.rf338(i))...
-                || isnan(t.EquityVolatility(i)) || isnan(t.vV(i)) || t.EquityVolatility(i)<=0 || isnan(t.T(i))
-        else
-            T = t.T(i);
-            sigmaV=fminsearch(@(x) EquityVolatilityEq(x,t.Equity(i),t.Debt(i),t.rf338(i),t.EquityVolatility(i),T),t.vV(i),options);
-            sigmaV = abs(sigmaV);        
-            [~, NewAv, dedv]=EquityVolatilityEq(sigmaV,t.Equity(i),t.Debt(i),t.rf338(i),t.EquityVolatility(i),T);
-            NewAv = abs(NewAv);
-            t.AssetValue(i) = NewAv;
-            t.AssetVolatility(i) = abs(sigmaV);
-            t.dedv(i) = dedv;
-        end
-        toc
+for i=1:length(t.Debt)
+    tic
+    disp(i)    
+    if isnan(t.Equity(i)) || isnan(t.Debt(i)) || isnan(t.rf338(i))...
+            || isnan(t.EquityVolatility(i)) || isnan(t.vV(i)) || t.EquityVolatility(i)<=0 || isnan(t.T(i))
+    else
+        T = t.T(i);
+        sigmaV=fminsearch(@(x) EquityVolatilityEq(x,t.Equity(i),t.Debt(i),t.rf338(i),t.EquityVolatility(i),T),t.vV(i),options);
+        sigmaV = abs(sigmaV);        
+        [~, NewAv, dedv]=EquityVolatilityEq(sigmaV,t.Equity(i),t.Debt(i),t.rf338(i),t.EquityVolatility(i),T);
+        NewAv = abs(NewAv);
+        t.AssetValue(i) = NewAv;
+        t.AssetVolatility(i) = abs(sigmaV);
+        t.dedv(i) = dedv;
     end
-    t.vV = [];
+    toc
+end
+t.vV = [];
 
-    function [Error, NewAv, d1]=EquityVolatilityEq(sigmaV,e,f,rf,vE,T)
+function [Error, NewAv, d1]=EquityVolatilityEq(sigmaV,e,f,rf,vE,T)
 
-    options = optimset('LargeScale','off','MaxFunEvals',1e+03,'MaxIter',1e+03,'TolX',1e-6);
-    sigmaV = abs(sigmaV);
-    NewAv=fminsearch(@(av) SolveOneEquation(av,e,sigmaV,f,rf,T),e+f,options);
-    NewAv = abs(NewAv);
+options = optimset('LargeScale','off','MaxFunEvals',1e+03,'MaxIter',1e+03,'TolX',1e-6);
+sigmaV = abs(sigmaV);
+NewAv=fminsearch(@(av) SolveOneEquation(av,e,sigmaV,f,rf,T),e+f,options);
+NewAv = abs(NewAv);
 
-    %alternative to blsdelta
-    % d1=(log(NewAv./f)+(rf+0.5*sigmaV.^2)*T)./(sigmaV*sqrt(T));
-    % d1 = norm_cdf(d1); %faster norm_cdf
+%alternative to blsdelta
+% d1=(log(NewAv./f)+(rf+0.5*sigmaV.^2)*T)./(sigmaV*sqrt(T));
+% d1 = norm_cdf(d1); %faster norm_cdf
 
-    if f == 0
-        %blsdelta fails if f = 0;
-        f = 1e-50;
-    end
+if f == 0
+    %blsdelta fails if f = 0;
+    f = 1e-50;
+end
 
-    if NewAv == 0
-        %blsdelta fails if NewAv = 0; unlikely to happen
-        NewAv = 1e-50;
-    end
+if NewAv == 0
+    %blsdelta fails if NewAv = 0; unlikely to happen
+    NewAv = 1e-50;
+end
 
-    d1 = blsdelta(NewAv,f,rf,T,sigmaV);
-    modelSigmaE=sigmaV*d1*NewAv/e;
-    Error=(vE-modelSigmaE)^2;
+d1 = blsdelta(NewAv,f,rf,T,sigmaV);
+modelSigmaE=sigmaV*d1*NewAv/e;
+Error=(vE-modelSigmaE)^2;
 
-    function Error=SolveOneEquation(v,E,vV,F,rf,T)
-    vV = abs(vV);
-    v = abs(v);
-    EModel=blsprice(v,F,rf,T,vV);
+function Error=SolveOneEquation(v,E,vV,F,rf,T)
+vV = abs(vV);
+v = abs(v);
+EModel=blsprice(v,F,rf,T,vV);
 
-    % alternative to blsprice
-    % EModel=BlackScholes(v,F,rf,T,vV,0,1);
+% alternative to blsprice
+% EModel=BlackScholes(v,F,rf,T,vV,0,1);
 
-    Error=(E-EModel)^2;
+Error=(E-EModel)^2;
