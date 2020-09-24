@@ -22,7 +22,9 @@ d.Name = eval(strcat('d.',ReturnSeries));
 d.NameExcess = d.Name - d.rfFFWebsite;
 
 
-function Mkt = getMarketData(d,LagAssetId)
+function Mkt = getMarketData(d,LagAssetId) 
+% only called when market excess returns are not available (e.g. asset-value weighted one)
+% equity value weighted portfolio returns can be retrieved from Kennith French's website
 
 Dates = unique(d.yyyymm);
 Dates(isnan(Dates))  = [];
@@ -62,7 +64,7 @@ d1 = [];
 disp(size(Perm))
 
 %running the estimation firm-by-firm
-parfor k = 1:length(Perm)
+parfor k = 1:length(Perm) %loop over firms
     
     if mod(k,100) == 0
         disp(k);
@@ -71,7 +73,8 @@ parfor k = 1:length(Perm)
     temp = d(loc,:);
     
     %for each firm compute the betas
-    temp = computeFirmBetas(temp,Mkt);
+    temp = computeFirmBetas(temp,Mkt); 
+    % returns the june beta both as next year's beta and a seperate column
     d1 = [d1;temp];
     
 end
@@ -81,11 +84,11 @@ d = d1; clear d1;
 function temp = computeFirmBetas(temp,Mkt)
 temp.FirmBetas = NaN*temp.yyyymm;
 temp.JuneFirmBetas = temp.FirmBetas;
-for j = 1971:2012
+for j = 1971:2012 %loop over years
     
     %identify June, as well as identify past five year 
-    St = (j-5)*1e2 + 6;
-    En = j*1e2 + 6;
+    St = (j-5)*1e2 + 6; % start: 5 years before current year
+    En = j*1e2 + 6; % end: current year
     loc = find(temp.yyyymm > St & temp.yyyymm <= En);
     y = [temp.yyyymm(loc), temp.NameExcess(loc)];
     [ir,~] = find(isnan(y) == 1);
@@ -95,12 +98,12 @@ for j = 1971:2012
     %perform the capm regression if at least 24 monthly data points available
     if size(y,1) >= 24
         [~,ia,ib] = intersect(y(:,1),Mkt(:,1)); % return the index
-        tx = [ones(size(Mkt(ib,1))), Mkt(ib,2:3)];
-        [ir,~] = find(isnan(tx) == 1);
+        tx = [ones(size(Mkt(ib,1))), Mkt(ib,2:3)]; %Mkt(ib, 2:3) is the market return and lag market return
+        [ir,~] = find(isnan(tx) == 1); % drop nans
         tx(ir,:) = [];
         R = rank(tx);
-        if R == size(tx,2) % no colinear
-            y = [y(ia,2),Mkt(ib,2:3)];
+        if R == size(tx,2) % make sure there's no colinearity
+            y = [y(ia,2),Mkt(ib,2:3)]; %y(ia,2) is the excess return of the stock
             tBetas = regress(y(:,1),[ones(size(y(:,1))),y(:,2:3)]);
             tBetas = tBetas(2) + tBetas(3);
         else
