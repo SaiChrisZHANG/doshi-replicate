@@ -1,4 +1,5 @@
 %This function is called by mainToRunFamaMacBeth
+%%This code is based on annual compustat, need to readjust with quarter data
 function [d,allPtf] = getBetaPortfoliosJune(d,Mkt)
 
 %% this function computes the decile portfolios for betas using the NYSE cut-offs
