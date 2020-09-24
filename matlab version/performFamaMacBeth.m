@@ -6,7 +6,7 @@ Dates = unique(d.yyyymm);
 %june size for fama-macbeth
 d.lnme = log(d.mejun);
 
-%compute btm
+%compute BTM
 d.BE(d.BE<=0) = NaN;
 d.lnbeme=log(d.BE./d.medec);
 d.lnbeme(isinf(abs(d.lnbeme)) == 1) = NaN;
@@ -52,14 +52,14 @@ for k = 1:size(Specs,1)
         tx = [y,x];
         [ir,~] = find(isnan(tx) == 1);
         tx(ir,:) = [];
-        if R == size(x,2) && size(tx,1) > 7
+        if R == size(x,2) && size(tx,1) > 7 % check colliearity
             disp(size(y))
             disp(size(x))
             
             [b,~,~,~,tR2] = regress(y,x);
             R2(j,:) = tR2(1);            
             Coeff(j,:) = [Dates(j), b'];            
-        else
+        else % set as nan
             if j == 1
                 Coeff(j,:) = [Dates(j), ones(size(locSpec))*NaN];
             else
@@ -77,8 +77,8 @@ for k = 1:size(Specs,1)
     %tStatAll(k,locSpec) = (nanmean(Coeff)./nanstd(Coeff)).*sqrt(sum(isnan(Coeff)~=1));   
     
     %compute the newey west t-statistics
-    for j = 1:size(Coeff,2)
-        y1 = [ones(size(Coeff(:,j))), Coeff(:,j)];        
+    for j = 1:size(Coeff,2) % loop over each coefficient
+        y1 = [ones(size(Coeff(:,j))), Coeff(:,j)];     
         [ir,~] = find(isnan(y1) == 1);
         y1(ir,:) = [];
         nwse = NeweyWest(y1(:,2) - nanmean(y1(:,2)),[],5);
