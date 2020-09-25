@@ -48,7 +48,6 @@ for k = 1:size(Specs,1)
         tx(ir,:) = [];
         R = rank(tx);
         
-        
         tx = [y,x];
         [ir,~] = find(isnan(tx) == 1);
         tx(ir,:) = [];
@@ -67,7 +66,6 @@ for k = 1:size(Specs,1)
             end
         end
     end
-    
     
     Dates = Coeff(:,1);
     Coeff = Coeff(:,2:end);

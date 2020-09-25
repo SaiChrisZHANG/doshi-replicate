@@ -15,7 +15,7 @@ function nwse = NeweyWest(e,X,L,constant)
     %
     %        nwse = Newey-West standard errors
     %---------------------------------------------------
-    
+    % In python package statmodel, 
     %% Variables
     
     if nargin < 4 || constant ~= 0
