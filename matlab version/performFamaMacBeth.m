@@ -79,7 +79,7 @@ for k = 1:size(Specs,1)
         y1 = [ones(size(Coeff(:,j))), Coeff(:,j)];     
         [ir,~] = find(isnan(y1) == 1);
         y1(ir,:) = [];
-        nwse = NeweyWest(y1(:,2) - nanmean(y1(:,2)),[],5);
+        nwse = NeweyWest(y1(:,2) - nanmean(y1(:,2)),[],5); % it's a number
         temptStat(1,j) = nanmean(y1(:,2))./nwse;
     end
     
