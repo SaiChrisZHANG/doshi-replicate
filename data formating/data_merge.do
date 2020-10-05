@@ -60,7 +60,7 @@ save, replace
 clear
 use compustat
 
-merge 1:m cusip crsp_dt using crsp_monthly, keepusing(datadate ajexm ajpm cshoq cshtrm curcdm navm prccm trfm trt1m rawpm rawxm exchg fyrc idbflag naics sic dvpspm dvpsxm dvrate)
+merge 1:m cusip crsp_dt using crsp_monthly, keepusing(datadate cshtrm prccm trfm trt1m rawpm rawxm exchg fyrc sic)
 keep if _merge==3
 drop _merge
 label variable crsp_dt "compustat_dt + 1 month"
@@ -72,5 +72,5 @@ rename cshtrm vol
 rename prccm prc
 rename trt1m ret
 replace ret = ret/100
-drop linktype ggroup gind gsector ajexm ajpm navm curcdm trfm rawpm rawxm fyrc idbflag naics dvpspm dvpsxm dvrate
+drop linktype ggroup gind gsector trfm rawpm rawxm fyrc idbflag naics dvpspm dvpsxm dvrate
 save "F:/Stephen/part1.dta", replace
