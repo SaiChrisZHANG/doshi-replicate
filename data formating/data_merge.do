@@ -60,7 +60,7 @@ save, replace
 clear
 use compustat
 
-merge 1:m cusip crsp_dt using crsp_monthly, keepusing(datadate cshtrm prccm trfm trt1m rawpm rawxm exchg fyrc sic)
+merge 1:m cusip crsp_dt using crsp_monthly, keepusing(datadate cshtrm prccm trt1m exchg sic)
 keep if _merge==3
 drop _merge
 label variable crsp_dt "compustat_dt + 1 month"
@@ -72,5 +72,68 @@ rename cshtrm vol
 rename prccm prc
 rename trt1m ret
 replace ret = ret/100
-drop linktype ggroup gind gsector trfm rawpm rawxm fyrc idbflag naics dvpspm dvpsxm dvrate
+drop linktype ggroup gind gsector
 save "F:/Stephen/part1.dta", replace
+
+*===============================================================================
+* clean data from CRSP and Compustat, separately, to get 2020 data
+*===============================================================================
+
+cd "F:/Stephen/separate"
+
+* clean data from CRSP and Compustat, separately, Compustat data are updated to Sep 2020, CRSP data are updated to Jun 2020.
+
+* clean Compustat data ================
+clear
+use compustat_big
+duplicates tag cusip datadate, gen(dup_cusip)
+drop if mi(cusip)
+drop if dup_cusip==1 & mi(datacqtr)
+drop dup_cusip
+duplicates report cusip datadate /*should be non-duplicates*/
+
+gen yr = year(datadate)
+gen mth = month(datadate)
+rename datadate compustat_dt
+gen crsp_mth = mth+1
+replace crsp_mth=1 if crsp_mth==13
+gen crsp_qr = ceil(crsp_mth/3)
+gen crsp_yr = yr
+replace crsp_yr = yr+1 if mth==12
+gen crsp_dt = crsp_yr*100+crsp_mth
+drop yr mth crsp_mth crsp_qr crsp_yr
+
+save, replace
+
+* clean CRSP data =====================
+clear
+use crsp_big
+duplicates drop cusip datadate, force
+keep if shrcd == 10 | shrcd==11
+* following information listed on Kenneth French's website, limit to common shares, other information saved in crsp_other.dta
+
+* keep if exchcd == 1 | exchcd == 2 | exchcd == 3
+* limit to NYSE, AMEX, Nasdaq
+rename cusip cusip8
+
+gen yr = year(datadate)
+gen qr = quarter(datadate)
+gen mth = 1 if qr == 1
+replace mth = 4 if qr == 2
+replace mth = 7 if qr == 3
+replace mth = 10 if qr == 4
+gen crsp_dt = yr*100+mth
+drop yr qr mth
+save, replace
+
+* merge them together =================
+clear
+use compustat_big
+*gen cusip8 = substr(cusip,1,8)
+
+merge 1:m cusip8 crsp_dt using crsp_big, keepusing(datadate prc vol ret retx crsp_dt)
+keep if _merge==3 & year(datadate)==2020
+
+drop _merge ajexq ajpq cusip8 merge_compustat_crsp tic
+destring gvkey, replace
+save "F:/Stephen/part2.dta", replace
