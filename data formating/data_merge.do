@@ -137,3 +137,12 @@ keep if _merge==3 & year(datadate)==2020
 drop _merge ajexq ajpq cusip8 merge_compustat_crsp tic
 destring gvkey, replace
 save "F:/Stephen/part2.dta", replace
+
+*===============================================================================
+* Put part 1 (data before 2020) and part 2 (data in 2020) together
+*===============================================================================
+clear
+use "F:/Stephen/part1.dta", replace
+append using "F:/Stephen/part2.dta"
+sort cusip datadate
+save full_data, replace
