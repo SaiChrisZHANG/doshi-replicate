@@ -35,6 +35,7 @@ end
 Ptfs(ia,2:end) = Ptfs(ia,2:end) + repmat(ffRf.rfFFWebsite(ib),1,100);
 
 Mean = nanmean(Ptfs(:,2:end));
+% suggested by Matlab: replace nanmean with mean(,'omitnan')
 Mean = Mean';
 scatter(Betas,Mean*1e2);
 xlim([0.2 2.2])
