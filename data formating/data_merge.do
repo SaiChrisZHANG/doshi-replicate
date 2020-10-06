@@ -146,3 +146,4 @@ use "F:/Stephen/part1.dta", replace
 append using "F:/Stephen/part2.dta"
 sort cusip datadate
 save full_data, replace
+clear
