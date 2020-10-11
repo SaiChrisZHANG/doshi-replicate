@@ -49,7 +49,11 @@ label variable ltq_f "book liabilities"
 label define compustat_code 11 "NYSE" 12 "AMEX" 13 "OTC" 14 "NASDAQ" 19 "Other OTC"
 label values exchg compustat_code
 
-
+* impute missing values ========================================================
+* missing returns
+sort cusip datadate
+by cusip: replace RET=RET_wD if RET==. & _n==1
+by cusip: replace RET=(PRC-PRC[_n-1])/PRC[_n-1] if RET==.c
 
 /*
 Variables:
