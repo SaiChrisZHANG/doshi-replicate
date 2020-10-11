@@ -140,6 +140,20 @@ sort cusip datadate
 by cusip: gen MElag = ME[_n-1]
 by cusip: gen LevLag = Lev[_n-1]
 
+* generate MEjun
+preserve
+tempfile ME_june
+keep ME gvkey compustat_dt
+duplicates drop gvkey compustat_dt, force
+rename ME MEjun
+gen JunDate = 100*year(compustat_dt)+month(compustat_dt)
+drop compustat_dt
+save `ME_june', replace
+restore
+
+merge m:1 gvkey JunDate using `ME_june'
+drop if _merge==2
+drop _merge
 
 /*
 Variables:
