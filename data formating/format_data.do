@@ -31,6 +31,15 @@ gen Fq4Date = string(year(datadate)-1)+"Q4" if month(datadate)<=12 & month(datad
 replace Fq4Date = string(year(datadate)-2)+"Q4" if month(datadate)<=6 & month(datadate)>=1
 * merge by year(compustat_dt)+substr(datafqtr,5,6), see gvkey==64418 for the most dramatic example
 
+* rename and label variables
+rename ret RET_wD
+label variable RET_wD "monthly return with dividend"
+rename retx RET
+label variable RET "monthly return (price)"
+rename atq at
+label variable at "book assets"
+rename prc PRC
+replace PRC = abs(PRC) if PRC<0
 
 
 /*
