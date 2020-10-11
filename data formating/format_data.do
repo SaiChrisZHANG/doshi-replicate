@@ -77,7 +77,6 @@ replace ceqq = lseq-ltq_f if ceqq==.
 * drop 66 0-common-share obs
 replace cshoq =. if cshoq==0
 
-
 * generate variables of interest ===============================================
 gen BE = ceqq-pstkq
 replace BE = ceqq if BE==.
