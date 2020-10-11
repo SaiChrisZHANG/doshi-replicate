@@ -103,6 +103,18 @@ label variable ME "market equity"
 
 *---------------------------------------- form here, stored as data_analysis.dta
 * transform CAD to USD
+gen comp_ym = year(compustat_dt)*100 + month(compustat_dt)
+merge m:1 comp_ym curcdq using "F:/Stephen/auxilary data/cad_usd.dta"
+drop if _merge==2
+drop _merge comp_ym
+label variable cad_usd "CAD per USD"
+
+foreach var in at ceqq dlcq dlttq lseq ltq_f pstkq BE{
+replace `var' = `var'*cad_usd if curcdq=="CAD"
+}
+
+drop cad_usd curcdq
+
 
 
 
