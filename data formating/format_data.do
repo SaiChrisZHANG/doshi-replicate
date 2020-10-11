@@ -41,6 +41,10 @@ label variable at "book assets"
 rename prc PRC
 replace PRC = abs(PRC) if PRC<0
 
+* CRSP use the negative of average of bid and ask price to impute missing close prices. 
+label variable PRC "end-of-month price"
+rename ltq ltq_f
+label variable ltq_f "book liabilities"
 
 /*
 Variables:
