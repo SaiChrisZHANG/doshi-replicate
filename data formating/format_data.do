@@ -20,6 +20,19 @@ drop _merge
 * drop unused variables of interest
 drop cshiq dd1q crsp_dt vol lltq ibq npq pstkrq teqq txdbq txdiq txditcq costat dvpq fyearq fqtr
 
+* date variables
+gen yyyymm = 100*year(datadate)+month(datadate)
+
+gen DecDate = 100*(year(datadate)-1)+12 if month(datadate)<=12 & month(datadate)>=7
+replace DecDate = 100*(year(datadate)-2)+12 if month(datadate)<=6 & month(datadate)>=1
+* merge by compustat_dt
+
+gen Fq4Date = string(year(datadate)-1)+"Q4" if month(datadate)<=12 & month(datadate)>=7
+replace Fq4Date = string(year(datadate)-2)+"Q4" if month(datadate)<=6 & month(datadate)>=1
+* merge by year(compustat_dt)+substr(datafqtr,5,6), see gvkey==64418 for the most dramatic example
+
+
+
 /*
 Variables:
 'PERMNO': Perm number from CRSP
