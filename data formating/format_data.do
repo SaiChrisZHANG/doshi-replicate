@@ -115,7 +115,22 @@ replace `var' = `var'*cad_usd if curcdq=="CAD"
 
 drop cad_usd curcdq
 
+* generate atdec BEdec medec
+preserve
+tempfile data_dec
+keep at BE ME gvkey compustat_dt
+duplicates drop gvkey compustat_dt, force
+rename at atdec
+rename BE BEdec
+rename ME MEdec
+gen DecDate = 100*year(compustat_dt)+month(compustat_dt)
+drop compustat_dt
+save `data_dec', replace
+restore
 
+merge m:1 gvkey DecDate using `data_dec'
+drop if _merge==2
+drop _merge
 
 
 
