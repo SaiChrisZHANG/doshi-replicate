@@ -12,24 +12,13 @@
 clear
 cd "F:/Stephen"
 use full_data 
+* merge the share adjustment factor
+merge m:1 gvkey compustat_dt using "F:/Stephen/auxilary data/share_adjust.dta"
+drop if _merge==2
+drop _merge
 
-* keep, rename variables of interest
-drop cshiq dd1q crsp_dt 
-
-gen BE = lseq-ltq
-label variable BE "book equity"
-gen yyyymm = 100*year(datadate)+month(datadate)
-
-
-rename ret RET_wD
-label variable RET_wD "monthly return with dividend"
-rename retx RET
-label variable RET "monthly return (price)"
-rename atq at
-label variable at "book assets"
-rename prc PRC
-label variable PRC "end-of-month price"
-rename ltq ltq_f
+* drop unused variables of interest
+drop cshiq dd1q crsp_dt vol lltq ibq npq pstkrq teqq txdbq txdiq txditcq costat dvpq fyearq fqtr
 
 /*
 Variables:
