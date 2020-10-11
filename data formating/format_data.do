@@ -115,6 +115,7 @@ replace `var' = `var'*cad_usd if curcdq=="CAD"
 
 drop cad_usd curcdq
 
+* reassign the at/BE/ME data in Fama-French fashion ============================
 * generate atdec BEdec medec
 preserve
 tempfile data_dec
