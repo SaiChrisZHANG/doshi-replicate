@@ -82,23 +82,8 @@ gen BE = ceqq-pstkq
 replace BE = ceqq if BE==.
 label variable BE "book equity"
 
-preserve
-tempfile price
-keep gvkey datadate PRC
-rename datadate compustat_dt
-rename PRC prc_me
-save `price', replace
-restore
-merge m:1 gvkey compustat_dt using `price'
-drop if _merge==2
-drop _merge
-
-merge m:1 cusip compustat_dt using "F:/Stephen/auxilary data/prc_me.dta"
-drop if _merge==2
-replace prc_me = prccm if prc_me==.
-drop prccm _merge
-
-gen ME = cshoq*ajexq*prc_me
+sort cusip datadate
+by cusip: gen ME = cshoq*ajexq*PRC[_n-1]
 label variable ME "market equity"
 
 *---------------------------------------- form here, stored as data_analysis.dta
