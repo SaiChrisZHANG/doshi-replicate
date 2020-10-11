@@ -65,6 +65,17 @@ replace ltq_f=ltq_m if ltq_f==.
 drop at_m ltq_m
 * only updated 12 more asset values and 9 more liability values
 
+sort cusip datadate
+foreach var in at ceqq cshoq dlcq dlttq lseq ltq_f pstkq{
+by cusip: replace `var' = `var'[_n-1] if `var'==.
+}
+
+replace ltq_f = lseq-ceqq if ltq_f==.
+replace ceqq = lseq-ltq_f if ceqq==.
+
+* drop 66 0-common-share obs
+replace cshoq =. if cshoq==0
+
 
 
 /*
