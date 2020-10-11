@@ -46,6 +46,11 @@ label variable PRC "end-of-month price"
 rename ltq ltq_f
 label variable ltq_f "book liabilities"
 
+label define compustat_code 11 "NYSE" 12 "AMEX" 13 "OTC" 14 "NASDAQ" 19 "Other OTC"
+label values exchg compustat_code
+
+
+
 /*
 Variables:
 'PERMNO': Perm number from CRSP
