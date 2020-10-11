@@ -93,6 +93,18 @@ merge m:1 gvkey compustat_dt using `price'
 drop if _merge==2
 drop _merge
 
+merge m:1 cusip compustat_dt using "F:/Stephen/auxilary data/prc_me.dta"
+drop if _merge==2
+replace prc_me = prccm if prc_me==.
+drop prccm _merge
+
+gen ME = cshoq*ajexq*prc_me
+label variable ME "market equity"
+
+*---------------------------------------- form here, stored as data_analysis.dta
+* transform CAD to USD
+
+
 
 
 /*
