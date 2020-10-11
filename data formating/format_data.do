@@ -55,6 +55,18 @@ sort cusip datadate
 by cusip: replace RET=RET_wD if RET==. & _n==1
 by cusip: replace RET=(PRC-PRC[_n-1])/PRC[_n-1] if RET==.c
 
+* missing compustat items: replace missings with most recent data
+merge m:1 gvkey compustat_dt using "F:/Stephen/auxilary data/liabilities.dta"
+drop if _merge==2
+drop _merge
+replace at= at_m if at==.
+replace lseq=at if lseq==.
+replace ltq_f=ltq_m if ltq_f==.
+drop at_m ltq_m
+* only updated 12 more asset values and 9 more liability values
+
+
+
 /*
 Variables:
 'PERMNO': Perm number from CRSP
