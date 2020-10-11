@@ -132,6 +132,22 @@ merge m:1 gvkey DecDate using `data_dec'
 drop if _merge==2
 drop _merge
 
+* generate atFq4 BEFq4 meFq4
+preserve
+tempfile data_fq4
+keep at BE ME gvkey datafqtr
+duplicates drop gvkey datafqtr, force
+rename at atfq4
+rename BE BEfq4
+rename ME MEfq4
+rename datafqtr Fq4Date
+save `data_fq4', replace
+restore
+
+merge m:1 gvkey Fq4Date using `data_fq4'
+drop if _merge==2
+drop _merge
+
 
 
 /*
