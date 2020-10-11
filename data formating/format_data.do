@@ -149,7 +149,8 @@ merge m:1 gvkey Fq4Date using `data_fq4'
 drop if _merge==2
 drop _merge
 
-
+sort cusip datadate
+by cusip: gen MElag = ME[_n-1]
 
 /*
 Variables:
