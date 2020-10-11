@@ -77,6 +77,23 @@ replace ceqq = lseq-ltq_f if ceqq==.
 replace cshoq =. if cshoq==0
 
 
+* generate variables of interest ===============================================
+gen BE = ceqq-pstkq
+replace BE = ceqq if BE==.
+label variable BE "book equity"
+
+preserve
+tempfile price
+keep gvkey datadate PRC
+rename datadate compustat_dt
+rename PRC prc_me
+save `price', replace
+restore
+merge m:1 gvkey compustat_dt using `price'
+drop if _merge==2
+drop _merge
+
+
 
 /*
 Variables:
