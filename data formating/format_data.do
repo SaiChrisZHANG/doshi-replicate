@@ -155,6 +155,13 @@ merge m:1 gvkey JunDate using `ME_june'
 drop if _merge==2
 drop _merge
 
+* merge with Fama-French risk free rate ========================================
+merge m:1 yyyymm using "F:/Stephen/french_website/french_fama", keepusing(rfFFWebsite)
+drop if _merge==2
+drop _merge
+
+
+
 /*
 Variables:
 'PERMNO': Perm number from CRSP
