@@ -160,7 +160,25 @@ merge m:1 yyyymm using "F:/Stephen/french_website/french_fama", keepusing(rfFFWe
 drop if _merge==2
 drop _merge
 
+* generate ME decile ===========================================================
+* drop financial firms, missings and 
 
+bys datadate: xtile DECILE = ME, nq(10)
+
+
+/* use FF website ME breakpoints
+gen DECILE = .
+sort cusip datadate
+forvalues i = 2/10{
+local j=`i'-1
+local i_1=`i'*10
+local j_1=`j'*10
+bys datadate: replace DECILE = `i' if MEdec<=ME_p`i_1' & MEdec>=ME_p`j_1'
+}
+
+bys datadate: replace DECILE = 1 if MEdec<ME_p10
+bys datadate: replace DECILE = 10 if MEdec>ME_p100 & MEdec!=.
+*/
 
 /*
 Variables:
