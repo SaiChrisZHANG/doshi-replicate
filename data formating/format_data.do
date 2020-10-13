@@ -165,8 +165,11 @@ drop _merge
 destring sic, replace
 drop if inrange(sic,6000,6999)
 
-* --------------------------drop missings, form here save as data_full_final.dta
+* keep firms traded in NYSE, AMEX and Nasdaq
+keep if exchg == 11 | exchg == 12 | exchg == 14
 
+* drop missings
+drop if mi(at) | mi(dlcq) | mi(dlttq) | mi(lseq) | mi(ltq_f) | mi(BE) | mi(ME) | mi(Lev) | mi(RET)
 
 
 
