@@ -160,6 +160,7 @@ drop _merge
 merge m:1 yyyymm using "F:/Stephen/french_website/french_fama", keepusing(rfFFWebsite)
 drop if _merge==2
 drop _merge
+replace rfFFWebsite = rfFFWebsite/100 /*from percentage to number*/
 
 * generate ME decile ===========================================================
 * drop financial firms, based on https://www.osha.gov/pls/imis/sic_manual.html
@@ -186,6 +187,12 @@ by datadate: replace ME_p`j' = ME_p`j'[_n-1] if ME_p`j' == .
 replace DECILE = `i' if ME <= ME_p`j' & DECILE == .
 drop ME_p`j'
 }
+
+bys datadate: egen ME_p90 = pctile(ME) if exchg == 11, p(90)
+sort datadate ME_p90
+by datadate: replace ME_p90 = ME_p90[_n-1] if ME_p90 == .
+replace DECILE = 10 if ME > ME_p90 & DECILE == .
+drop ME_p90
 
 
 /* use FF website ME breakpoints
