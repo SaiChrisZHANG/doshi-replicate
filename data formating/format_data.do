@@ -174,6 +174,16 @@ drop if mi(at) | mi(dlcq) | mi(dlttq) | mi(lseq) | mi(ltq_f) | mi(BE) | mi(ME) |
 
 
 
+forvalues i = 1/9{
+local j=10*`i'
+bys datadate: egen ME_p`j' = pctile(ME) if exchg == 11, p(`j')
+sort datadate ME_p`j'
+by datadate: replace ME_p`j' = ME_p`j'[_n-1] if ME_p`j' == .
+replace DECILE = `i' if ME <= ME_p`j' & DECILE == .
+drop ME_p`j'
+}
+
+
 /* use FF website ME breakpoints
 gen DECILE = .
 sort cusip datadate
