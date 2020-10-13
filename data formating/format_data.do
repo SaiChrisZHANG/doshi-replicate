@@ -161,9 +161,11 @@ drop if _merge==2
 drop _merge
 
 * generate ME decile ===========================================================
-* drop financial firms, missings and 
+* drop financial firms, based on https://www.osha.gov/pls/imis/sic_manual.html
+destring sic, replace
+drop if inrange(sic,6000,6999)
 
-bys datadate: xtile DECILE = ME, nq(10)
+* --------------------------drop missings, form here save as data_full_final.dta
 
 
 /* use FF website ME breakpoints
