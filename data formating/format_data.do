@@ -168,6 +168,8 @@ drop if inrange(sic,6000,6999)
 * --------------------------drop missings, form here save as data_full_final.dta
 
 
+
+
 /* use FF website ME breakpoints
 gen DECILE = .
 sort cusip datadate
