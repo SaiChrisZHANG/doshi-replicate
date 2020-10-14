@@ -223,6 +223,10 @@ drop ME_p90
 * generate Debt
 gen Debt = ltq_f
 
+* Equity
+gen Equity = ME
+
+
 /* use FF website ME breakpoints
 gen DECILE = .
 sort cusip datadate
