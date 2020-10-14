@@ -13,7 +13,7 @@ use merged
 * keep NYSE/AMEX/Nasdaq
 keep if exchcd == 1 | exchcd == 2 | exchcd == 3
 
-drop tic ajpq datacqtr cshiq dd1q dvpq ibq lltq npq pstkrq teqq txdbq txdiq txditcq costat permno primexch _merge
+drop tic ajpq datacqtr cshiq dd1q dvpq ibq lltq npq pstkrq teqq txdbq txdiq txditcq exchg crsp_dt costat permno primexch _merge
 
 gen yyyymm = 100*year(datadate) + month(datadate)
 
