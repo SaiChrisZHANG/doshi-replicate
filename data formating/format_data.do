@@ -32,6 +32,13 @@ replace Fq4Date = string(year(datadate)-2)+"Q4" if month(datadate)<=6 & month(da
 gen JunDate = 100*(year(datadate)-1)+6 if month(datadate)<=12 & month(datadate)>=7
 replace JunDate = 100*(year(datadate)-2)+6 if month(datadate)<=6 & month(datadate)>=1
 
+* jump: identify firms that out of the dataset at a point and back in later
+sort cusip datadate
+by cusip: gen jump = datadate - datadate[_n-1]
+replace jump = . if jump <=366
+by cusip: replace jump = jump[_n-1] if jump==.
+replace jump = 0 if jump==.
+
 * rename and label variables
 rename ret RET_wD
 label variable RET_wD "monthly return with dividend"
