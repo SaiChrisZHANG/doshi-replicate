@@ -121,7 +121,7 @@ foreach var in at ceqq dlcq dlttq lseq ltq_f pstkq BE{
 replace `var' = `var'*cad_usd if curcdq=="CAD"
 }
 
-drop cad_usd curcdq
+drop cad_usd curcdq datacqtr curuscnq
 
 * reassign the at/BE/ME data in Fama-French fashion ============================
 * generate atdec BEdec medec
@@ -159,9 +159,9 @@ drop _merge
 
 * generate MElag Lev LevLag
 gen Lev = ltq_f/(ltq_f+ME)
-sort cusip datadate
-by cusip: gen MElag = ME[_n-1]
-by cusip: gen LevLag = Lev[_n-1]
+sort cusip jump datadate
+by cusip jump: gen MElag = ME[_n-1]
+by cusip jump: gen LevLag = Lev[_n-1]
 
 * generate MEjun
 preserve
