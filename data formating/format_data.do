@@ -194,7 +194,7 @@ drop if inrange(sic,6000,6999)
 keep if exchg == 11 | exchg == 12 | exchg == 14
 
 * drop missings
-drop if mi(at) | mi(dlcq) | mi(dlttq) | mi(lseq) | mi(ltq_f) | mi(BE) | mi(ME) | mi(Lev) | mi(RET)
+drop if mi(at) | mi(BE) | mi(ME) | mi(Lev) | mi(RET)
 
 * drop data before July 1971, since then, there're at leat 109 firms per month
 keep if yyyymm>=197107
