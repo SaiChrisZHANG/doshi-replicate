@@ -59,9 +59,9 @@ label values exchg compustat_code
 
 * impute missing values ========================================================
 * missing returns
-sort cusip datadate
-by cusip: replace RET=RET_wD if RET==. & _n==1
-by cusip: replace RET=(PRC-PRC[_n-1])/PRC[_n-1] if RET==.c
+sort cusip jump datadate
+by cusip jump: replace RET=RET_wD if RET==. & _n==1
+by cusip jump: replace RET=(PRC-PRC[_n-1])/PRC[_n-1] if RET==.c
 
 * missing compustat items: replace missings with most recent data
 merge m:1 gvkey compustat_dt using "F:/Stephen/auxilary data/liabilities.dta"
@@ -73,9 +73,9 @@ replace ltq_f=ltq_m if ltq_f==.
 drop at_m ltq_m
 * only updated 12 more asset values and 9 more liability values
 
-sort cusip datadate
+sort cusip jump datadate
 foreach var in at ceqq cshoq dlcq dlttq lseq ltq_f pstkq{
-by cusip: replace `var' = `var'[_n-1] if `var'==.
+by cusip jump: replace `var' = `var'[_n-1] if `var'==.
 }
 
 replace ltq_f = lseq-ceqq if ltq_f==.
@@ -85,12 +85,28 @@ replace ceqq = lseq-ltq_f if ceqq==.
 replace cshoq =. if cshoq==0
 
 * generate variables of interest ===============================================
+* BE
 gen BE = ceqq-pstkq
 replace BE = ceqq if BE==.
 label variable BE "book equity"
 
-sort cusip datadate
-by cusip: gen ME = cshoq*ajexq*PRC[_n-1]
+* ME: the price in the end of month t-1 * the common share in the end of last quarter * adjustment factor of compustat
+gen Lag1 = yyyymm-1
+replace Lag1 = (year(datadate)-1)*100 + 12 if month(datadate)==1
+
+preserve
+keep cusip yyyymm PRC
+rename yyyymm Lag1
+rename PRC prc_lag
+tempfile lag_prc
+save `lag_prc', replace
+restore
+
+merge 1:1 cusip Lag1 using `lag_prc'
+drop if _merge==2
+drop _merge
+
+gen ME = cshoq*ajexq*prc_lag
 label variable ME "market equity"
 
 *---------------------------------------- form here, stored as data_analysis.dta
