@@ -72,3 +72,5 @@ drop PERMNO
 
 gen YMD = string(year(date)-2) + "/" + string(month(date)) + "/" + string(day(date))
 gen date_low = date(YMD,"YMD")
+* 62774 missings, due to Fed 29
+replace YMD = string(year(date)-2) + "/" + string(month(date)) + "/" + string(day(date)-1) if mi(date_low)
