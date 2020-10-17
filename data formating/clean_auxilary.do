@@ -67,3 +67,5 @@ save, replace
 * equity volatility
 * ==============================================================================
 use "F:\Stephen\auxilary data\dailty_return.dta" 
+rename CUSIP cusip8
+drop PERMNO
