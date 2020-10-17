@@ -69,3 +69,6 @@ save, replace
 use "F:\Stephen\auxilary data\dailty_return.dta" 
 rename CUSIP cusip8
 drop PERMNO
+
+gen YMD = string(year(date)-2) + "/" + string(month(date)) + "/" + string(day(date))
+gen date_low = date(YMD,"YMD")
