@@ -76,3 +76,5 @@ gen date_low = date(YMD,"YMD")
 replace YMD = string(year(date)-2) + "/" + string(month(date)) + "/" + string(day(date)-1) if mi(date_low)
 replace date_low = date(YMD,"YMD") if mi(date_low)
 format date_low %td
+drop YMD
+
