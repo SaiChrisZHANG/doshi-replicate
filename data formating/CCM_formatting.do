@@ -47,8 +47,9 @@ replace PRC = abs(PRC) if PRC<0
 * CRSP use the negative of average of bid and ask price to impute missing close prices. 
 
 * generate equity volatility
-gen YMD = string(year(date)-2) + "/" + string(month(date)) + "/" + string(day(date))
-gen date_low = date(YMD,"YMD")
+gen yyyymm_low = yyyymm - 200
+rangestat (sd) RET, interval(yyyymm, yyyymm_low, yyyymm) by(cusip)
+replace RET_sd = RET_sd * sqrt(12) /*annualize monthly volatility*/
 
 label variable PRC "end-of-month price"
 rename ltq ltq_f
