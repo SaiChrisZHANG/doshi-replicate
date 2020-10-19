@@ -68,11 +68,18 @@ replace ltq_f=ltq_m if ltq_f==.
 drop at_m ltq_m
 * only updated 12 more asset values and 9 more liability values
 
-
-
 sort cusip jump datadate
 foreach var in at ceqq cshoq dlcq dlttq lseq ltq_f pstkq{
     by cusip jump: replace `var' = `var'[_n-1] if `var'==.
+}
+
+* interpolate debt data
+sort cusip jump datadate
+foreach var in at ceqq cshoq lseq pstkq{
+    by cusip jump: replace `var' = `var'[_n-1] if `var'==.
+}
+foreach var in dlcq clttq ltq_f{
+    d
 }
 
 replace ltq_f = lseq-ceqq if ltq_f==.
@@ -103,6 +110,8 @@ merge 1:1 cusip Lag1 using `lag_prc'
 drop if _merge==2
 drop _merge
 
+gen ME = cshoq*ajexq*prc_lag
+label variable ME "market equity"
 
 *---------------------------------------- form here, stored as data_analysis.dta
 * transform CAD to USD
