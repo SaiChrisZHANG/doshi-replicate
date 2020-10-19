@@ -34,10 +34,10 @@ by cusip: replace jump = jump[_n-1] if jump==.
 replace jump = 0 if jump==.
 
 * rename and label variables
-rename ret RET_wD
-label variable RET_wD "monthly return with dividend"
-rename retx RET
-label variable RET "monthly return (price)"
+rename ret RET
+label variable RET "monthly return"
+rename retx RETx
+label variable RETx "monthly return with dividends"
 rename atq at
 label variable at "book assets"
 rename prc PRC
@@ -52,10 +52,6 @@ label define share_code 1 "NYSE" 2 "AMEX" 3 "NASDAQ"
 label values exchcd share_code
 
 * impute missing values ========================================================
-* missing returns
-sort cusip jump datadate
-by cusip jump: replace RET=(PRC-PRC[_n-1])/PRC[_n-1] if mi(RET)
-
 * missing compustat items: replace missings with most recent data
 merge m:1 gvkey compustat_dt using "F:/Stephen/auxilary data/liabilities.dta"
 drop if _merge==2
@@ -64,6 +60,10 @@ replace at= at_m if at==.
 replace lseq=at if lseq==.
 replace ltq_f=ltq_m if ltq_f==.
 drop at_m ltq_m
+
+* deferred tax and investment tax credits (if applicable)
+replace txditcq = txdbq if mi(txditcq)
+replace txditcq = 0 if mi(txditcq)
 
 * impute missing values
 sort cusip jump datadate
