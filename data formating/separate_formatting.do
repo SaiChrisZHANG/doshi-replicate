@@ -8,7 +8,7 @@ cd "F:/Stephen/separate"
 *===============================================================================
 * Clean the merged dataset
 *===============================================================================
-use merged
+use full_data_raw
 
 * keep NYSE/AMEX/Nasdaq
 keep if exchcd == 1 | exchcd == 2 | exchcd == 3

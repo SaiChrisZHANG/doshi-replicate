@@ -11,7 +11,7 @@
 * load dataset
 clear
 cd "F:/Stephen/CCM"
-use full_data 
+use full_data_raw 
 
 * drop unused variables of interest
 drop cshiq dd1q crsp_dt vol lltq ibq npq pstkrq teqq txdbq txdiq txditcq costat dvpq fyearq fqtr
