@@ -65,14 +65,21 @@ drop at_m ltq_m
 replace txditcq = txdbq if mi(txditcq)
 replace txditcq = 0 if mi(txditcq)
 
-* impute missing values
-sort cusip jump datadate
-foreach var in at ceqq cshoq dlcq dlttq lseq ltq_f pstkq{
-by cusip jump: replace `var' = `var'[_n-1] if `var'==.
+* impute debt data with linear interpolatg according to date (CRSP)
+sort cusip compustat_dt datadate
+foreach var in dlcq dlttq ltq_f{
+    gen `var'_aux = `var'
+    by cusip compustat_dt: replace `var'_aux=. if _n>1
+    by cusip: ipolate `var'_aux datadate, gen(`var'_intpl)
 }
 
-replace ltq_f = lseq-ceqq if ltq_f==.
-replace ceqq = lseq-ltq_f if ceqq==.
+* keep the last non-missing value constant through the following periods without valid values
+sort cusip jump datadate
+foreach var in at ceqq cshoq dlcq dlttq ltq_f lseq pstkq{
+    by cusip jump: replace `var' = `var'[_n-1] if `var'==.
+}
+
+replace ltq_f = lseq-teqq if ltq_f==.
 
 * drop 338 0-common-share obs
 replace cshoq =. if cshoq==0

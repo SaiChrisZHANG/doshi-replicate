@@ -75,7 +75,7 @@ replace txditcq = 0 if mi(txditcq)
 
 * impute debt data with linear interpolatg according to date (CRSP)
 sort cusip compustat_dt datadate
-foreach var in dlcq dlttq ltq{
+foreach var in dlcq dlttq ltq_f{
     gen `var'_aux = `var'
     by cusip compustat_dt: replace `var'_aux=. if _n>1
     by cusip: ipolate `var'_aux datadate, gen(`var'_intpl)
