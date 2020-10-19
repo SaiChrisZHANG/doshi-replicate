@@ -221,8 +221,6 @@ gen Debt = ltq_f
 * Equity
 gen Equity = ME
 
-
-
 /*
 Variables:
 'PERMNO': Perm number from CRSP
@@ -247,6 +245,8 @@ Variables:
 'RetExcess': Excess Stock Return, RET - rfFFWebsite
 'Lev': Leverage measured as ltq_f/(ltq_f + me)
 'LevLag': Lagged Leverage, one lag neeeded to compute the adjusted returns
+
+'EquityVolatility': Annualized stock volatility (2 year daily sd, annualized)
 */
 
 *===============================================================================
@@ -259,9 +259,6 @@ Variables:
 'dlcq': debt in current liabilities used to compute total debt, which is used as face value of debt in one of the specification of Merton model 
 'dlttq': Long term debt used to compute total debt, which is used as face value of debt in one of the specification of Merton model
 'Debt': Total Liabilities, same as d.ltq_f
-
-Not know yet -------------------------------------------------------------------
-'EquityVolatility': Annualized stock volatility 
 'rf338': risk-free rate (annualized) for debt maturity 3.38 years used only in the estimation of merton model, need to change for other assumptions of debt maturity
 */
 
