@@ -68,18 +68,19 @@ drop at_m ltq_m
 replace txditcq = txdbq if mi(txditcq)
 replace txditcq = 0 if mi(txditcq)
 
+* impute debt data with linear interpolating
+preserve
+keep compustat_dt cusip dlcq dlttq ltq_f
+
+
 * keep the last non-missing value constant through the following periods without valid values
 sort cusip jump datadate
-foreach var in at ceqq cshoq dlcq dlttq ltq_f lseq pstkq txditcq{
+foreach var in at ceqq cshoq dlcq dlttq ltq_f lseq pstkq{
     by cusip jump: replace `var' = `var'[_n-1] if `var'==.
 }
 
 * drop 66 0-common-share obs
 replace cshoq =. if cshoq==0
-
-* another way to impute missing debt data: linear interpolating
-preserve
-keep 
 
 * generate variables of interest ===============================================
 * BE: following Fama and French (1992), use common equity + balance sheet deferred tax and investment tax credit (if applicable)
