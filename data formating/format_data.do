@@ -54,7 +54,7 @@ label variable PRC "end-of-month price"
 rename ltq ltq_f
 label variable ltq_f "book liabilities"
 
-label define compustat_code 11 "NYSE" 12 "AMEX" 13 "OTC" 14 "NASDAQ" 19 "Other OTC"
+label define compustat_code 11 "NYSE" 12 "AMEX" 14 "NASDAQ"
 label values exchg compustat_code
 
 * impute missing values ========================================================
@@ -68,9 +68,11 @@ replace ltq_f=ltq_m if ltq_f==.
 drop at_m ltq_m
 * only updated 12 more asset values and 9 more liability values
 
+
+
 sort cusip jump datadate
 foreach var in at ceqq cshoq dlcq dlttq lseq ltq_f pstkq{
-by cusip jump: replace `var' = `var'[_n-1] if `var'==.
+    by cusip jump: replace `var' = `var'[_n-1] if `var'==.
 }
 
 replace ltq_f = lseq-ceqq if ltq_f==.
@@ -101,8 +103,6 @@ merge 1:1 cusip Lag1 using `lag_prc'
 drop if _merge==2
 drop _merge
 
-gen ME = cshoq*ajexq*prc_lag
-label variable ME "market equity"
 
 *---------------------------------------- form here, stored as data_analysis.dta
 * transform CAD to USD
@@ -113,7 +113,7 @@ drop _merge comp_ym
 label variable cad_usd "CAD per USD"
 
 foreach var in at ceqq dlcq dlttq lseq ltq_f pstkq BE{
-replace `var' = `var'*cad_usd if curcdq=="CAD"
+    replace `var' = `var'*cad_usd if curcdq=="CAD"
 }
 
 drop cad_usd curcdq datacqtr curuscnq
@@ -198,12 +198,12 @@ keep if yyyymm>=197107
 gen DECILE = .
 
 forvalues i = 1/9{
-local j=10*`i'
-bys datadate: egen ME_p`j' = pctile(ME) if exchg == 11, p(`j')
-sort datadate ME_p`j'
-by datadate: replace ME_p`j' = ME_p`j'[_n-1] if ME_p`j' == .
-replace DECILE = `i' if ME <= ME_p`j' & DECILE == .
-drop ME_p`j'
+    local j=10*`i'
+    bys datadate: egen ME_p`j' = pctile(ME) if exchg == 11, p(`j')
+    sort datadate ME_p`j'
+    by datadate: replace ME_p`j' = ME_p`j'[_n-1] if ME_p`j' == .
+    replace DECILE = `i' if ME <= ME_p`j' & DECILE == .
+    drop ME_p`j'
 }
 
 bys datadate: egen ME_p90 = pctile(ME) if exchg == 11, p(90)
