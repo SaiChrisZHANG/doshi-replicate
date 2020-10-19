@@ -12,10 +12,6 @@
 clear
 cd "F:/Stephen"
 use full_data 
-* merge the share adjustment factor
-merge m:1 gvkey compustat_dt using "F:/Stephen/auxilary data/share_adjust.dta"
-drop if _merge==2
-drop _merge
 
 * drop unused variables of interest
 drop cshiq dd1q crsp_dt vol lltq ibq npq pstkrq teqq txdbq txdiq txditcq costat dvpq fyearq fqtr
@@ -181,6 +177,7 @@ merge m:1 yyyymm using "F:/Stephen/french_website/french_fama", keepusing(rfFFWe
 drop if _merge==2
 drop _merge
 replace rfFFWebsite = rfFFWebsite/100 /*from percentage to number*/
+gen RetExcess = RET - rfFFWebsite
 
 * generate ME decile ===========================================================
 * drop financial firms, based on https://www.osha.gov/pls/imis/sic_manual.html
@@ -197,6 +194,7 @@ drop if mi(at) | mi(BE) | mi(ME) | mi(Lev) | mi(RET)
 keep if yyyymm>=197107
 
 * generate DECILE, the size decile markers
+* DECILE 
 gen DECILE = .
 
 forvalues i = 1/9{
