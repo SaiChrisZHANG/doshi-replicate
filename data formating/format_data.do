@@ -115,9 +115,9 @@ label variable cad_usd "CAD per USD"
 foreach var in at ceqq dlcq dlttq lseq ltq_f pstkq BE{
     replace `var' = `var'*cad_usd if curcdq=="CAD"
 }
-* drop cad_usd curuscnq
+* drop cad_usd 
 */
-drop curcdq datacqtr
+drop curcdq datacqtr curuscnq
 
 
 * reassign the at/BE/ME data in Fama-French fashion ============================
