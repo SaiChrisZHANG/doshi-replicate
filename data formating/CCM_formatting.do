@@ -68,13 +68,12 @@ drop at_m ltq_m
 replace txditcq = txdbq if mi(txditcq)
 replace txditcq = 0 if mi(txditcq)
 
-* impute debt data with linear interpolating
+* impute debt data with linear interpolatg according to date (CRSP)
 sort cusip compustat_dt datadate
-foreach var in dlcq dlttq ltq_f{
+foreach var in dlcq dlttq ltq{
     gen `var'_aux = `var'
-    by cusip compustat_dt: 
-    ipolate `var'_aux datadate, gen(`var'_intpl)
-    drop `var'_aux
+    by cusip compustat_dt: replace `var'_aux=. if _n>1
+    by cusip: ipolate `var'_aux datadate, gen(`var'_intpl)
 }
 
 * keep the last non-missing value constant through the following periods without valid values
