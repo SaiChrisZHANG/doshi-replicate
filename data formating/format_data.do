@@ -43,7 +43,7 @@ replace jump = 0 if jump==.
 rename ret RET
 label variable RET "monthly return"
 rename retx RETx
-label variable RET "monthly return without dividend"
+label variable RETx "monthly return without dividends"
 rename atq at
 label variable at "book assets"
 rename prc PRC
@@ -110,7 +110,7 @@ merge 1:1 cusip Lag1 using `lag_prc'
 drop if _merge==2
 drop _merge
 
-gen ME = cshoq*ajexq*prc_lag
+gen ME = cshoq*prc_lag
 label variable ME "market equity"
 
 *---------------------------------------- form here, stored as data_analysis.dta
