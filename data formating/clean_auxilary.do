@@ -86,4 +86,5 @@ gen yyyymm = year(date)*month(date)
 sort cusip8 yyyymm date
 by cusip8 yyyymm: keep if _n=_N
 
+save monthly_volatility, replace
 *
