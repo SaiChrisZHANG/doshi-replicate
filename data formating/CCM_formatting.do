@@ -14,7 +14,7 @@ cd "F:/Stephen/CCM"
 use full_data_raw 
 
 * drop unused variables of interest
-drop cshiq dd1q vol lltq ibq npq pstkrq teqq txdiq costat dvpq fyearq fqtr
+drop cshiq dd1q vol lltq ibq npq pstkrq teqq txdiq costat dvpq fyearq fqtr crsp_dt
 
 * date variables
 gen yyyymm = 100*year(datadate)+month(datadate)
