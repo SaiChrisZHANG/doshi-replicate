@@ -112,7 +112,7 @@ tempfile lag_me
 save `lag_me', replace
 restore
 
-merge 1:1 cusip Lag1 using `lag_prc'
+merge 1:1 cusip Lag1 using `lag_me'
 drop if _merge==2
 drop _merge
 
