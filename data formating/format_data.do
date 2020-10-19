@@ -194,7 +194,7 @@ drop if mi(at) | mi(BE) | mi(ME) | mi(Lev) | mi(RET)
 keep if yyyymm>=197107
 
 * generate DECILE, the size decile markers
-* DECILE 
+* DECILE threshold is set using NYSE stock data, then applying the threshold for all stocks
 gen DECILE = .
 
 forvalues i = 1/9{
