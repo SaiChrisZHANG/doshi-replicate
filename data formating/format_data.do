@@ -73,15 +73,6 @@ foreach var in at ceqq cshoq dlcq dlttq lseq ltq_f pstkq{
     by cusip jump: replace `var' = `var'[_n-1] if `var'==.
 }
 
-* interpolate debt data
-sort cusip jump datadate
-foreach var in at ceqq cshoq lseq pstkq{
-    by cusip jump: replace `var' = `var'[_n-1] if `var'==.
-}
-foreach var in dlcq clttq ltq_f{
-    d
-}
-
 replace ltq_f = lseq-ceqq if ltq_f==.
 replace ceqq = lseq-ltq_f if ceqq==.
 
@@ -114,7 +105,7 @@ gen ME = cshoq*prc_lag
 label variable ME "market equity"
 
 *---------------------------------------- form here, stored as data_analysis.dta
-* transform CAD to USD
+/* transform CAD to USD
 gen comp_ym = year(compustat_dt)*100 + month(compustat_dt)
 merge m:1 comp_ym curcdq using "F:/Stephen/auxilary data/cad_usd.dta"
 drop if _merge==2
@@ -124,8 +115,10 @@ label variable cad_usd "CAD per USD"
 foreach var in at ceqq dlcq dlttq lseq ltq_f pstkq BE{
     replace `var' = `var'*cad_usd if curcdq=="CAD"
 }
+* drop cad_usd curuscnq
+*/
+drop curcdq datacqtr
 
-drop cad_usd curcdq datacqtr curuscnq
 
 * reassign the at/BE/ME data in Fama-French fashion ============================
 * generate atdec BEdec medec
