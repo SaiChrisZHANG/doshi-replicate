@@ -25,8 +25,8 @@ replace DecDate = 100*(year(datadate)-2)+12 if month(datadate)<=6 & month(datada
 gen Fq4Date = string(year(datadate)-1)+"Q4" if month(datadate)<=12 & month(datadate)>=7
 replace Fq4Date = string(year(datadate)-2)+"Q4" if month(datadate)<=6 & month(datadate)>=1
 
-gen JunDate = 100*(year(datadate)-1)+6 if month(datadate)<=12 & month(datadate)>=7
-replace JunDate = 100*(year(datadate)-2)+6 if month(datadate)<=6 & month(datadate)>=1
+gen JunDate = 100*(year(datadate))+6 if month(datadate)<=12 & month(datadate)>=7
+replace JunDate = 100*(year(datadate)-1)+6 if month(datadate)<=6 & month(datadate)>=1
 
 * jump: identify firms that out of the dataset at a point and back in later
 sort cusip datadate
@@ -64,15 +64,19 @@ replace ltq_f=ltq_m if ltq_f==.
 drop at_m ltq_m
 * only updated 12 more asset values and 9 more liability values
 
+* deferred tax and investment tax credits (if applicable)
+replace txditcq = txdbq if mi(txditcq)
+replace txditcq = 0 if mi(txditcq)
+
 sort cusip jump datadate
 foreach var in at ceqq cshoq lseq pstkq{
     by cusip jump: replace `var' = `var'[_n-1] if `var'==.
 }
 
 * missings of debt data
-*------ keep last quarter end's data constant through the following 3 months
+* keep the last non-missing value constant through the following periods without valid values
 sort cusip jump datadate
-foreach var in at dlcq dlttq lseq ltq_f pstkq{
+foreach var in dlcq dlttq ltq_f{
     by cusip jump: replace `var' = `var'[_n-1] if `var'==.
 }
 
@@ -81,8 +85,8 @@ replace cshoq =. if cshoq==0
 
 * generate variables of interest ===============================================
 * BE: following Fama and French (1992), use common equity + balance sheet deferred tax and investment tax credit (if applicable)
-replace txditcq = txdbq if mi(txditcq)
-gen BE = ceqq + txditcq if txditcq!=.
+
+gen BE = ceqq + txditcq
 label variable BE "book equity"
 
 * ME: the price in the end of month t-1 * the common share in the end of last quarter * adjustment factor of compustat
