@@ -154,12 +154,6 @@ merge m:1 gvkey Fq4Date using `data_fq4'
 drop if _merge==2
 drop _merge
 
-* generate MElag Lev LevLag
-gen Lev = ltq_f/(ltq_f+ME)
-sort cusip jump datadate
-by cusip jump: gen MElag = ME[_n-1]
-by cusip jump: gen LevLag = Lev[_n-1]
-
 * generate MEjun
 preserve
 tempfile ME_june
@@ -174,6 +168,12 @@ restore
 merge m:1 gvkey JunDate using `ME_june'
 drop if _merge==2
 drop _merge
+
+* generate MElag Lev LevLag
+gen Lev = ltq_f/(ltq_f+ME)
+sort cusip jump datadate
+by cusip jump: gen MElag = ME[_n-1]
+by cusip jump: gen LevLag = Lev[_n-1]
 
 * merge with Fama-French risk free rate ========================================
 * ---------------------------------------- from here save as data_full_final.dta
