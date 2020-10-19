@@ -78,4 +78,12 @@ replace date_low = date(YMD,"YMD") if mi(date_low)
 format date_low %td
 drop YMD
 
+rangestat (sd) RET, interval(date, date_low, date) by(cusip8)
+gen EquityVolatility = RET_sd*sqrt(252)
+
+keep date cusip8 EquityVolatility
+gen yyyymm = year(date)*month(date)
+sort cusip8 yyyymm date
+by cusip8 yyyymm: keep if _n=_N
+
 *

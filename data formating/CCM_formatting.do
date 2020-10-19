@@ -46,6 +46,10 @@ rename prc PRC
 replace PRC = abs(PRC) if PRC<0
 * CRSP use the negative of average of bid and ask price to impute missing close prices. 
 
+* generate equity volatility
+gen YMD = string(year(date)-2) + "/" + string(month(date)) + "/" + string(day(date))
+gen date_low = date(YMD,"YMD")
+
 label variable PRC "end-of-month price"
 rename ltq ltq_f
 label variable ltq_f "book liabilities"
