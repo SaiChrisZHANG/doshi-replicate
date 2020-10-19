@@ -13,9 +13,6 @@ clear
 cd "F:/Stephen/CCM"
 use full_data_raw 
 
-* drop unused variables of interest
-drop cshiq dd1q crsp_dt vol lltq ibq npq pstkrq teqq txdbq txdiq txditcq costat dvpq fyearq fqtr
-
 * date variables
 gen yyyymm = 100*year(datadate)+month(datadate)
 
@@ -65,7 +62,14 @@ drop at_m ltq_m
 * only updated 12 more asset values and 9 more liability values
 
 sort cusip jump datadate
-foreach var in at ceqq cshoq dlcq dlttq lseq ltq_f pstkq{
+foreach var in at ceqq cshoq lseq pstkq{
+    by cusip jump: replace `var' = `var'[_n-1] if `var'==.
+}
+
+* missings of debt data
+*------ keep last quarter end's data constant through the following 3 months
+sort cusip jump datadate
+foreach var in at dlcq dlttq lseq ltq_f pstkq{
     by cusip jump: replace `var' = `var'[_n-1] if `var'==.
 }
 
@@ -76,7 +80,15 @@ replace ceqq = lseq-ltq_f if ceqq==.
 replace cshoq =. if cshoq==0
 
 * generate variables of interest ===============================================
-* BE
+* BE: following Fama-French calculation: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/variable_definitions.html
+
+replace teqq = ceqq + pstkq if teqq ==.
+replace teqq = lseq - ltq_f
+
+* drop unused variables of interest
+drop cshiq dd1q crsp_dt vol lltq ibq npq pstkrq teqq txdbq txdiq txditcq costat dvpq fyearq fqtr
+
+gen BE = teqq + txdbq - pstkq
 gen BE = ceqq-pstkq
 replace BE = ceqq if BE==.
 label variable BE "book equity"
