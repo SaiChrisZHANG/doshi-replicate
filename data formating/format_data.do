@@ -102,16 +102,14 @@ label variable ME "market equity"
 
 * generate MElag Lev LevLag
 gen Lev = ltq_f/(ltq_f+ME)
-sort cusip jump datadate
-by cusip jump: gen MElag = ME[_n-1]
-by cusip jump: gen LevLag = Lev[_n-1]
 
 preserve
-keep cusip yyyymm PRC
+keep cusip yyyymm ME Lev
 rename yyyymm Lag1
-rename PRC prc_lag
-tempfile lag_prc
-save `lag_prc', replace
+rename ME MElag
+rename Lev LevLag
+tempfile lag_me
+save `lag_me', replace
 restore
 
 merge 1:1 cusip Lag1 using `lag_prc'
