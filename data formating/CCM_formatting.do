@@ -77,6 +77,10 @@ foreach var in at ceqq cshoq dlcq dlttq ltq_f lseq pstkq txditcq{
 * drop 66 0-common-share obs
 replace cshoq =. if cshoq==0
 
+* another way to impute missing debt data: linear interpolating
+preserve
+keep 
+
 * generate variables of interest ===============================================
 * BE: following Fama and French (1992), use common equity + balance sheet deferred tax and investment tax credit (if applicable)
 
