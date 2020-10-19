@@ -79,15 +79,12 @@ foreach var in at ceqq cshoq dlcq dlttq ltq_f lseq pstkq{
     by cusip jump: replace `var' = `var'[_n-1] if `var'==.
 }
 
-replace ltq_f = lseq-teqq if ltq_f==.
-
 * drop 338 0-common-share obs
 replace cshoq =. if cshoq==0
 
 * generate variables of interest ===============================================
-* BE
-gen BE = ceqq-pstkq
-replace BE = ceqq if BE==.
+* BE: following Fama and French (1992), use common equity + balance sheet deferred tax and investment tax credit (if applicable)
+gen BE = ceqq + txditcq
 label variable BE "book equity"
 
 * ME: the price in the end of month t-1 * the common share in the end of last quarter * adjustment factor of compustat
@@ -109,19 +106,23 @@ drop _merge
 gen ME = cshoq*prc_lag
 label variable ME "market equity"
 
-*---------------------------------------- form here, stored as data_analysis.dta
-* transform CAD to USD
-gen comp_ym = year(compustat_dt)*100 + month(compustat_dt)
-merge m:1 comp_ym curcdq using "F:/Stephen/auxilary data/cad_usd.dta"
+* generate MElag Lev LevLag
+gen Lev = ltq_f/(ltq_f+ME)
+
+preserve
+keep cusip yyyymm ME Lev
+rename yyyymm Lag1
+rename ME MElag
+rename Lev LevLag
+tempfile lag_me
+save `lag_me', replace
+restore
+
+merge 1:1 cusip Lag1 using `lag_me'
 drop if _merge==2
-drop _merge comp_ym
-label variable cad_usd "CAD per USD"
+drop _merge
 
-foreach var in at ceqq dlcq dlttq lseq ltq_f pstkq BE{
-replace `var' = `var'*cad_usd if curcdq=="CAD"
-}
-
-drop cad_usd curcdq
+drop curcdq
 
 * reassign the at/BE/ME data in Fama-French fashion ============================
 * generate atdec BEdec medec
@@ -157,12 +158,6 @@ merge m:1 gvkey Fq4Date using `data_fq4'
 drop if _merge==2
 drop _merge
 
-* generate MElag Lev LevLag
-gen Lev = ltq_f/(ltq_f+ME)
-sort cusip jump datadate
-by cusip jump: gen MElag = ME[_n-1]
-by cusip jump: gen LevLag = Lev[_n-1]
-
 * generate MEjun
 preserve
 tempfile ME_june
@@ -184,6 +179,7 @@ merge m:1 yyyymm using "F:/Stephen/french_website/french_fama", keepusing(rfFFWe
 drop if _merge==2
 drop _merge
 replace rfFFWebsite = rfFFWebsite/100 /*from percentage to number*/
+gen RetExcess = RET - rfFFWebsite
 
 * generate ME decile ===========================================================
 * drop financial firms, based on https://www.osha.gov/pls/imis/sic_manual.html
@@ -223,7 +219,8 @@ gen Debt = ltq_f
 * Equity
 gen Equity = ME
 
-* merge with monthly volatility calculated with daily returns
+* merge with volatility calculated with daily returns
+* this volatility is the annualized volatility of the past two years' daily return of any month
 merge 1:1 cusip8 yyyymm using "F:/Stephen/auxilary data/monthly_volatility.dta", keepusing(volatility_m n_day)
 drop if _merge==2
 drop _merge
