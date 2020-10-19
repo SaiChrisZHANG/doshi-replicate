@@ -68,15 +68,9 @@ drop at_m ltq_m
 replace txditcq = txdbq if mi(txditcq)
 replace txditcq = 0 if mi(txditcq)
 
-sort cusip jump datadate
-foreach var in at ceqq cshoq lseq pstkq{
-    by cusip jump: replace `var' = `var'[_n-1] if `var'==.
-}
-
-* missings of debt data
 * keep the last non-missing value constant through the following periods without valid values
 sort cusip jump datadate
-foreach var in dlcq dlttq ltq_f{
+foreach var in at ceqq cshoq dlcq dlttq ltq_f lseq pstkq txditcq{
     by cusip jump: replace `var' = `var'[_n-1] if `var'==.
 }
 
