@@ -10,7 +10,7 @@
 
 * load dataset
 clear
-cd "F:/Stephen"
+cd "F:/Stephen/CCM"
 use full_data 
 
 * drop unused variables of interest
