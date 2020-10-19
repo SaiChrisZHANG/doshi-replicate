@@ -13,6 +13,9 @@ clear
 cd "F:/Stephen/CCM"
 use full_data_raw 
 
+* drop unused variables of interest
+drop cshiq dd1q crsp_dt vol lltq ibq npq pstkrq teqq txdiq costat dvpq fyearq fqtr
+
 * date variables
 gen yyyymm = 100*year(datadate)+month(datadate)
 
@@ -73,24 +76,13 @@ foreach var in at dlcq dlttq lseq ltq_f pstkq{
     by cusip jump: replace `var' = `var'[_n-1] if `var'==.
 }
 
-replace ltq_f = lseq-ceqq if ltq_f==.
-replace ceqq = lseq-ltq_f if ceqq==.
-
 * drop 66 0-common-share obs
 replace cshoq =. if cshoq==0
 
 * generate variables of interest ===============================================
-* BE: following Fama-French calculation: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/variable_definitions.html
-
-replace teqq = ceqq + pstkq if teqq ==.
-replace teqq = lseq - ltq_f
-
-* drop unused variables of interest
-drop cshiq dd1q crsp_dt vol lltq ibq npq pstkrq teqq txdbq txdiq txditcq costat dvpq fyearq fqtr
-
-gen BE = teqq + txdbq - pstkq
-gen BE = ceqq-pstkq
-replace BE = ceqq if BE==.
+* BE: following Fama and French (1992), use common equity + balance sheet deferred tax and investment tax credit (if applicable)
+replace txditcq = txdbq if mi(txditcq)
+gen BE = ceqq + txditcq if txditcq!=.
 label variable BE "book equity"
 
 * ME: the price in the end of month t-1 * the common share in the end of last quarter * adjustment factor of compustat
