@@ -14,7 +14,7 @@ cd "F:/Stephen/CCM"
 use full_data_raw 
 
 * drop unused variables of interest
-drop cshiq dd1q crsp_dt vol lltq ibq npq pstkrq teqq txdiq costat dvpq fyearq fqtr
+drop cshiq dd1q vol lltq ibq npq pstkrq teqq txdiq costat dvpq fyearq fqtr
 
 * date variables
 gen yyyymm = 100*year(datadate)+month(datadate)
@@ -69,9 +69,13 @@ replace txditcq = txdbq if mi(txditcq)
 replace txditcq = 0 if mi(txditcq)
 
 * impute debt data with linear interpolating
-preserve
-keep compustat_dt cusip dlcq dlttq ltq_f
-
+sort cusip compustat_dt datadate
+foreach var in dlcq dlttq ltq_f{
+    gen `var'_aux = `var'
+    by cusip compustat_dt: 
+    ipolate `var'_aux datadate, gen(`var'_intpl)
+    drop `var'_aux
+}
 
 * keep the last non-missing value constant through the following periods without valid values
 sort cusip jump datadate
