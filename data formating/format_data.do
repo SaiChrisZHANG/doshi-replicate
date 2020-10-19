@@ -100,6 +100,20 @@ drop _merge
 gen ME = cshoq*prc_lag
 label variable ME "market equity"
 
+
+
+preserve
+keep cusip yyyymm PRC
+rename yyyymm Lag1
+rename PRC prc_lag
+tempfile lag_prc
+save `lag_prc', replace
+restore
+
+merge 1:1 cusip Lag1 using `lag_prc'
+drop if _merge==2
+drop _merge
+
 *---------------------------------------- form here, stored as data_analysis.dta
 /* transform CAD to USD
 gen comp_ym = year(compustat_dt)*100 + month(compustat_dt)
@@ -114,7 +128,6 @@ foreach var in at ceqq dlcq dlttq lseq ltq_f pstkq BE{
 * drop cad_usd 
 */
 drop curcdq datacqtr curuscnq
-
 
 * reassign the at/BE/ME data in Fama-French fashion ============================
 * generate atdec BEdec medec
@@ -164,12 +177,6 @@ restore
 merge m:1 gvkey JunDate using `ME_june'
 drop if _merge==2
 drop _merge
-
-* generate MElag Lev LevLag
-gen Lev = ltq_f/(ltq_f+ME)
-sort cusip jump datadate
-by cusip jump: gen MElag = ME[_n-1]
-by cusip jump: gen LevLag = Lev[_n-1]
 
 * merge with Fama-French risk free rate ========================================
 * ---------------------------------------- from here save as data_full_final.dta
