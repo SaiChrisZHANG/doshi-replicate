@@ -100,7 +100,11 @@ drop _merge
 gen ME = cshoq*prc_lag
 label variable ME "market equity"
 
-
+* generate MElag Lev LevLag
+gen Lev = ltq_f/(ltq_f+ME)
+sort cusip jump datadate
+by cusip jump: gen MElag = ME[_n-1]
+by cusip jump: gen LevLag = Lev[_n-1]
 
 preserve
 keep cusip yyyymm PRC
