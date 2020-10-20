@@ -80,7 +80,7 @@ save `part1', replace
 * clean data from CRSP and Compustat, separately, to get 2020 data
 *===============================================================================
 
-cd "F:/Stephen/separate"
+cd "F:/Stephen/separate/raw"
 
 * clean data from CRSP and Compustat, separately, Compustat data are updated to Sep 2020, CRSP data are updated to Jun 2020.
 
