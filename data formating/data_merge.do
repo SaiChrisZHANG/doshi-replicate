@@ -13,7 +13,7 @@
 *===============================================================================
 * CCM provides data from Jan 1961 to Dec 2019.
 
-cd "F:/Stephen/CMM"
+cd "F:/Stephen/CMM/raw"
 
 *clean compustat data =================
 clear
@@ -73,7 +73,8 @@ rename prccm prc
 rename trt1m ret
 replace ret = ret/100
 drop linktype ggroup gind gsector
-save "F:/Stephen/part1.dta", replace
+tempfile part1
+save `part1', replace
 
 *===============================================================================
 * clean data from CRSP and Compustat, separately, to get 2020 data
@@ -132,18 +133,23 @@ use compustat_big
 *gen cusip8 = substr(cusip,1,8)
 
 merge 1:m cusip8 crsp_dt using crsp_big, keepusing(datadate prc vol ret retx crsp_dt)
-keep if _merge==3 & year(datadate)==2020
+keep if _merge==3
+drop _merge
+save "F:/Stephen/separate/full_data_raw.dta", replace
+
+keep if year(datadate)==2020
 
 drop _merge ajexq ajpq cusip8 merge_compustat_crsp tic
 destring gvkey, replace
-save "F:/Stephen/part2.dta", replace
+tempfile part2
+save `part2', replace
 
 *===============================================================================
 * Put part 1 (data before 2020) and part 2 (data in 2020) together
 *===============================================================================
 clear
-use "F:/Stephen/part1.dta", replace
-append using "F:/Stephen/part2.dta"
+use `part1', replace
+append using `part2'
 sort cusip datadate
-save full_data, replace
+save "F:/Stephen/CMM/full_data_raw.dta", replace
 clear
