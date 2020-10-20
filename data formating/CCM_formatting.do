@@ -80,6 +80,7 @@ foreach var in dlcq dlttq ltq_f{
     gen `var'_aux = `var'
     by cusip compustat_dt: replace `var'_aux=. if _n>1
     by cusip: ipolate `var'_aux datadate, gen(`var'_intpl)
+    drop `var'_aux
 }
 
 * keep the last non-missing value constant through the following periods without valid values
@@ -129,6 +130,7 @@ label variable ME "market equity"
 
 * generate MElag Lev LevLag
 gen Lev = ltq_f/(ltq_f+ME)
+gen Lev_intpl = ltq_f_intpl/(ltq_f_intpl+ME)
 
 preserve
 keep cusip yyyymm ME Lev
