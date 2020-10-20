@@ -48,7 +48,7 @@ replace PRC = abs(PRC) if PRC<0
 
 * generate equity volatility
 gen yyyymm_low = yyyymm - 200
-rangestat (sd) RET, interval(yyyymm, yyyymm_low, yyyymm) by(cusip)
+rangestat (sd) RET, interval(yyyymm, yyyymm_low, yyyymm) by(cusip) excl
 replace RET_sd = RET_sd * sqrt(12) /*annualize monthly volatility*/
 
 label variable PRC "end-of-month price"

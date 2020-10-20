@@ -220,7 +220,7 @@ gen Debt = ltq_f
 gen Equity = ME
 
 * merge with volatility calculated with daily returns
-* this volatility is the annualized volatility of the past two years' daily return of any month
+* -----volatility: annualized volatility of past two years' daily returns of any given month
 merge 1:1 cusip8 yyyymm using "F:/Stephen/auxilary data/monthly_volatility.dta", keepusing(volatility_m n_day)
 drop if _merge==2
 drop _merge
