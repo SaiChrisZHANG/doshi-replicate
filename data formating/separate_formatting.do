@@ -221,8 +221,6 @@ gen Equity = ME
 
 * merge with volatility calculated with daily returns
 * -----volatility: annualized volatility of past two years' daily returns of any given month
-merge 1:1 cusip8 yyyymm using "F:/Stephen/auxilary data/monthly_volatility.dta", keepusing(volatility_m n_day)
+merge 1:1 cusip8 yyyymm using "F:/Stephen/auxilary data/monthly_volatility.dta", keepusing(EquityVolatility)
 drop if _merge==2
 drop _merge
-
-* --------------------from here, save as F:/Stephen/separate/data_full_final.dta

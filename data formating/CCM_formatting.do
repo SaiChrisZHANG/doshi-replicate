@@ -46,17 +46,18 @@ rename prc PRC
 replace PRC = abs(PRC) if PRC<0
 * CRSP use the negative of average of bid and ask price to impute missing close prices. 
 
-* generate equity volatility
-gen yyyymm_low = yyyymm - 200
-rangestat (sd) RET, interval(yyyymm, yyyymm_low, yyyymm) by(cusip) excl
-replace RET_sd = RET_sd * sqrt(12) /*annualize monthly volatility*/
-
 label variable PRC "end-of-month price"
 rename ltq ltq_f
 label variable ltq_f "book liabilities"
 
 label define compustat_code 11 "NYSE" 12 "AMEX" 14 "NASDAQ"
 label values exchg compustat_code
+
+* generate equity volatility
+gen yyyymm_low = yyyymm - 200
+rangestat (sd) RET, interval(yyyymm, yyyymm_low, yyyymm) by(cusip) excl
+replace RET_sd = RET_sd * sqrt(12) /*annualize monthly volatility*/
+rename RET_sd EquityVolatility
 
 * impute missing values ========================================================
 * missing compustat items: replace missings with most recent data
