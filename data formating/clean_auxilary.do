@@ -86,6 +86,7 @@ gen yyyymm = year(date)*100 + month(date)
 sort cusip8 yyyymm date
 by cusip8 yyyymm: keep if _n=_N
 
+* change yyyymm (merging key) s.t. month t's volatility is merged with month t+1's return
 replace yyyymm = yyyymm+1
 replace yyyymm = (year(date)+1)*100 + 1 if month(date)==12
 
