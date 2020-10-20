@@ -82,6 +82,7 @@ foreach var in dlcq dlttq ltq_f{
     by cusip: ipolate `var'_aux datadate, gen(`var'_intpl)
     drop `var'_aux
 }
+drop yyyymm_low
 
 * keep the last non-missing value constant through the following periods without valid values
 sort cusip jump datadate
@@ -133,10 +134,11 @@ gen Lev = ltq_f/(ltq_f+ME)
 gen Lev_intpl = ltq_f_intpl/(ltq_f_intpl+ME)
 
 preserve
-keep cusip yyyymm ME Lev
+keep cusip yyyymm ME Lev Lev_intpl
 rename yyyymm Lag1
 rename ME MElag
 rename Lev LevLag
+rename Lev_intpl LevLag_intpl
 tempfile lag_me
 save `lag_me', replace
 restore
