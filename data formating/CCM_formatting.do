@@ -162,6 +162,9 @@ foreach var in at ceqq dlcq dlttq lseq ltq_f pstkq BE{
 */
 drop curcdq datacqtr curuscnq
 
+label variable Lev "Leverage"
+label variable Lev "Leverage, linear interpolating"
+
 * reassign the at/BE/ME data in Fama-French fashion ============================
 * generate atdec BEdec medec
 preserve
@@ -261,9 +264,10 @@ gen Debt = ltq_f
 * Equity
 gen Equity = ME
 
+sort cusip datadate
 /*
 Variables:
-'PERMNO': Perm number from CRSP
+'cusip': Perm number from CRSP
 'yyyymm': Four digit year(yyyy) + two digit month format of date (mm)
 'RET': Stock return
 'BE': Book equity, from fiscal year end in the previous calendar year (t-1). Held constant from July of year t to June of t+1 year 

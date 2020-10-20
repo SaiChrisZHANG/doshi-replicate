@@ -127,6 +127,9 @@ drop _merge
 
 drop curcdq
 
+label variable Lev "Leverage"
+label variable Lev "Leverage, linear interpolating"
+
 * reassign the at/BE/ME data in Fama-French fashion ============================
 * generate atdec BEdec medec
 preserve
