@@ -216,6 +216,7 @@ by datadate: replace ME_p90 = ME_p90[_n-1] if ME_p90 == .
 replace DECILE = 10 if ME > ME_p90 & DECILE == .
 drop ME_p90
 
+gen DECILE_jun = .
 
 
 * ==============================================================================
