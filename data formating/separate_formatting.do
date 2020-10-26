@@ -198,7 +198,7 @@ drop if mi(at) | mi(BE) | mi(ME) | mi(Lev) | mi(RET)
 * drop data before July 1971, since then, there're at leat 123 firms per month
 keep if yyyymm>=197107
 
-* generate DECILE, the size decile markers
+* generate DECILE of monthly adjusted portfolio, the size decile markers
 gen DECILE = .
 
 forvalues i = 1/9{
@@ -215,6 +215,8 @@ sort datadate ME_p90
 by datadate: replace ME_p90 = ME_p90[_n-1] if ME_p90 == .
 replace DECILE = 10 if ME > ME_p90 & DECILE == .
 drop ME_p90
+
+
 
 * ==============================================================================
 * Generate variables used for Merton estimation
