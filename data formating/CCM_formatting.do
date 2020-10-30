@@ -255,6 +255,39 @@ by datadate: replace ME_p90 = ME_p90[_n-1] if ME_p90 == .
 replace DECILE = 10 if ME > ME_p90 & DECILE == .
 drop ME_p90
 
+* generate DECILE of June-adjusted portfolio:
+* the size of firm in June of year t, holding from July of year t to June of year t+1
+preserve
+tempfile decile_jun
+
+keep cusip JunDate MEjun exchcd
+keep if !mi(MEjun)
+duplicates drop cusip JunDate, force
+
+gen DECILEjun = .
+
+forvalues i = 1/9{
+    local j = 10*`i'
+    bys JunDate: egen ME_p`j' = pctile(MEjun) if exchcd == 1, p(`j')
+    sort JunDate ME_p`j'
+    by JunDate: replace ME_p`j' = ME_p`j'[_n-1] if ME_p`j' == .
+    replace DECILEjun = `i' if MEjun <= ME_p`j' & DECILEjun == .
+    drop ME_p`j'
+}
+
+bys JunDate: egen ME_p90 = pctile(MEjun) if exchcd == 1, p(90)
+sort JunDate ME_p90
+by JunDate: replace ME_p90 = ME_p90[_n-1] if ME_p90 == .
+replace DECILEjun = 10 if MEjun > ME_p90 & DECILEjun == .
+drop ME_p90
+
+keep cusip JunDate DECILEjun
+save `decile_jun', replace
+restore
+
+merge m:1 cusip JunDate using `decile_jun'
+drop _merge
+
 * ==============================================================================
 * Generate variables used for Merton estimation
 * ==============================================================================
