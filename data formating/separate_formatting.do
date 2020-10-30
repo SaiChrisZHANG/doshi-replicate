@@ -180,7 +180,6 @@ drop if _merge==2
 drop _merge
 
 * merge with Fama-French risk free rate ========================================
-* ---------------------------------------- from here save as data_full_final.dta
 merge m:1 yyyymm using "F:/Stephen/french_website/french_fama", keepusing(rfFFWebsite)
 drop if _merge==2
 drop _merge
