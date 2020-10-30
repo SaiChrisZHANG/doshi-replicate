@@ -223,17 +223,19 @@ rename DECILE DECILEmth
 preserve
 tempfile decile_jun
 
-keep cusip JunDate MEjun
+keep cusip JunDate MEjun exchcd
 duplicates drop cusip JunDate, force
 
 gen DECILEjun = .
 
-for values i = 1/9{
+forvalues i = 1/9{
     local j = 10*`i'
-
+    bys JunDate: egen ME_p`j' = pctile(ME) if exchcd == 1, p(`j')
+    sort JunDate ME_p`j'
+    by JunDate: replace ME_p`j' = ME_p`j'[_n-1] if ME_p`j' == .
+    replace DECILE = `i' if ME <= ME_p`j' & DECILE == .
+    drop ME_p`j'
 }
-
-forvalues i 
 
 * ==============================================================================
 * Generate variables used for Merton estimation
