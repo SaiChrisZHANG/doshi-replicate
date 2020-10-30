@@ -202,12 +202,12 @@ keep if yyyymm>=197107
 gen DECILE = .
 
 forvalues i = 1/9{
-local j=10*`i'
-bys datadate: egen ME_p`j' = pctile(ME) if exchcd == 1, p(`j')
-sort datadate ME_p`j'
-by datadate: replace ME_p`j' = ME_p`j'[_n-1] if ME_p`j' == .
-replace DECILE = `i' if ME <= ME_p`j' & DECILE == .
-drop ME_p`j'
+    local j=10*`i'
+    bys datadate: egen ME_p`j' = pctile(ME) if exchcd == 1, p(`j')
+    sort datadate ME_p`j'
+    by datadate: replace ME_p`j' = ME_p`j'[_n-1] if ME_p`j' == .
+    replace DECILE = `i' if ME <= ME_p`j' & DECILE == .
+    drop ME_p`j'
 }
 
 bys datadate: egen ME_p90 = pctile(ME) if exchcd == 1, p(90)
@@ -218,7 +218,16 @@ drop ME_p90
 
 rename DECILE DECILEmth
 
-gen DECILE_dec = .
+* generate DECILE of June-adjusted portfolio:
+* the 
+preserve
+tempfile decile_jun
+gen DECILEjun = .
+
+for values i = 1/9{
+    local j = 10*`i'
+
+}
 
 forvalues i 
 
