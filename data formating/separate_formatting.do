@@ -265,3 +265,5 @@ gen Equity = ME
 merge 1:1 cusip8 yyyymm using "F:/Stephen/auxilary data/monthly_volatility.dta", keepusing(EquityVolatility)
 drop if _merge==2
 drop _merge
+
+clear

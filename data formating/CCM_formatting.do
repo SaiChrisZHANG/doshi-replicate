@@ -340,4 +340,3 @@ Variables:
 */
 
 clear
-cd "F:/Stephen"
