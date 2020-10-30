@@ -37,7 +37,7 @@ replace jump = 0 if jump==.
 rename ret RET
 label variable RET "monthly return"
 rename retx RETx
-label variable RETx "monthly return with dividends"
+label variable RETx "monthly return without dividends"
 rename atq at
 label variable at "book assets"
 rename prc PRC
