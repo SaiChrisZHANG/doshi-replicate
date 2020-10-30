@@ -223,7 +223,8 @@ rename DECILE DECILEmth
 preserve
 tempfile decile_jun
 
-
+keep cusip JunDate MEjun
+duplicates drop cusip JunDate, force
 
 gen DECILEjun = .
 
