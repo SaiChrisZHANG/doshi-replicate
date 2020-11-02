@@ -299,10 +299,10 @@ replace DECILEdec_BtM = 10 if BtMdec > BtM_p90 & DECILEdec_BtM == .
 drop BtM_p90
 
 keep cusip DecDate DECILEdec_BtM
-save `decile_jun', replace
+save `decile_dec', replace
 restore
 
-merge m:1 cusip JunDate using `decile_jun'
+merge m:1 cusip DecDate using `decile_dec'
 drop _merge
 
 
