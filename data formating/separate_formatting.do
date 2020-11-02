@@ -244,10 +244,10 @@ replace DECILEdec = 10 if MEdec > ME_p90 & DECILEdec == .
 drop ME_p90
 
 keep cusip DecDate DECILEdec
-save `decile_jun', replace
+save `decile_dec', replace
 restore
 
-merge m:1 cusip JunDate using `decile_jun'
+merge m:1 cusip JunDate using `decile_dec'
 drop _merge
 
 * generate DECILE of June-adjusted portfolio:
