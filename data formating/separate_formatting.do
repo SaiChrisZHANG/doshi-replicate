@@ -291,16 +291,16 @@ forvalues i = 1/9{
     sort JunDate BtM_p`j'
     by JunDate: replace BtM_p`j' = BtM_p`j'[_n-1] if BtM_p`j' == .
     replace DECILEjun_BtM = `i' if BtMjun <= BtM_p`j' & DECILEjun_BtM == .
-    drop ME_p`j'
+    drop BtM_p`j'
 }
 
 bys JunDate: egen BtM_p90 = pctile(BtMjun) if exchcd == 1, p(90)
 sort JunDate BtM_p90
 by JunDate: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
-replace DECILEjun_BtM = 10 if BtMjun > BtM_p90 & DECILEjun == .
+replace DECILEjun_BtM = 10 if BtMjun > BtM_p90 & DECILEjun_BtM == .
 drop BtM_p90
 
-keep cusip JunDate DECILEjun
+keep cusip JunDate DECILEjun_BtM
 save `decile_jun', replace
 restore
 
