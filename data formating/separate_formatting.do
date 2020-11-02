@@ -373,8 +373,11 @@ merge m:1 cusip JunDate using `decile_jun'
 drop _merge
 
 * ==============================================================================
-* 
+* Generate double-sorting portfolio marker
 * ==============================================================================
+* Fama-French style: June(t) ME breakpoints by December(t-1) BTM breakpoints for returns from July(t) to June(t+1)
+
+* Higher frequency style: 
 
 * ==============================================================================
 * Generate variables used for Merton estimation
