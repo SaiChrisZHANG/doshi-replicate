@@ -254,6 +254,11 @@ drop _merge
 * Generate Book-To-Market Ratio and Decile
 * ==============================================================================
 gen BtM = BE/ME
+gen BtMdec = BEdec/MEdec
+gen BtMjun = BEdec/MEjun
+
+gen DECILE_BtM = .
+
 
 
 * ==============================================================================
