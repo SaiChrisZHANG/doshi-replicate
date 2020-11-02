@@ -278,8 +278,8 @@ drop BtM_p90
 preserve
 tempfile decile_dec
 
-keep cusip DecDate BTMdec exchcd
-keep if !mi(BTMdec)
+keep cusip DecDate BtMdec exchcd
+keep if !mi(BtMdec)
 duplicates drop cusip DecDate, force
 
 gen DECILEdec_BtM = .
