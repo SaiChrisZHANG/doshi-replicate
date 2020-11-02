@@ -275,10 +275,11 @@ replace DECILEmth_BtM = 10 if BtM > BtM_p90 & DECILEmth_BtM == .
 drop BtM_p90
 
 * generate DECILE of June-adjusted Portfolio
+* December 
 preserve
 tempfile decile_jun
 
-keep cusip JunDate MEjun exchcd
+keep cusip JunDate BtMjun exchcd
 keep if !mi(MEjun)
 duplicates drop cusip JunDate, force
 
