@@ -257,8 +257,21 @@ gen BtM = BE/ME
 gen BtMdec = BEdec/MEdec
 gen BtMjun = BEdec/MEjun
 
-gen DECILE_BtM = .
+gen DECILEmth_BtM = .
+forvalues i = 1/9{
+    local j=10*`i'
+    bys datadate: egen ME_p`j' = pctile(ME) if exchcd == 1, p(`j')
+    sort datadate ME_p`j'
+    by datadate: replace ME_p`j' = ME_p`j'[_n-1] if ME_p`j' == .
+    replace DECILE = `i' if ME <= ME_p`j' & DECILE == .
+    drop ME_p`j'
+}
 
+bys datadate: egen ME_p90 = pctile(ME) if exchcd == 1, p(90)
+sort datadate ME_p90
+by datadate: replace ME_p90 = ME_p90[_n-1] if ME_p90 == .
+replace DECILE = 10 if ME > ME_p90 & DECILE == .
+drop ME_p90
 
 
 * ==============================================================================
