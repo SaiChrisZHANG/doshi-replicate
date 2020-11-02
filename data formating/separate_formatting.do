@@ -280,17 +280,17 @@ preserve
 tempfile decile_jun
 
 keep cusip JunDate BtMjun exchcd
-keep if !mi(MEjun)
+keep if !mi(BtMjun)
 duplicates drop cusip JunDate, force
 
 gen DECILEjun = .
 
 forvalues i = 1/9{
     local j = 10*`i'
-    bys JunDate: egen ME_p`j' = pctile(MEjun) if exchcd == 1, p(`j')
-    sort JunDate ME_p`j'
-    by JunDate: replace ME_p`j' = ME_p`j'[_n-1] if ME_p`j' == .
-    replace DECILEjun = `i' if MEjun <= ME_p`j' & DECILEjun == .
+    bys JunDate: egen BtM_p`j' = pctile(BtMjun) if exchcd == 1, p(`j')
+    sort JunDate BtM_p`j'
+    by JunDate: replace BtM_p`j' = BtM_p`j'[_n-1] if BtM_p`j' == .
+    replace DECILEjun_BtM = `i' if BtMjun <= BtM_p`j' & DECILEjun_BtM == .
     drop ME_p`j'
 }
 
