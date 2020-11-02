@@ -275,6 +275,35 @@ replace DECILEmth_BtM = 10 if BtM > BtM_p90 & DECILEmth_BtM == .
 drop BtM_p90
 
 * generate DECILE of June-adjusted Portfolio, BTM is calcuated with December(t-1) equity and book value
+preserve
+tempfile decile_dec
+
+keep cusip DecDate BTMdec exchcd
+keep if !mi(BTMdec)
+duplicates drop cusip DecDate, force
+
+gen DECILEdec_BtM = .
+forvalues i = 1/9{
+    local j = 10*`i'
+    bys DecDate: egen BtM_p`j' = pctile(BtMjun) if exchcd == 1, p(`j')
+    sort DecDate BtM_p`j'
+    by DecDate: replace BtM_p`j' = BtM_p`j'[_n-1] if BtM_p`j' == .
+    replace DECILEjun_BtM = `i' if BtMjun <= BtM_p`j' & DECILEjun_BtM == .
+    drop BtM_p`j'
+}
+
+bys DecDate: egen BtM_p90 = pctile(BtMjun) if exchcd == 1, p(90)
+sort DecDate BtM_p90
+by DecDate: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
+replace DECILEjun_BtM = 10 if BtMjun > BtM_p90 & DECILEjun_BtM == .
+drop BtM_p90
+
+keep cusip DecDate DECILEjun_BtM
+save `decile_jun', replace
+restore
+
+merge m:1 cusip JunDate using `decile_jun'
+drop _merge
 
 
 * generate DECILE of June-adjusted Portfolio, BTM is calculated with June(t) equity and December(t-1) book value
