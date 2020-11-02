@@ -274,9 +274,10 @@ by datadate: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
 replace DECILEmth_BtM = 10 if BtM > BtM_p90 & DECILEmth_BtM == .
 drop BtM_p90
 
-* generate DECILE of June-adjusted Portfolio, BTM is calcuated with December(t-1) 
+* generate DECILE of June-adjusted Portfolio, BTM is calcuated with December(t-1) equity and book value
 
-* generate DECILE of June-adjusted Portfolio, BTM is calculated with June(t) Equity and December(t-1) Book value
+
+* generate DECILE of June-adjusted Portfolio, BTM is calculated with June(t) equity and December(t-1) book value
 * December 
 preserve
 tempfile decile_jun
