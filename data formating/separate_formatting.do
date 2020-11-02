@@ -377,30 +377,30 @@ drop _merge
 * ==============================================================================
 * Fama-French style: June(t) ME breakpoints by December(t-1) BTM breakpoints for returns from July(t) to June(t+1)
 preserve
-tempfile decile_jun
+tempfile decile_ff
 
-keep cusip JunDate BtMjun exchcd
-keep if !mi(BtMjun)
-duplicates drop cusip JunDate, force
+keep cusip DecDate DECILEjun BtMdec exchcd
+keep if !mi(BtMdec) & !mi(DECILEjun)
+duplicates drop cusip DecDate DECILEjun, force
 
-gen DECILEjun_BtM = .
+gen FF_portbp = .
 
 forvalues i = 1/9{
     local j = 10*`i'
-    bys JunDate: egen BtM_p`j' = pctile(BtMjun) if exchcd == 1, p(`j')
-    sort JunDate BtM_p`j'
-    by JunDate: replace BtM_p`j' = BtM_p`j'[_n-1] if BtM_p`j' == .
-    replace DECILEjun_BtM = `i' if BtMjun <= BtM_p`j' & DECILEjun_BtM == .
+    bys DecDate DECILEjun: egen BtM_p`j' = pctile(BtMdec) if exchcd == 1, p(`j')
+    sort DecDate DECILEjun BtM_p`j'
+    by DecDate DECILEjun: replace BtM_p`j' = BtM_p`j'[_n-1] if BtM_p`j' == .
+    replace FF_portbp = `i' if BtMdec <= BtM_p`j' & FF_portbp == .
     drop BtM_p`j'
 }
 
-bys JunDate: egen BtM_p90 = pctile(BtMjun) if exchcd == 1, p(90)
-sort JunDate BtM_p90
-by JunDate: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
-replace DECILEjun_BtM = 10 if BtMjun > BtM_p90 & DECILEjun_BtM == .
+bys DecDate: egen BtM_p90 = pctile(BtMdec) if exchcd == 1, p(90)
+sort DecDate BtM_p90
+by DecDate: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
+replace FF_portbp = 10 if BtMdec > BtM_p90 & FF_portbp == .
 drop BtM_p90
 
-keep cusip JunDate DECILEjun_BtM
+keep cusip DecDate FF_portbp
 save `decile_jun', replace
 restore
 
