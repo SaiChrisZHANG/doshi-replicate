@@ -283,7 +283,7 @@ keep cusip JunDate BtMjun exchcd
 keep if !mi(BtMjun)
 duplicates drop cusip JunDate, force
 
-gen DECILEjun = .
+gen DECILEjun_BtM = .
 
 forvalues i = 1/9{
     local j = 10*`i'
@@ -294,11 +294,11 @@ forvalues i = 1/9{
     drop ME_p`j'
 }
 
-bys JunDate: egen ME_p90 = pctile(MEjun) if exchcd == 1, p(90)
-sort JunDate ME_p90
-by JunDate: replace ME_p90 = ME_p90[_n-1] if ME_p90 == .
-replace DECILEjun = 10 if MEjun > ME_p90 & DECILEjun == .
-drop ME_p90
+bys JunDate: egen BtM_p90 = pctile(BtMjun) if exchcd == 1, p(90)
+sort JunDate BtM_p90
+by JunDate: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
+replace DECILEjun_BtM = 10 if BtMjun > BtM_p90 & DECILEjun == .
+drop BtM_p90
 
 keep cusip JunDate DECILEjun
 save `decile_jun', replace
