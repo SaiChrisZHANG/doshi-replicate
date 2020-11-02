@@ -247,7 +247,7 @@ keep cusip DecDate DECILEdec
 save `decile_dec', replace
 restore
 
-merge m:1 cusip JunDate using `decile_dec'
+merge m:1 cusip DecDate using `decile_dec'
 drop _merge
 
 * generate DECILE of June-adjusted portfolio:
@@ -373,7 +373,7 @@ merge m:1 cusip JunDate using `decile_jun'
 drop _merge
 
 * ==============================================================================
-
+* 
 * ==============================================================================
 
 * ==============================================================================
