@@ -285,17 +285,17 @@ duplicates drop cusip DecDate, force
 gen DECILEdec_BtM = .
 forvalues i = 1/9{
     local j = 10*`i'
-    bys DecDate: egen BtM_p`j' = pctile(BtMjun) if exchcd == 1, p(`j')
+    bys DecDate: egen BtM_p`j' = pctile(BtMdec) if exchcd == 1, p(`j')
     sort DecDate BtM_p`j'
     by DecDate: replace BtM_p`j' = BtM_p`j'[_n-1] if BtM_p`j' == .
-    replace DECILEdec_BtM = `i' if BtMjun <= BtM_p`j' & DECILEdec_BtM == .
+    replace DECILEdec_BtM = `i' if BtMdec <= BtM_p`j' & DECILEdec_BtM == .
     drop BtM_p`j'
 }
 
-bys DecDate: egen BtM_p90 = pctile(BtMjun) if exchcd == 1, p(90)
+bys DecDate: egen BtM_p90 = pctile(BtMdec) if exchcd == 1, p(90)
 sort DecDate BtM_p90
 by DecDate: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
-replace DECILEdec_BtM = 10 if BtMjun > BtM_p90 & DECILEdec_BtM == .
+replace DECILEdec_BtM = 10 if BtMdec > BtM_p90 & DECILEdec_BtM == .
 drop BtM_p90
 
 keep cusip DecDate DECILEdec_BtM
