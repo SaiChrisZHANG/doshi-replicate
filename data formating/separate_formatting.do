@@ -274,6 +274,8 @@ by datadate: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
 replace DECILEmth_BtM = 10 if BtM > BtM_p90 & DECILEmth_BtM == .
 drop BtM_p90
 
+* generate DECILE of June-adjusted Portfolio
+
 
 * ==============================================================================
 * Generate variables used for Merton estimation
