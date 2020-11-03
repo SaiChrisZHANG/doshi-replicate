@@ -376,7 +376,7 @@ drop _merge
 * Generate double-sorting portfolio marker
 * ==============================================================================
 * 10-by-10 =====================================================================
-* DECILEmth-by-FF_port_decile
+* DECILEjun-by-FF_port_decile
 * Fama-French style: June(t) ME breakpoints by December(t-1) BTM breakpoints for returns from July(t) to June(t+1)
 preserve
 tempfile decile_ff
@@ -409,6 +409,7 @@ restore
 merge m:1 cusip DecDate DECILEjun using `decile_ff'
 drop _merge
 
+* DECILEmth-by-mth_port_decile
 * Higher frequency style: use last month ME and BTM
 gen mth_port_decile = .
 
