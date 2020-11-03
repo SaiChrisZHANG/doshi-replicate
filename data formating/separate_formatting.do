@@ -431,14 +431,17 @@ drop BtM_p90
 * 5 by 5 =======================================================================
 * Fama-French style: June(t) ME breakpoints by December(t-1) BTM breakpoints for returns from July(t) to June(t+1)
 *** DECILEjun-by-FF_port_decile
-gen QUINTILEmth = DECILEmth
-replace QUINTILEmth = ceil(QUINTILEmth/2)
+gen QUINTILEjun = DECILEjun
+replace QUINTILEjun = ceil(QUINTILEjun/2)
 gen FF_port_quintile = FF_port_decile
 replace FF_port_quintile = ceil(FF_port_decile/2)
 
 * Higher frequency style: use last month ME and BTM
 *** QUINTILEmth-by-mth_port_quintile
-
+gen QUINTILEmth = DECILEmth
+replace QUINTILEmth = ceil(QUINTILEmth/2)
+gen mth_port_quintile = mth_port_decile
+replace mth_port_quintile = ceil(mth_port_decile/2)
 
 * ==============================================================================
 * Generate variables used for Merton estimation
