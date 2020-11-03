@@ -376,6 +376,7 @@ drop _merge
 * Generate double-sorting portfolio marker
 * ==============================================================================
 * 10-by-10 =====================================================================
+* DECILEmth-by-FF_port_decile
 * Fama-French style: June(t) ME breakpoints by December(t-1) BTM breakpoints for returns from July(t) to June(t+1)
 preserve
 tempfile decile_ff
@@ -427,7 +428,12 @@ replace mth_port_decile = 10 if BtM > BtM_p90 & mth_port_decile == .
 drop BtM_p90
 
 * 5 by 5 =======================================================================
-* generate Q of monthly adjusted portfolio, the size quintile markers
+* DECILEmth-by-FF_port_decile
+* Fama French style
+gen QUINTILEmth = 
+gen FF_port_quintile = 
+
+
 
 
 * ==============================================================================
