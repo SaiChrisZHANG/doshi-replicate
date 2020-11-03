@@ -384,24 +384,24 @@ keep cusip DecDate DECILEjun BtMdec exchcd
 keep if !mi(BtMdec) & !mi(DECILEjun)
 duplicates drop cusip DecDate DECILEjun, force
 
-gen FF_portbp = .
+gen FF_port_decile = .
 
 forvalues i = 1/9{
     local j = 10*`i'
     bys DecDate DECILEjun: egen BtM_p`j' = pctile(BtMdec) if exchcd == 1, p(`j')
     sort DecDate DECILEjun BtM_p`j'
     by DecDate DECILEjun: replace BtM_p`j' = BtM_p`j'[_n-1] if BtM_p`j' == .
-    replace FF_portbp = `i' if BtMdec <= BtM_p`j' & FF_portbp == .
+    replace FF_port_decile = `i' if BtMdec <= BtM_p`j' & FF_port_decile == .
     drop BtM_p`j'
 }
 
 bys DecDate DECILEjun: egen BtM_p90 = pctile(BtMdec) if exchcd == 1, p(90)
 sort DecDate DECILEjun BtM_p90
 by DecDate DECILEjun: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
-replace FF_portbp = 10 if BtMdec > BtM_p90 & FF_portbp == .
+replace FF_port_decile = 10 if BtMdec > BtM_p90 & FF_port_decile == .
 drop BtM_p90
 
-keep cusip DecDate DECILEjun FF_portbp
+keep cusip DecDate DECILEjun FF_port_decile
 save `decile_ff', replace
 restore
 
@@ -409,7 +409,7 @@ merge m:1 cusip DecDate DECILEjun using `decile_ff'
 drop _merge
 
 * Higher frequency style: use last month ME and BTM
-gen mth_portbp = .
+gen mth_port = .
 
 forvalues i = 1/9{
     local j=10*`i'
