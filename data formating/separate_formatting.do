@@ -409,21 +409,21 @@ merge m:1 cusip DecDate DECILEjun using `decile_ff'
 drop _merge
 
 * Higher frequency style: use last month ME and BTM
-gen mth_port = .
+gen mth_port_decile = .
 
 forvalues i = 1/9{
     local j=10*`i'
     bys datadate DECILEmth: egen BtM_p`j' = pctile(BtM) if exchcd == 1, p(`j')
     sort datadate DECILEmth BtM_p`j'
     by datadate DECILEmth: replace BtM_p`j' = BtM_p`j'[_n-1] if BtM_p`j' == .
-    replace mth_portbp = `i' if BtM <= BtM_p`j' & mth_portbp == .
+    replace mth_port_decile = `i' if BtM <= BtM_p`j' & mth_port_decile == .
     drop BtM_p`j'
 }
 
 bys datadate DECILEmth: egen BtM_p90 = pctile(BtM) if exchcd == 1, p(90)
 sort datadate DECILEmth BtM_p90
 by datadate DECILEmth: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
-replace mth_portbp = 10 if BtM > BtM_p90 & mth_portbp == .
+replace mth_port_decile = 10 if BtM > BtM_p90 & mth_port_decile == .
 drop BtM_p90
 
 * 5 by 5 =======================================================================
