@@ -427,7 +427,7 @@ replace mth_portbp = 10 if BtM > BtM_p90 & mth_portbp == .
 drop BtM_p90
 
 * 5 by 5 =======================================================================
-
+* generate Q of monthly adjusted portfolio, the size quintile markers
 
 
 * ==============================================================================
