@@ -375,6 +375,7 @@ drop _merge
 * ==============================================================================
 * Generate double-sorting portfolio marker
 * ==============================================================================
+* 10-by-10 =====================================================================
 * Fama-French style: June(t) ME breakpoints by December(t-1) BTM breakpoints for returns from July(t) to June(t+1)
 preserve
 tempfile decile_ff
@@ -394,20 +395,24 @@ forvalues i = 1/9{
     drop BtM_p`j'
 }
 
-bys DecDate: egen BtM_p90 = pctile(BtMdec) if exchcd == 1, p(90)
-sort DecDate BtM_p90
-by DecDate: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
+bys DecDate DECILEjun: egen BtM_p90 = pctile(BtMdec) if exchcd == 1, p(90)
+sort DecDate DECILEjun BtM_p90
+by DecDate DECILEjun: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
 replace FF_portbp = 10 if BtMdec > BtM_p90 & FF_portbp == .
 drop BtM_p90
 
-keep cusip DecDate FF_portbp
-save `decile_jun', replace
+keep cusip DecDate DECILEjun FF_portbp
+save `ff_decilebp', replace
 restore
 
-merge m:1 cusip JunDate using `decile_jun'
+merge m:1 cusip DecDate DECILEjun using `ff_decilebp'
 drop _merge
 
 * Higher frequency style: 
+
+* 5 by 5 =======================================================================
+
+
 
 * ==============================================================================
 * Generate variables used for Merton estimation
