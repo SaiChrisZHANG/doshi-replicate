@@ -13,4 +13,13 @@
 preserve
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RET*ME), missing
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(ME), missing
-gen 
+gen RET_11A = port_11A_ws/port_11A_w
+duplicates drop datadate QUINTILEjun FF_port_quintile, force
+
+bys QUINTILEjun FF_port_quintile: egen portRET_11A = mean(RET_11A)
+duplicates drop QUITILEjun FF_port_quintile, force
+
+keep QUINTILEjun FF_port_quintile portRET_11A
+drop if mi(QUINTILEjun) | mi(FF_port_quintile)
+save "F:/Stephen/analysis/descriptive study/Table1/table1_1A.dta", replace
+restore
