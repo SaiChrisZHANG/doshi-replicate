@@ -15,6 +15,7 @@ preserve
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RET*ME), missing
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(ME), missing
 gen RET_11A = port_11A_ws/port_11A_w
+duplicates drop datadate QUITILEjun FF_port_quintile, force
 
 bys QUINTILEjun FF_port_quintile: egen portRET_11A = mean(RET_11A)
 duplicates drop QUITILEjun FF_port_quintile, force
@@ -29,6 +30,15 @@ preserve
 bys datadate QUINTILEjun: egen port_11A_ws_me = total(RET*ME), missing
 bys datadate QUINTILEjun: egen port_11A_w_me = total(ME), missing
 gen RET_11A_me = port_11A_ws_me/port_11A_w_me
+duplicates drop datadate QUITILEjun, force
+
+bys QUINTILEjun: egen portRET_11A = mean(RET_11A)
+duplicates drop QUITILEjun, force
+
+keep QUINTILEjun portRET_11A
+drop if mi(QUINTILEjun)
+save "F:/Stephen/analysis/descriptive study/Table1/table1_1A.dta", replace
+restore
 
 bys QUINTILEjun: egen portRET_11A = mean(RET_11A)
 duplicates drop QUITILEjun FF_port_quintile, force
