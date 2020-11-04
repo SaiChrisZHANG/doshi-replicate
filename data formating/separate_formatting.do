@@ -435,6 +435,8 @@ gen QUINTILEjun = DECILEjun
 replace QUINTILEjun = ceil(QUINTILEjun/2)
 gen FF_port_quintile = FF_port_decile
 replace FF_port_quintile = ceil(FF_port_decile/2)
+gen QUINTILEdec_BtM = DECILEdec_BtM
+replace QUINTILEdec_BtM = ceil(QUINTILEdec_BtM/2)
 
 * Higher frequency style: use last month ME and BTM
 *** QUINTILEmth-by-mth_port_quintile
@@ -442,6 +444,8 @@ gen QUINTILEmth = DECILEmth
 replace QUINTILEmth = ceil(QUINTILEmth/2)
 gen mth_port_quintile = mth_port_decile
 replace mth_port_quintile = ceil(mth_port_decile/2)
+gen QUINTILEmth_BtM = DECILEmth_BtM
+replace QUINTILEmth_BtM = ceil(QUINTILEmth_BtM/2)
 
 * ==============================================================================
 * Generate variables used for Merton estimation

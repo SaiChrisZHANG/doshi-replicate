@@ -32,25 +32,25 @@ bys datadate QUINTILEjun: egen port_11A_w_me = total(ME), missing
 gen RET_11A_me = port_11A_ws_me/port_11A_w_me
 duplicates drop datadate QUITILEjun, force
 
-bys QUINTILEjun: egen portRET_11A = mean(RET_11A)
+bys QUINTILEjun: egen portRET_11A_me = mean(RET_11A_me)
 duplicates drop QUITILEjun, force
 
-keep QUINTILEjun portRET_11A
+keep QUINTILEjun portRET_11A_me
 drop if mi(QUINTILEjun)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_1A.dta", replace
 restore
 
 **** sort by BTM
 preserve
-bys datadate QU: egen port_11A_ws_me = total(RET*ME), missing
-bys datadate QUINTILEjun: egen port_11A_w_me = total(ME), missing
-gen RET_11A_me = port_11A_ws_me/port_11A_w_me
-duplicates drop datadate QUITILEjun, force
+bys datadate QUINTILEdec_BtM: egen port_11A_ws_btm = total(RET*ME), missing
+bys datadate QUINTILEdec_BtM: egen port_11A_w_btm = total(ME), missing
+gen RET_11A_me = port_11A_ws_btm/port_11A_w_btm
+duplicates drop datadate QUINTILEdec_BtM, force
 
-bys QUINTILEjun: egen portRET_11A = mean(RET_11A)
-duplicates drop QUITILEjun, force
+bys QUINTILEdec_BtM: egen portRET_11A_me = mean(RET_11A_me)
+duplicates drop QUINTILEdec_BtM, force
 
-keep QUINTILEjun portRET_11A
-drop if mi(QUINTILEjun)
+keep QUINTILEdec_BtM portRET_11A_me
+drop if mi(QUINTILEdec_BtM)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_1A.dta", replace
 restore 
