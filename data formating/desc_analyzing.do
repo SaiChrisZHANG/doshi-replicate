@@ -7,5 +7,7 @@
 * ==============================================================================
 
 * Table 1.1 A ------------------------------------------------------------------
-* 5-by-5, value weighted returns cross-sectionally, average across time series
-bys datadate 
+** 5-by-5
+** value weighted returns cross-sectionally, average across time series
+** yearly adjusted portfolios
+bys datadate QUINTILEjun FF_port_quintile
