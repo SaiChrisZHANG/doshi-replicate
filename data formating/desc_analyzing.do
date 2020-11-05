@@ -50,26 +50,22 @@ restore
 
 * Table 1.2 --------------------------------------------------------------------
 ** 10-by-10
-** value weighted returns cross-sectionally, average across time series
+** equal weighted returns cross-sectionally, average across time series
 ** yearly adjusted portfolios
 **** double sorting
 preserve
-bys datadate DECILEjun FF_port_decile: egen port_12A_ws = total(RET*ME), missing
-bys datadate DECILEjun FF_port_decile: egen port_12A_w = total(ME), missing
-gen RET_12A = port_12A_ws/port_12A_w
+bys datadate DECILEjun FF_port_decile: egen RET_12A = mean(ME)
 duplicates drop datadate DECILEjun FF_port_decile, force
 
 bys DECILEjun FF_port_decile: egen portRET_12A = mean(RET_12A)
-keep DECILEjun FF_port_decile portRET_12A datadate
+keep DECILEjun FF_port_decile portRET_12A RET_12A datadate
 drop if mi(DECILEjun) | mi(FF_port_decile)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_2A.dta", replace
 restore
 
 **** sort by ME
 preserve
-bys datadate DECILEjun: egen port_12B1_ws_me = total(RET*ME), missing
-bys datadate DECILEjun: egen port_12B1_w_me = total(ME), missing
-gen RET_12B1_me = port_12B1_ws_me/port_12B1_w_me
+bys datadate DECILEjun: egen RET_12B1_me = mean(ME)
 duplicates drop datadate DECILEjun, force
 
 bys DECILEjun: egen portRET_12B1_me = mean(RET_12B1_me)
@@ -80,9 +76,7 @@ restore
 
 **** sort by BTM
 preserve
-bys datadate DECILEdec_BtM: egen port_12B2_ws_btm = total(RET*ME), missing
-bys datadate DECILEdec_BtM: egen port_12B2_w_btm = total(ME), missing
-gen RET_12B2_btm = port_12B2_ws_btm/port_12B2_w_btm
+bys datadate DECILEdec_BtM: egen RET_12B2_btm = mean(ME)
 duplicates drop datadate DECILEdec_BtM, force
 
 bys DECILEdec_BtM: egen portRET_12B2_btm = mean(RET_12B2_btm)
