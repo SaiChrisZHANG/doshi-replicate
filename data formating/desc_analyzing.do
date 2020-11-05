@@ -91,41 +91,41 @@ restore
 ** monthly adjusted portfolios
 **** double sorting
 preserve
-bys datadate QUINTILEmth mth_port_quintile: egen port_11A_ws = total(RET*ME), missing
-bys datadate QUINTILEmth mth_port_quintile: egen port_11A_w = total(ME), missing
-gen RET_11A = port_11A_ws/port_11A_w
+bys datadate QUINTILEmth mth_port_quintile: egen port_21A_ws = total(RET*ME), missing
+bys datadate QUINTILEmth mth_port_quintile: egen port_21A_w = total(ME), missing
+gen RET_21A = port_21A_ws/port_21A_w
 duplicates drop datadate QUINTILEmth mth_port_quintile, force
 
-bys QUINTILEmth mth_port_quintile: egen portRET_11A = mean(RET_11A)
-keep QUINTILEmth mth_port_quintile portRET_11A RET_11A datadate
+bys QUINTILEmth mth_port_quintile: egen portRET_21A = mean(RET_21A)
+keep QUINTILEmth mth_port_quintile portRET_21A RET_21A datadate
 drop if mi(QUINTILEmth) | mi(mth_port_quintile)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_1A.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table1/table2_1A.dta", replace
 restore
 
 **** sort by ME
 preserve
-bys datadate QUINTILEmth: egen port_11B_ws_me = total(RET*ME), missing
-bys datadate QUINTILEmth: egen port_11B_w_me = total(ME), missing
-gen RET_11B_me = port_11B_ws_me/port_11B_w_me
+bys datadate QUINTILEmth: egen port_21B_ws_me = total(RET*ME), missing
+bys datadate QUINTILEmth: egen port_21B_w_me = total(ME), missing
+gen RET_21B_me = port_21B_ws_me/port_21B_w_me
 duplicates drop datadate QUINTILEmth, force
 
-bys QUINTILEmth: egen portRET_11B_me = mean(RET_11B_me)
-keep QUINTILEmth portRET_11B_me RET_11B_me datadate
+bys QUINTILEmth: egen portRET_21B_me = mean(RET_21B_me)
+keep QUINTILEmth portRET_21B_me RET_21B_me datadate
 drop if mi(QUINTILEmth)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_1B1.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table1/table2_1B1.dta", replace
 restore
 
 **** sort by BTM
 preserve
-bys datadate QUINTILEmth_BtM: egen port_11B_ws_btm = total(RET*ME), missing
-bys datadate QUINTILEmth_BtM: egen port_11B_w_btm = total(ME), missing
-gen RET_11B_btm = port_11B_ws_btm/port_11B_w_btm
+bys datadate QUINTILEmth_BtM: egen port_21B_ws_btm = total(RET*ME), missing
+bys datadate QUINTILEmth_BtM: egen port_21B_w_btm = total(ME), missing
+gen RET_21B_btm = port_21B_ws_btm/port_21B_w_btm
 duplicates drop datadate QUINTILEmth_BtM, force
 
-bys QUINTILEmth_BtM: egen portRET_11B_btm = mean(RET_11B_btm)
-keep QUINTILEmth_BtM portRET_11B_btm RET_11B_btm datadate
+bys QUINTILEmth_BtM: egen portRET_21B_btm = mean(RET_21B_btm)
+keep QUINTILEmth_BtM portRET_21B_btm RET_21B_btm datadate
 drop if mi(QUINTILEmth_BtM)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_1B2.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table1/table2_1B2.dta", replace
 restore
 
 * Table 1.2.2 ------------------------------------------------------------------
@@ -134,33 +134,33 @@ restore
 ** monthly adjusted portfolios
 **** double sorting
 preserve
-bys datadate DECILEjun FF_port_decile: egen RET_12A = mean(RET)
-duplicates drop datadate DECILEjun FF_port_decile, force
+bys datadate DECILEmth mth_port_decile: egen RET_22A = mean(RET)
+duplicates drop datadate DECILEmth mth_port_decile, force
 
-bys DECILEjun FF_port_decile: egen portRET_12A = mean(RET_12A)
-keep DECILEjun FF_port_decile portRET_12A RET_12A datadate
-drop if mi(DECILEjun) | mi(FF_port_decile)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_2A.dta", replace
+bys DECILEmth mth_port_decile: egen portRET_22A = mean(RET_22A)
+keep DECILEmth mth_port_decile portRET_22A RET_22A datadate
+drop if mi(DECILEmth) | mi(mth_port_decile)
+save "F:/Stephen/analysis/descriptive study/Table1/table2_2A.dta", replace
 restore
 
 **** sort by ME
 preserve
-bys datadate DECILEjun: egen RET_12B_me = mean(RET)
-duplicates drop datadate DECILEjun, force
+bys datadate DECILEmth: egen RET_22B_me = mean(RET)
+duplicates drop datadate DECILEmth, force
 
-bys DECILEjun: egen portRET_12B_me = mean(RET_12B_me)
-keep DECILEjun portRET_12B_me RET_12B_me datadate
-drop if mi(DECILEjun)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_2B1.dta", replace
+bys DECILEmth: egen portRET_22B_me = mean(RET_22B_me)
+keep DECILEmth portRET_22B_me RET_22B_me datadate
+drop if mi(DECILEmth)
+save "F:/Stephen/analysis/descriptive study/Table1/table2_2B1.dta", replace
 restore
 
 **** sort by BTM
 preserve
-bys datadate DECILEdec_BtM: egen RET_12B_btm = mean(RET)
-duplicates drop datadate DECILEdec_BtM, force
+bys datadate DECILEmth_BtM: egen RET_22B_btm = mean(RET)
+duplicates drop datadate DECILEmth_BtM, force
 
-bys DECILEdec_BtM: egen portRET_12B_btm = mean(RET_12B_btm)
-keep DECILEdec_BtM portRET_12B_btm RET_12B_btm datadate
-drop if mi(DECILEdec_BtM)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_2B2.dta", replace
+bys DECILEmth_BtM: egen portRET_22B_btm = mean(RET_22B_btm)
+keep DECILEmth_BtM portRET_22B_btm RET_22B_btm datadate
+drop if mi(DECILEmth_BtM)
+save "F:/Stephen/analysis/descriptive study/Table1/table2_2B2.dta", replace
 restore
