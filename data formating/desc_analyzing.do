@@ -54,7 +54,7 @@ restore
 ** yearly adjusted portfolios
 **** double sorting
 preserve
-bys datadate DECILEjun FF_port_decile: egen RET_12A = mean(ME)
+bys datadate DECILEjun FF_port_decile: egen RET_12A = mean(RET)
 duplicates drop datadate DECILEjun FF_port_decile, force
 
 bys DECILEjun FF_port_decile: egen portRET_12A = mean(RET_12A)
@@ -65,22 +65,22 @@ restore
 
 **** sort by ME
 preserve
-bys datadate DECILEjun: egen RET_12B1_me = mean(ME)
+bys datadate DECILEjun: egen RET_12B_me = mean(RET)
 duplicates drop datadate DECILEjun, force
 
-bys DECILEjun: egen portRET_12B1_me = mean(RET_12B1_me)
-keep DECILEjun portRET_12B1_me RET_12B1_me datadate
+bys DECILEjun: egen portRET_12B_me = mean(RET_12B_me)
+keep DECILEjun portRET_12B_me RET_12B_me datadate
 drop if mi(DECILEjun)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_2B1.dta", replace
 restore
 
 **** sort by BTM
 preserve
-bys datadate DECILEdec_BtM: egen RET_12B2_btm = mean(ME)
+bys datadate DECILEdec_BtM: egen RET_12B_btm = mean(RET)
 duplicates drop datadate DECILEdec_BtM, force
 
-bys DECILEdec_BtM: egen portRET_12B2_btm = mean(RET_12B2_btm)
-keep DECILEdec_BtM portRET_12B2_btm RET_12B2_btm datadate
+bys DECILEdec_BtM: egen portRET_12B_btm = mean(RET_12B_btm)
+keep DECILEdec_BtM portRET_12B_btm RET_12B_btm datadate
 drop if mi(DECILEdec_BtM)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_2B2.dta", replace
 restore
