@@ -6,8 +6,8 @@
 * Table 1: Returns by portfolios
 * ==============================================================================
 * Table 1.1 --------------------------------------------------------------------
-** 5-by-5
-** value weighted returns cross-sectionally, average across time series
+** 5-by-5: Doshi et al 2012
+** VALUE weighted returns cross-sectionally, average across time series
 ** yearly adjusted portfolios
 **** double sorting
 preserve
@@ -24,33 +24,33 @@ restore
 
 **** sort by ME
 preserve
-bys datadate QUINTILEjun: egen port_11B1_ws_me = total(RET*ME), missing
-bys datadate QUINTILEjun: egen port_11B1_w_me = total(ME), missing
-gen RET_11B1_me = port_11B1_ws_me/port_11B1_w_me
+bys datadate QUINTILEjun: egen port_11B_ws_me = total(RET*ME), missing
+bys datadate QUINTILEjun: egen port_11B_w_me = total(ME), missing
+gen RET_11B_me = port_11B_ws_me/port_11B_w_me
 duplicates drop datadate QUINTILEjun, force
 
-bys QUINTILEjun: egen portRET_11B1_me = mean(RET_11B1_me)
-keep QUINTILEjun portRET_11B1_me RET_11B1_me datadate
+bys QUINTILEjun: egen portRET_11B_me = mean(RET_11B_me)
+keep QUINTILEjun portRET_11B_me RET_11B_me datadate
 drop if mi(QUINTILEjun)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_1B1.dta", replace
 restore
 
 **** sort by BTM
 preserve
-bys datadate QUINTILEdec_BtM: egen port_11B2_ws_btm = total(RET*ME), missing
-bys datadate QUINTILEdec_BtM: egen port_11B2_w_btm = total(ME), missing
-gen RET_11B2_btm = port_11B2_ws_btm/port_11B2_w_btm
+bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RET*ME), missing
+bys datadate QUINTILEdec_BtM: egen port_11B_w_btm = total(ME), missing
+gen RET_11B_btm = port_11B_ws_btm/port_11B_w_btm
 duplicates drop datadate QUINTILEdec_BtM, force
 
-bys QUINTILEdec_BtM: egen portRET_11B2_btm = mean(RET_11B2_btm)
-keep QUINTILEdec_BtM portRET_11B2_btm RET_11B2_btm datadate
+bys QUINTILEdec_BtM: egen portRET_11B_btm = mean(RET_11B_btm)
+keep QUINTILEdec_BtM portRET_11B_btm RET_11B_btm datadate
 drop if mi(QUINTILEdec_BtM)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_1B2.dta", replace
 restore
 
 * Table 1.2 --------------------------------------------------------------------
-** 10-by-10
-** equal weighted returns cross-sectionally, average across time series
+** 10-by-10: Fama and French 1992
+** EQUAL weighted returns cross-sectionally, average across time series
 ** yearly adjusted portfolios
 **** double sorting
 preserve
