@@ -168,14 +168,15 @@ restore
 * ==============================================================================
 * Table 2: Leverage
 * ==============================================================================
-* Table 1.2.1 ------------------------------------------------------------------
+* Table 2.1.1 ------------------------------------------------------------------
 ** 5-by-5: Doshi et al 2012
 ** mean leverage cross-sectionally, average across time series
 ** for portfolio formed in July t, take leverage in December t-1
 **** double sorting
-preserve 
 
-bys QUINTILEjun FF_port_quintile: egen portRET_11A = mean(RET_11A)
+preserve 
+duplicates drop DecDate QUINTILEjun FF_port_quintile, force 
+bys QUINTILEjun FF_port_quintile: egen portLev_11A = mean(RET_11A)
 keep QUINTILEjun FF_port_quintile portRET_11A RET_11A datadate
 drop if mi(QUINTILEjun) | mi(FF_port_quintile)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_1A.dta", replace
