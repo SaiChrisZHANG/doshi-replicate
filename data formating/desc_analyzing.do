@@ -172,8 +172,8 @@ restore
 ** 5-by-5: Doshi et al 2012
 ** mean leverage cross-sectionally, average across time series
 ** for portfolio formed in July t, take leverage in December t-1
-**** double sorting
 
+**** double sorting
 preserve 
 duplicates drop DecDate QUINTILEjun FF_port_quintile, force 
 bys QUINTILEjun FF_port_quintile: egen portLev_11A = mean(RET_11A)
