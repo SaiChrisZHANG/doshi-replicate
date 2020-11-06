@@ -173,12 +173,7 @@ restore
 ** mean leverage cross-sectionally, average across time series
 ** for portfolio formed in July t, take leverage in December t-1
 **** double sorting
-preserve
-duplicates drop 
-bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RET*ME), missing
-bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(ME), missing
-gen RET_11A = port_11A_ws/port_11A_w
-duplicates drop datadate QUINTILEjun FF_port_quintile, force
+preserve 
 
 bys QUINTILEjun FF_port_quintile: egen portRET_11A = mean(RET_11A)
 keep QUINTILEjun FF_port_quintile portRET_11A RET_11A datadate

@@ -341,7 +341,7 @@ restore
 merge m:1 cusip DecDate using `decile_dec'
 drop _merge
 
-
+/*
 * generate DECILE of June-adjusted Portfolio, BTM is calculated with June(t) equity and December(t-1) book value
 * December 
 preserve
@@ -374,7 +374,7 @@ restore
 
 merge m:1 cusip JunDate using `decile_jun'
 drop _merge
-
+*/
 * ==============================================================================
 * Generate double-sorting portfolio marker
 * ==============================================================================
