@@ -134,11 +134,14 @@ label variable Lev "Leverage, linear interpolating"
 * generate atdec BEdec medec Levdec
 preserve
 tempfile data_dec
-keep at BE ME gvkey compustat_dt
+keep at BE ME Lev Lev_intpl gvkey compustat_dt
 duplicates drop gvkey compustat_dt, force
 rename at atdec
 rename BE BEdec
 rename ME MEdec
+rename Lev Levdec
+rename Lev_intpl Levdec_intpl
+
 gen DecDate = 100*year(compustat_dt)+month(compustat_dt)
 drop compustat_dt
 save `data_dec', replace
