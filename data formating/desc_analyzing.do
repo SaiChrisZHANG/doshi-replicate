@@ -248,12 +248,12 @@ restore
 **** sort by BTM
 preserve
 bys datadate QUINTILEmth_BtM: egen Lev_12B_btm = mean(Lev)
-bys datadate QUINTILEdec_BtM: egen Levipl_12B_btm = mean(Lev_intpl)
-duplicates drop datadate QUINTILEdec_BtM, force
+bys datadate QUINTILEmth_BtM: egen Levipl_12B_btm = mean(Lev_intpl)
+duplicates drop datadate QUINTILEmth_BtM, force
 
-bys QUINTILEdec_BtM: egen portLev_12B_btm = mean(Lev_12B_btm)
-bys QUINTILEdec_BtM: egen portLevipl_12B_btm = mean(Levipl_12B_btm)
-keep QUINTILEdec_BtM Lev_12B_btm Levipl_12B_btm portLev_12B_btm portLevipl_12B_btm datadate
-drop if mi(QUINTILEdec_BtM)
+bys QUINTILEmth_BtM: egen portLev_12B_btm = mean(Lev_12B_btm)
+bys QUINTILEmth_BtM: egen portLevipl_12B_btm = mean(Levipl_12B_btm)
+keep QUINTILEmth_BtM Lev_12B_btm Levipl_12B_btm portLev_12B_btm portLevipl_12B_btm datadate
+drop if mi(QUINTILEmth_BtM)
 save "F:/Stephen/analysis/descriptive study/Table2/table1_2B2.dta", replace
 restore
