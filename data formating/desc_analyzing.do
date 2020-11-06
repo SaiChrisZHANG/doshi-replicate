@@ -171,7 +171,7 @@ restore
 * Table 1.2.1 ------------------------------------------------------------------
 ** 5-by-5: Doshi et al 2012
 ** mean leverage cross-sectionally, average across time series
-** for portfolio formed in July t, 
+** for portfolio formed in July t, take leverage 
 **** double sorting
 preserve
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RET*ME), missing
