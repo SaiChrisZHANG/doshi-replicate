@@ -112,10 +112,6 @@ gen Lev = ltq_f/(ltq_f+ME)
 gen Lev_intpl = ltq_f_intpl/(ltq_f_intpl+ME)
 
 preserve
-keep cusip 
-
-
-preserve
 keep cusip yyyymm ME Lev Lev_intpl
 rename yyyymm Lag1
 rename ME MElag
@@ -135,7 +131,7 @@ label variable Lev "Leverage"
 label variable Lev "Leverage, linear interpolating"
 
 * reassign the at/BE/ME data in Fama-French fashion ============================
-* generate atdec BEdec medec
+* generate atdec BEdec medec Levdec
 preserve
 tempfile data_dec
 keep at BE ME gvkey compustat_dt
