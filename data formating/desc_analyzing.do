@@ -170,9 +170,8 @@ restore
 * ==============================================================================
 * Table 1.2.1 ------------------------------------------------------------------
 ** 5-by-5: Doshi et al 2012
-** mean leverage (quarter-end leverage held through the next 3 month) cross-sectionally, average across time series
-
-** yearly adjusted portfolios
+** mean leverage cross-sectionally, average across time series
+** for portfolio formed in July t, 
 **** double sorting
 preserve
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RET*ME), missing
