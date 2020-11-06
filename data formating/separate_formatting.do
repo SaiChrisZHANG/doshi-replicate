@@ -107,9 +107,13 @@ drop _merge
 gen ME = cshoq*prc_lag
 label variable ME "market equity"
 
-* generate MElag Lev LevLag
+* generate MElag Lev LevLag Levdec
 gen Lev = ltq_f/(ltq_f+ME)
 gen Lev_intpl = ltq_f_intpl/(ltq_f_intpl+ME)
+
+preserve
+keep cusip 
+
 
 preserve
 keep cusip yyyymm ME Lev Lev_intpl

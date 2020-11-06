@@ -165,7 +165,6 @@ drop if mi(DECILEmth_BtM)
 save "F:/Stephen/analysis/descriptive study/Table1/table2_2B2.dta", replace
 restore
 
-
 * ==============================================================================
 * Table 2: Leverage
 * ==============================================================================
