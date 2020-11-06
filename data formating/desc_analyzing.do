@@ -234,9 +234,8 @@ restore
 
 **** sort by ME
 preserve
-duplicates drop cusip DecDate, force
-bys DecDate QUINTILEmth: egen Lev_12B_me = mean(Levdec)
-bys DecDate QUINTILEmth: egen Levipl_12B_me = mean(Levdec_intpl)
+bys datadate QUINTILEmth: egen Lev_12B_me = mean(Levdec)
+bys datadate QUINTILEmth: egen Levipl_12B_me = mean(Levdec_intpl)
 duplicates drop DecDate QUINTILEmth, force
 
 bys QUINTILEmth: egen portLev_12B_me = mean(Lev_12B_me)
