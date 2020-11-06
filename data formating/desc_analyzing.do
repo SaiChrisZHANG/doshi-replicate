@@ -197,19 +197,65 @@ duplicates drop DecDate QUINTILEjun, force
 
 bys QUINTILEjun: egen portLev_11B_me = mean(Lev_11B_me)
 bys QUINTILEjun: egen portLevipl_11B_me = mean(Levipl_11B_me)
-keep QUINTILEjun portLev_11B_me portLevipl_11B_me DecDate
+keep QUINTILEjun Lev_11B_me Levipl_11B_me portLev_11B_me portLevipl_11B_me DecDate
 drop if mi(QUINTILEjun)
 save "F:/Stephen/analysis/descriptive study/Table2/table1_1B1.dta", replace
 restore
 
 **** sort by BTM
 preserve
-duplicates drop DecDate QUINTILEdec_BtM, force 
-bys QUINTILEdec_BtM: egen portLev_11B_btm = mean(Levdec)
-bys QUINTILEdec_BtM: egen portLevipl_11B_btm = mean(Levdec_intpl)
-keep QUINTILEdec_BtM portLev_11B_btm portLevipl_11B_btm DecDate
+duplicates drop cusip DecDate, force
+bys DecDate QUINTILEdec_BtM: egen Lev_11B_btm = mean(Levdec)
+bys DecDate QUINTILEdec_BtM: egen Levipl_11B_btm = mean(Levdec_intpl)
+duplicates drop DecDate QUINTILEdec_BtM, force
+
+bys QUINTILEdec_BtM: egen portLev_11B_btm = mean(Lev_11B_btm)
+bys QUINTILEdec_BtM: egen portLevipl_11B_btm = mean(Levipl_11B_btm)
+keep QUINTILEdec_BtM Lev_11B_btm Levipl_11B_btm portLev_11B_btm portLevipl_11B_btm DecDate
 drop if mi(QUINTILEdec_BtM)
 save "F:/Stephen/analysis/descriptive study/Table2/table1_1B2.dta", replace
 restore
 
 * Table 2.2 ------------------------------------------------------------------
+** 5-by-5: Doshi et al 2012
+** mean leverage cross-sectionally, average across time series
+** for monthly portfolio, take leverage of the previous month
+preserve 
+bys datadate QUINTILEmth mth_port_quintile: egen Lev_12A = mean(Levdec)
+bys datadate QUINTILEmth mth_port_quintile: egen Levipl_12A = mean(Levdec_intpl)
+duplicates drop DecDate QUINTILEmth mth_port_quintile, force
+
+bys QUINTILEmth mth_port_quintile: egen portLev_12A = mean(Levdec)
+bys QUINTILEmth mth_port_quintile: egen portLevipl_12A = mean(Levdec_intpl)
+keep QUINTILEmth mth_port_quintile Lev_12A Levipl_12A portLev_12A portLevipl_12A DecDate
+drop if mi(QUINTILEmth) | mi(mth_port_quintile)
+save "F:/Stephen/analysis/descriptive study/Table2/table1_2A.dta", replace
+restore
+
+**** sort by ME
+preserve
+duplicates drop cusip DecDate, force
+bys DecDate QUINTILEmth: egen Lev_12B_me = mean(Levdec)
+bys DecDate QUINTILEmth: egen Levipl_12B_me = mean(Levdec_intpl)
+duplicates drop DecDate QUINTILEmth, force
+
+bys QUINTILEmth: egen portLev_12B_me = mean(Lev_12B_me)
+bys QUINTILEmth: egen portLevipl_12B_me = mean(Levipl_12B_me)
+keep QUINTILEmth Lev_12B_me Levipl_12B_me portLev_12B_me portLevipl_12B_me DecDate
+drop if mi(QUINTILEmth)
+save "F:/Stephen/analysis/descriptive study/Table2/table1_2B1.dta", replace
+restore
+
+**** sort by BTM
+preserve
+duplicates drop cusip DecDate, force
+bys DecDate QUINTILEdec_BtM: egen Lev_12B_btm = mean(Levdec)
+bys DecDate QUINTILEdec_BtM: egen Levipl_12B_btm = mean(Levdec_intpl)
+duplicates drop DecDate QUINTILEdec_BtM, force
+
+bys QUINTILEdec_BtM: egen portLev_12B_btm = mean(Lev_12B_btm)
+bys QUINTILEdec_BtM: egen portLevipl_12B_btm = mean(Levipl_12B_btm)
+keep QUINTILEdec_BtM Lev_12B_btm Levipl_12B_btm portLev_12B_btm portLevipl_12B_btm DecDate
+drop if mi(QUINTILEdec_BtM)
+save "F:/Stephen/analysis/descriptive study/Table2/table1_2B2.dta", replace
+restore
