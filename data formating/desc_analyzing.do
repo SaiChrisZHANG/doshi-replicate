@@ -190,18 +190,50 @@ bys QUINTILEjun: egen portLev_11B_me = mean(Levdec)
 bys QUINTILEjun: egen portLevipl_11B_me = mean(Levdec_intpl)
 keep QUINTILEjun portLev_11B_me portLevipl_11B_me DecDate
 drop if mi(QUINTILEjun)
-save "F:/Stephen/analysis/descriptive study/Table1/table2_1B1.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table2/table2_1B1.dta", replace
 restore
 
 **** sort by BTM
 preserve
-bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RET*ME), missing
-bys datadate QUINTILEdec_BtM: egen port_11B_w_btm = total(ME), missing
-gen RET_11B_btm = port_11B_ws_btm/port_11B_w_btm
-duplicates drop datadate QUINTILEdec_BtM, force
-
-bys QUINTILEdec_BtM: egen portRET_11B_btm = mean(RET_11B_btm)
-keep QUINTILEdec_BtM portRET_11B_btm RET_11B_btm datadate
+duplicates drop DecDate QUINTILEdec_BtM, force 
+bys QUINTILEdec_BtM: egen portLev_11B_btm = mean(Levdec)
+bys QUINTILEdec_BtM: egen portLevipl_11B_btm = mean(Levdec_intpl)
+keep QUINTILEdec_BtM portLev_11B_btm portLevipl_11B_btm DecDate
 drop if mi(QUINTILEdec_BtM)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_1B2.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table2/table2_1B2.dta", replace
+restore
+
+* Table 2.1.2 ------------------------------------------------------------------
+** 10-by-10: Fama and French 1992
+** mean leverage cross-sectionally, average across time series
+** for portfolio formed in July t, take leverage in December t-1
+
+**** double sorting
+preserve 
+duplicates drop DecDate QUINTILEjun FF_port_quintile, force 
+bys QUINTILEjun FF_port_quintile: egen portLev_11A = mean(Levdec)
+bys QUINTILEjun FF_port_quintile: egen portLevipl_11A = mean(Levdec_intpl)
+keep QUINTILEjun FF_port_quintile portLev_11A portLevipl_11A DecDate
+drop if mi(QUINTILEjun) | mi(FF_port_quintile)
+save "F:/Stephen/analysis/descriptive study/Table2/table2_1A.dta", replace
+restore
+
+**** sort by ME
+preserve
+duplicates drop DecDate QUINTILEjun, force 
+bys QUINTILEjun: egen portLev_11B_me = mean(Levdec)
+bys QUINTILEjun: egen portLevipl_11B_me = mean(Levdec_intpl)
+keep QUINTILEjun portLev_11B_me portLevipl_11B_me DecDate
+drop if mi(QUINTILEjun)
+save "F:/Stephen/analysis/descriptive study/Table2/table2_1B1.dta", replace
+restore
+
+**** sort by BTM
+preserve
+duplicates drop DecDate QUINTILEdec_BtM, force 
+bys QUINTILEdec_BtM: egen portLev_11B_btm = mean(Levdec)
+bys QUINTILEdec_BtM: egen portLevipl_11B_btm = mean(Levdec_intpl)
+keep QUINTILEdec_BtM portLev_11B_btm portLevipl_11B_btm DecDate
+drop if mi(QUINTILEdec_BtM)
+save "F:/Stephen/analysis/descriptive study/Table2/table2_1B2.dta", replace
 restore
