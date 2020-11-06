@@ -190,7 +190,7 @@ bys QUINTILEjun: egen portLev_11B_me = mean(Levdec)
 bys QUINTILEjun: egen portLevipl_11B_me = mean(Levdec_intpl)
 keep QUINTILEjun portLev_11B_me portLevipl_11B_me DecDate
 drop if mi(QUINTILEjun)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_1B1.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table1/table2_1B1.dta", replace
 restore
 
 **** sort by BTM
