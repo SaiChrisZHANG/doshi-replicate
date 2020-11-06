@@ -164,3 +164,12 @@ keep DECILEmth_BtM portRET_22B_btm RET_22B_btm datadate
 drop if mi(DECILEmth_BtM)
 save "F:/Stephen/analysis/descriptive study/Table1/table2_2B2.dta", replace
 restore
+
+
+* ==============================================================================
+* Table 2: Leverage
+* ==============================================================================
+* Table 1.1.1 ------------------------------------------------------------------
+** 5-by-5: Doshi et al 2012
+** VALUE weighted returns cross-sectionally, average across time series
+** yearly adjusted portfolios
