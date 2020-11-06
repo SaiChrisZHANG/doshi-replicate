@@ -168,29 +168,38 @@ restore
 * ==============================================================================
 * Table 2: Leverage
 * ==============================================================================
-* Table 2.1.1 ------------------------------------------------------------------
+* Table 2.1 ------------------------------------------------------------------
 ** 5-by-5: Doshi et al 2012
 ** mean leverage cross-sectionally, average across time series
 ** for portfolio formed in July t, take leverage in December t-1
 
 **** double sorting
 preserve 
-duplicates drop DecDate QUINTILEjun FF_port_quintile, force 
+duplicates drop cusip DecDate, force 
+
+bys DecDate QUINTILEjun FF_port_quintile: egen Lev_11A = mean(Levdec)
+bys DecDate QUINTILEjun FF_port_quintile: egen Levipl_11A = mean(Levdec_intpl)
+duplicates drop DecDate QUINTILEjun FF_port_quintile, force
+
 bys QUINTILEjun FF_port_quintile: egen portLev_11A = mean(Levdec)
 bys QUINTILEjun FF_port_quintile: egen portLevipl_11A = mean(Levdec_intpl)
-keep QUINTILEjun FF_port_quintile portLev_11A portLevipl_11A DecDate
+keep QUINTILEjun FF_port_quintile Lev_11A Levipl_11A portLev_11A portLevipl_11A DecDate
 drop if mi(QUINTILEjun) | mi(FF_port_quintile)
-save "F:/Stephen/analysis/descriptive study/Table2/table2_1A.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table2/table1_1A.dta", replace
 restore
 
 **** sort by ME
 preserve
-duplicates drop DecDate QUINTILEjun, force 
-bys QUINTILEjun: egen portLev_11B_me = mean(Levdec)
-bys QUINTILEjun: egen portLevipl_11B_me = mean(Levdec_intpl)
+duplicates drop cusip DecDate, force
+bys DecDate QUINTILEjun: egen Lev_11B_me = mean(Levdec)
+bys DecDate QUINTILEjun: egen Levipl_11B_me = mean(Levdec_intpl)
+duplicates drop DecDate QUINTILEjun, force
+
+bys QUINTILEjun: egen portLev_11B_me = mean(Lev_11B_me)
+bys QUINTILEjun: egen portLevipl_11B_me = mean(Levipl_11B_me)
 keep QUINTILEjun portLev_11B_me portLevipl_11B_me DecDate
 drop if mi(QUINTILEjun)
-save "F:/Stephen/analysis/descriptive study/Table2/table2_1B1.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table2/table1_1B1.dta", replace
 restore
 
 **** sort by BTM
@@ -200,40 +209,7 @@ bys QUINTILEdec_BtM: egen portLev_11B_btm = mean(Levdec)
 bys QUINTILEdec_BtM: egen portLevipl_11B_btm = mean(Levdec_intpl)
 keep QUINTILEdec_BtM portLev_11B_btm portLevipl_11B_btm DecDate
 drop if mi(QUINTILEdec_BtM)
-save "F:/Stephen/analysis/descriptive study/Table2/table2_1B2.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table2/table1_1B2.dta", replace
 restore
 
-* Table 2.1.2 ------------------------------------------------------------------
-** 10-by-10: Fama and French 1992
-** mean leverage cross-sectionally, average across time series
-** for portfolio formed in July t, take leverage in December t-1
-
-**** double sorting
-preserve 
-duplicates drop DecDate QUINTILEjun FF_port_quintile, force 
-bys QUINTILEjun FF_port_quintile: egen portLev_11A = mean(Levdec)
-bys QUINTILEjun FF_port_quintile: egen portLevipl_11A = mean(Levdec_intpl)
-keep QUINTILEjun FF_port_quintile portLev_11A portLevipl_11A DecDate
-drop if mi(QUINTILEjun) | mi(FF_port_quintile)
-save "F:/Stephen/analysis/descriptive study/Table2/table2_1A.dta", replace
-restore
-
-**** sort by ME
-preserve
-duplicates drop DecDate QUINTILEjun, force 
-bys QUINTILEjun: egen portLev_11B_me = mean(Levdec)
-bys QUINTILEjun: egen portLevipl_11B_me = mean(Levdec_intpl)
-keep QUINTILEjun portLev_11B_me portLevipl_11B_me DecDate
-drop if mi(QUINTILEjun)
-save "F:/Stephen/analysis/descriptive study/Table2/table2_1B1.dta", replace
-restore
-
-**** sort by BTM
-preserve
-duplicates drop DecDate QUINTILEdec_BtM, force 
-bys QUINTILEdec_BtM: egen portLev_11B_btm = mean(Levdec)
-bys QUINTILEdec_BtM: egen portLevipl_11B_btm = mean(Levdec_intpl)
-keep QUINTILEdec_BtM portLev_11B_btm portLevipl_11B_btm DecDate
-drop if mi(QUINTILEdec_BtM)
-save "F:/Stephen/analysis/descriptive study/Table2/table2_1B2.dta", replace
-restore
+* Table 2.2 ------------------------------------------------------------------
