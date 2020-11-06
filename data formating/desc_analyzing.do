@@ -181,8 +181,8 @@ bys DecDate QUINTILEjun FF_port_quintile: egen Lev_11A = mean(Levdec)
 bys DecDate QUINTILEjun FF_port_quintile: egen Levipl_11A = mean(Levdec_intpl)
 duplicates drop DecDate QUINTILEjun FF_port_quintile, force
 
-bys QUINTILEjun FF_port_quintile: egen portLev_11A = mean(Levdec)
-bys QUINTILEjun FF_port_quintile: egen portLevipl_11A = mean(Levdec_intpl)
+bys QUINTILEjun FF_port_quintile: egen portLev_11A = mean(Lev_11A)
+bys QUINTILEjun FF_port_quintile: egen portLevipl_11A = mean(Levipl_11A)
 keep QUINTILEjun FF_port_quintile Lev_11A Levipl_11A portLev_11A portLevipl_11A DecDate
 drop if mi(QUINTILEjun) | mi(FF_port_quintile)
 save "F:/Stephen/analysis/descriptive study/Table2/table1_1A.dta", replace
@@ -225,8 +225,8 @@ bys datadate QUINTILEmth mth_port_quintile: egen Lev_12A = mean(Lev)
 bys datadate QUINTILEmth mth_port_quintile: egen Levipl_12A = mean(Lev_intpl)
 duplicates drop datadate QUINTILEmth mth_port_quintile, force
 
-bys QUINTILEmth mth_port_quintile: egen portLev_12A = mean(Lev)
-bys QUINTILEmth mth_port_quintile: egen portLevipl_12A = mean(Lev_intpl)
+bys QUINTILEmth mth_port_quintile: egen portLev_12A = mean(Lev_12A)
+bys QUINTILEmth mth_port_quintile: egen portLevipl_12A = mean(Levipl_12A)
 keep QUINTILEmth mth_port_quintile Lev_12A Levipl_12A portLev_12A portLevipl_12A datadate
 drop if mi(QUINTILEmth) | mi(mth_port_quintile)
 save "F:/Stephen/analysis/descriptive study/Table2/table1_2A.dta", replace
