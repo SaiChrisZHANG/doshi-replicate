@@ -294,13 +294,13 @@ restore
 preserve
 gen RETul = RetExcess*(1-Levdec)
 gen RETul_intpl = RetExcess*(1-Levdec_intpl)
+
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RETul*ME), missing
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(ME), missing
 gen RETul_11A = port_11A_ws/port_11A_w
-drop port_11A_ws port_11A_w
+drop port_11A_ws
 
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RETul_intpl*ME), missing
-bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(ME), missing
 gen RETul_intpl_11A = port_11A_ws/port_11A_w
 duplicates drop datadate QUINTILEjun FF_port_quintile, force
 
@@ -314,23 +314,36 @@ restore
 **** sort by ME
 preserve
 gen RETul = RetExcess*(1-Lev)
+gen RETul_intpl = RetExcess*(1-Levdec_intpl)
+
 bys datadate QUINTILEjun: egen port_11B_ws_me = total(RETul*ME), missing
 bys datadate QUINTILEjun: egen port_11B_w_me = total(ME), missing
 gen RETul_11B_me = port_11B_ws_me/port_11B_w_me
+drop port_11B_ws_me
+
+bys datadate QUINTILEjun: egen port_11B_ws_me = total(RETul_intpl*ME), missing
+gen RETul_intpl_11B_me = port_11B_ws_me/port_11B_w_me
 duplicates drop datadate QUINTILEjun, force
 
 bys QUINTILEjun: egen portRETul_11B_me = mean(RETul_11B_me)
-keep QUINTILEjun portRET_11B_me RET_11B_me portRETex_11B_me RETex_11B_me datadate
+bys QUINTILEjun: egen portRETul_intpl_11B_me = mean(RETul_intpl_11B_me)
+keep QUINTILEjun portRETul_11B_me RETul_11B_me portRETul_intpl_11B_me RETul_intpl_11B_me datadate
 drop if mi(QUINTILEjun)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_1B1.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table3/table1_1B1.dta", replace
 restore
 
 **** sort by BTM
 preserve
-bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RET*ME), missing
+gen RETul = RetExcess*(1-Lev)
+gen RETul_intpl = RetExcess*(1-Levdec_intpl)
+
+bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RETul*ME), missing
 bys datadate QUINTILEdec_BtM: egen port_11B_w_btm = total(ME), missing
-gen RET_11B_btm = port_11B_ws_btm/port_11B_w_btm
-gen RETex_11B_btm = RET_11B_btm - rfFFWebsite
+gen RETul_11B_btm = port_11B_ws_btm/port_11B_w_btm
+drop port_11B_ws_btm
+
+bys datadate QUINTILEjun: egen port_11B_ws_btm = total(RETul_intpl*ME), missing
+gen RETul_intpl_11B_btm = port_11B_ws_btm/port_11B_w_btm
 duplicates drop datadate QUINTILEdec_BtM, force
 
 bys QUINTILEdec_BtM: egen portRET_11B_btm = mean(RET_11B_btm)
