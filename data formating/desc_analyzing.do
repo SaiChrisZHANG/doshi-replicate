@@ -285,7 +285,11 @@ restore
 * ==============================================================================
 * Table 3: Unlevered Return: the simple way
 * ==============================================================================
-* Table 2.1 ------------------------------------------------------------------
+* Table 3.1 --------------------------------------------------------------------
 ** 5-by-5: Doshi et al 2012
-** mean leverage cross-sectionally, average across time series
+** mean unlevered returns cross-sectionally, average across time series
+** R_A = R_E*(1-Lev(t-1))
 ** for portfolio formed in July t, take leverage in December t-1
+
+
+* Table 3.2 --------------------------------------------------------------------
