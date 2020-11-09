@@ -91,7 +91,8 @@ gen RETex_12B_btm = RET_12B_btm - rfFFWebsite
 duplicates drop datadate DECILEdec_BtM, force
 
 bys DECILEdec_BtM: egen portRET_12B_btm = mean(RET_12B_btm)
-keep DECILEdec_BtM portRET_12B_btm RET_12B_btm datadate
+bys DECILEdec_BtM: egen portRETex_12B_btm = mean(RETex_12B_btm)
+keep DECILEdec_BtM portRET_12B_btm RET_12B_btm portRETex_12B_btm RETex_12B_btm datadate
 drop if mi(DECILEdec_BtM)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_2B2.dta", replace
 restore
