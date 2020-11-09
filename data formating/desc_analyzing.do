@@ -11,22 +11,25 @@
 ** yearly adjusted portfolios
 **** double sorting
 preserve
-bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RetExcess*ME), missing
+bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RET*ME), missing
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(ME), missing
 gen RET_11A = port_11A_ws/port_11A_w
+gen RETex_11A = RET_11A - rfFFWebsite
 duplicates drop datadate QUINTILEjun FF_port_quintile, force
 
 bys QUINTILEjun FF_port_quintile: egen portRET_11A = mean(RET_11A)
-keep QUINTILEjun FF_port_quintile portRET_11A RET_11A datadate
+bys QUINTILEjun FF_port_quintile: egen portRETex_11A = mean(RETex_11A)
+keep QUINTILEjun FF_port_quintile portRET_11A RET_11A portRETex_11A RETex_11A datadate
 drop if mi(QUINTILEjun) | mi(FF_port_quintile)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_1A.dta", replace
 restore
 
 **** sort by ME
 preserve
-bys datadate QUINTILEjun: egen port_11B_ws_me = total(RetExcess*ME), missing
+bys datadate QUINTILEjun: egen port_11B_ws_me = total(RET*ME), missing
 bys datadate QUINTILEjun: egen port_11B_w_me = total(ME), missing
 gen RET_11B_me = port_11B_ws_me/port_11B_w_me
+
 duplicates drop datadate QUINTILEjun, force
 
 bys QUINTILEjun: egen portRET_11B_me = mean(RET_11B_me)
@@ -37,7 +40,7 @@ restore
 
 **** sort by BTM
 preserve
-bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RetExcess*ME), missing
+bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RET*ME), missing
 bys datadate QUINTILEdec_BtM: egen port_11B_w_btm = total(ME), missing
 gen RET_11B_btm = port_11B_ws_btm/port_11B_w_btm
 duplicates drop datadate QUINTILEdec_BtM, force
@@ -54,7 +57,7 @@ restore
 ** yearly adjusted portfolios
 **** double sorting
 preserve
-bys datadate DECILEjun FF_port_decile: egen RET_12A = mean(RetExcess)
+bys datadate DECILEjun FF_port_decile: egen RET_12A = mean(RET)
 duplicates drop datadate DECILEjun FF_port_decile, force
 
 bys DECILEjun FF_port_decile: egen portRET_12A = mean(RET_12A)
@@ -65,7 +68,7 @@ restore
 
 **** sort by ME
 preserve
-bys datadate DECILEjun: egen RET_12B_me = mean(RetExcess)
+bys datadate DECILEjun: egen RET_12B_me = mean(RET)
 duplicates drop datadate DECILEjun, force
 
 bys DECILEjun: egen portRET_12B_me = mean(RET_12B_me)
@@ -76,7 +79,7 @@ restore
 
 **** sort by BTM
 preserve
-bys datadate DECILEdec_BtM: egen RET_12B_btm = mean(RetExcess)
+bys datadate DECILEdec_BtM: egen RET_12B_btm = mean(RET)
 duplicates drop datadate DECILEdec_BtM, force
 
 bys DECILEdec_BtM: egen portRET_12B_btm = mean(RET_12B_btm)
@@ -91,7 +94,7 @@ restore
 ** monthly adjusted portfolios
 **** double sorting
 preserve
-bys datadate QUINTILEmth mth_port_quintile: egen port_21A_ws = total(RetExcess*ME), missing
+bys datadate QUINTILEmth mth_port_quintile: egen port_21A_ws = total(RET*ME), missing
 bys datadate QUINTILEmth mth_port_quintile: egen port_21A_w = total(ME), missing
 gen RET_21A = port_21A_ws/port_21A_w
 duplicates drop datadate QUINTILEmth mth_port_quintile, force
@@ -104,7 +107,7 @@ restore
 
 **** sort by ME
 preserve
-bys datadate QUINTILEmth: egen port_21B_ws_me = total(RetExcess*ME), missing
+bys datadate QUINTILEmth: egen port_21B_ws_me = total(RET*ME), missing
 bys datadate QUINTILEmth: egen port_21B_w_me = total(ME), missing
 gen RET_21B_me = port_21B_ws_me/port_21B_w_me
 duplicates drop datadate QUINTILEmth, force
@@ -117,7 +120,7 @@ restore
 
 **** sort by BTM
 preserve
-bys datadate QUINTILEmth_BtM: egen port_21B_ws_btm = total(RetExcess*ME), missing
+bys datadate QUINTILEmth_BtM: egen port_21B_ws_btm = total(RET*ME), missing
 bys datadate QUINTILEmth_BtM: egen port_21B_w_btm = total(ME), missing
 gen RET_21B_btm = port_21B_ws_btm/port_21B_w_btm
 duplicates drop datadate QUINTILEmth_BtM, force
@@ -134,7 +137,7 @@ restore
 ** monthly adjusted portfolios
 **** double sorting
 preserve
-bys datadate DECILEmth mth_port_decile: egen RET_22A = mean(RetExcess)
+bys datadate DECILEmth mth_port_decile: egen RET_22A = mean(RET)
 duplicates drop datadate DECILEmth mth_port_decile, force
 
 bys DECILEmth mth_port_decile: egen portRET_22A = mean(RET_22A)
@@ -145,7 +148,7 @@ restore
 
 **** sort by ME
 preserve
-bys datadate DECILEmth: egen RET_22B_me = mean(RetExcess)
+bys datadate DECILEmth: egen RET_22B_me = mean(RET)
 duplicates drop datadate DECILEmth, force
 
 bys DECILEmth: egen portRET_22B_me = mean(RET_22B_me)
@@ -156,7 +159,7 @@ restore
 
 **** sort by BTM
 preserve
-bys datadate DECILEmth_BtM: egen RET_22B_btm = mean(RetExcess)
+bys datadate DECILEmth_BtM: egen RET_22B_btm = mean(RET)
 duplicates drop datadate DECILEmth_BtM, force
 
 bys DECILEmth_BtM: egen portRET_22B_btm = mean(RET_22B_btm)
