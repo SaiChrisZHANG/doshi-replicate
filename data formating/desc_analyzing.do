@@ -293,4 +293,5 @@ restore
 
 
 * Table 3.2 --------------------------------------------------------------------
-** 5-
+** mean unlevered returns cross-sectionally, average across time series
+** monthly adjusted portfolios
