@@ -29,10 +29,11 @@ preserve
 bys datadate QUINTILEjun: egen port_11B_ws_me = total(RET*ME), missing
 bys datadate QUINTILEjun: egen port_11B_w_me = total(ME), missing
 gen RET_11B_me = port_11B_ws_me/port_11B_w_me
-
+gen RETex_11B_me = RET_11B_me - rfFFWebsite
 duplicates drop datadate QUINTILEjun, force
 
 bys QUINTILEjun: egen portRET_11B_me = mean(RET_11B_me)
+bys QUINTILEjun: egen portRETex_11B_me = mean(RETex_11B_me)
 keep QUINTILEjun portRET_11B_me RET_11B_me datadate
 drop if mi(QUINTILEjun)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_1B1.dta", replace
