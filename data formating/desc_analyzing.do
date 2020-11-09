@@ -106,10 +106,12 @@ preserve
 bys datadate QUINTILEmth mth_port_quintile: egen port_21A_ws = total(RET*ME), missing
 bys datadate QUINTILEmth mth_port_quintile: egen port_21A_w = total(ME), missing
 gen RET_21A = port_21A_ws/port_21A_w
+gen RETex_21A = RET_21A - rfFFWebsite
 duplicates drop datadate QUINTILEmth mth_port_quintile, force
 
 bys QUINTILEmth mth_port_quintile: egen portRET_21A = mean(RET_21A)
-keep QUINTILEmth mth_port_quintile portRET_21A RET_21A datadate
+bys QUINTILEmth mth_port_quintile: egen portRETex_21A = mean(RETex_21A)
+keep QUINTILEmth mth_port_quintile portRET_21A RET_21A portRETex_21A RETex_21A datadate
 drop if mi(QUINTILEmth) | mi(mth_port_quintile)
 save "F:/Stephen/analysis/descriptive study/Table1/table2_1A.dta", replace
 restore
