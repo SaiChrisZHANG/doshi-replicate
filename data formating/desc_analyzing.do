@@ -170,7 +170,8 @@ gen RETex_22B_me = RET_22B_me - rfFFWebsite
 duplicates drop datadate DECILEmth, force
 
 bys DECILEmth: egen portRET_22B_me = mean(RET_22B_me)
-keep DECILEmth portRET_22B_me RET_22B_me datadate
+bys DECILEmth: egen portRETex_22B_me = mean(RETex_22B_me)
+keep DECILEmth portRET_22B_me RET_22B_me portRETex_22B_me RETex_22B_me datadate
 drop if mi(DECILEmth)
 save "F:/Stephen/analysis/descriptive study/Table1/table2_2B1.dta", replace
 restore
@@ -178,10 +179,12 @@ restore
 **** sort by BTM
 preserve
 bys datadate DECILEmth_BtM: egen RET_22B_btm = mean(RET)
+gen RETex_22B_btm = RET_22B_btm - rfFFWebsite
 duplicates drop datadate DECILEmth_BtM, force
 
 bys DECILEmth_BtM: egen portRET_22B_btm = mean(RET_22B_btm)
-keep DECILEmth_BtM portRET_22B_btm RET_22B_btm datadate
+bys DECILEmth_BtM: egen portRETex_22B_btm = mean(RETex_22B_btm)
+keep DECILEmth_BtM portRET_22B_btm RET_22B_btm portRETex_22B_btm RETex_22B_btm datadate
 drop if mi(DECILEmth_BtM)
 save "F:/Stephen/analysis/descriptive study/Table1/table2_2B2.dta", replace
 restore
@@ -278,3 +281,11 @@ keep QUINTILEmth_BtM Lev_12B_btm Levipl_12B_btm portLev_12B_btm portLevipl_12B_b
 drop if mi(QUINTILEmth_BtM)
 save "F:/Stephen/analysis/descriptive study/Table2/table1_2B2.dta", replace
 restore
+
+* ==============================================================================
+* Table 3: Unlevered Return: the simple way
+* ==============================================================================
+* Table 2.1 ------------------------------------------------------------------
+** 5-by-5: Doshi et al 2012
+** mean leverage cross-sectionally, average across time series
+** for portfolio formed in July t, take leverage in December t-1
