@@ -301,10 +301,12 @@ drop port_11A_ws port_11A_w
 
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RETul_intpl*ME), missing
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(ME), missing
+gen RETul_intpl_11A = port_11A_ws/port_11A_w
 duplicates drop datadate QUINTILEjun FF_port_quintile, force
 
 bys QUINTILEjun FF_port_quintile: egen portRETul_11A = mean(RETul_11A)
-keep QUINTILEjun FF_port_quintile portRETul_11A RETul_11A datadate
+bys QUINTILEjun FF_port_quintile: egen portRETul_intpl_11A = mean(RETul_intpl_11A)
+keep QUINTILEjun FF_port_quintile portRETul_11A RETul_11A portRETul_intpl_11A RETul_intpl_11A datadate
 drop if mi(QUINTILEjun) | mi(FF_port_quintile)
 save "F:/Stephen/analysis/descriptive study/Table3/table1_1A.dta", replace
 restore
