@@ -313,7 +313,7 @@ restore
 
 **** sort by ME
 preserve
-gen RETul = RetExcess*(1-Lev)
+gen RETul = RetExcess*(1-Levdec)
 gen RETul_intpl = RetExcess*(1-Levdec_intpl)
 
 bys datadate QUINTILEjun: egen port_11B_ws_me = total(RETul*ME), missing
@@ -334,7 +334,7 @@ restore
 
 **** sort by BTM
 preserve
-gen RETul = RetExcess*(1-Lev)
+gen RETul = RetExcess*(1-Levdec)
 gen RETul_intpl = RetExcess*(1-Levdec_intpl)
 
 bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RETul*ME), missing
@@ -342,17 +342,78 @@ bys datadate QUINTILEdec_BtM: egen port_11B_w_btm = total(ME), missing
 gen RETul_11B_btm = port_11B_ws_btm/port_11B_w_btm
 drop port_11B_ws_btm
 
-bys datadate QUINTILEjun: egen port_11B_ws_btm = total(RETul_intpl*ME), missing
+bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RETul_intpl*ME), missing
 gen RETul_intpl_11B_btm = port_11B_ws_btm/port_11B_w_btm
 duplicates drop datadate QUINTILEdec_BtM, force
 
-bys QUINTILEdec_BtM: egen portRET_11B_btm = mean(RET_11B_btm)
-bys QUINTILEdec_BtM: egen portRETex_11B_btm = mean(RETex_11B_btm)
-keep QUINTILEdec_BtM portRET_11B_btm RET_11B_btm portRETex_11B_btm RETex_11B_btm datadate
+bys QUINTILEdec_BtM: egen portRETul_11B_btm = mean(RETul_11B_btm)
+bys QUINTILEdec_BtM: egen portRETul_intpl_11B_btm = mean(RETul_intpl_11B_btm)
+keep QUINTILEdec_BtM portRETul_11B_btm RETul_11B_btm portRETul_intpl_11B_btm RETul_intpl_11B_btm datadate
 drop if mi(QUINTILEdec_BtM)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_1B2.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table3/table1_1B2.dta", replace
 restore
 
 * Table 3.2 --------------------------------------------------------------------
 ** mean unlevered returns cross-sectionally, average across time series
 ** monthly adjusted portfolios
+preserve
+gen RETul = RetExcess*(1-Lev)
+gen RETul_intpl = RetExcess*(1-Lev_intpl)
+
+bys datadate QUINTILEmth mth_port_quintile: egen port_11A_ws = total(RETul*ME), missing
+bys datadate QUINTILEmth mth_port_quintile: egen port_11A_w = total(ME), missing
+gen RETul_11A = port_11A_ws/port_11A_w
+drop port_11A_ws
+
+bys datadate QUINTILEmth mth_port_quintile: egen port_11A_ws = total(RETul_intpl*ME), missing
+gen RETul_intpl_11A = port_11A_ws/port_11A_w
+duplicates drop datadate QUINTILEmth mth_port_quintile, force
+
+bys QUINTILEmth mth_port_quintile: egen portRETul_11A = mean(RETul_11A)
+bys QUINTILEmth mth_port_quintile: egen portRETul_intpl_11A = mean(RETul_intpl_11A)
+keep QUINTILEmth mth_port_quintile portRETul_11A RETul_11A portRETul_intpl_11A RETul_intpl_11A datadate
+drop if mi(QUINTILEmth) | mi(mth_port_quintile)
+save "F:/Stephen/analysis/descriptive study/Table3/table2_1A.dta", replace
+restore
+
+**** sort by ME
+preserve
+gen RETul = RetExcess*(1-Lev)
+gen RETul_intpl = RetExcess*(1-Lev_intpl)
+
+bys datadate QUINTILEmth: egen port_11B_ws_me = total(RETul*ME), missing
+bys datadate QUINTILEmth: egen port_11B_w_me = total(ME), missing
+gen RETul_11B_me = port_11B_ws_me/port_11B_w_me
+drop port_11B_ws_me
+
+bys datadate QUINTILEmth: egen port_11B_ws_me = total(RETul_intpl*ME), missing
+gen RETul_intpl_11B_me = port_11B_ws_me/port_11B_w_me
+duplicates drop datadate QUINTILEmth, force
+
+bys QUINTILEmth: egen portRETul_11B_me = mean(RETul_11B_me)
+bys QUINTILEmth: egen portRETul_intpl_11B_me = mean(RETul_intpl_11B_me)
+keep QUINTILEmth portRETul_11B_me RETul_11B_me portRETul_intpl_11B_me RETul_intpl_11B_me datadate
+drop if mi(QUINTILEmth)
+save "F:/Stephen/analysis/descriptive study/Table3/table2_1B1.dta", replace
+restore
+
+**** sort by BTM
+preserve
+gen RETul = RetExcess*(1-Lev)
+gen RETul_intpl = RetExcess*(1-Lev_intpl)
+
+bys datadate QUINTILEmth_BtM: egen port_11B_ws_btm = total(RETul*ME), missing
+bys datadate QUINTILEmth_BtM: egen port_11B_w_btm = total(ME), missing
+gen RETul_11B_btm = port_11B_ws_btm/port_11B_w_btm
+drop port_11B_ws_btm
+
+bys datadate QUINTILEmth_BtM: egen port_11B_ws_btm = total(RETul_intpl*ME), missing
+gen RETul_intpl_11B_btm = port_11B_ws_btm/port_11B_w_btm
+duplicates drop datadate QUINTILEmth_BtM, force
+
+bys QUINTILEmth_BtM: egen portRETul_11B_btm = mean(RETul_11B_btm)
+bys QUINTILEmth_BtM: egen portRETul_intpl_11B_btm = mean(RETul_intpl_11B_btm)
+keep QUINTILEmth_BtM portRETul_11B_btm RETul_11B_btm portRETul_intpl_11B_btm RETul_intpl_11B_btm datadate
+drop if mi(QUINTILEmth_BtM)
+save "F:/Stephen/analysis/descriptive study/Table3/table2_1B2.dta", replace
+restore
