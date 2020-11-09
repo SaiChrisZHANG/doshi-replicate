@@ -292,30 +292,32 @@ restore
 ** for portfolio formed in July t, take leverage in December t-1
 
 preserve
-gen RETul = 
-bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RET*ME), missing
+gen RETul = RetExcess*(1-Levdec)
+gen RETul_intpl = RetExcess*(1-Levdec_intpl)
+bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RETul*ME), missing
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(ME), missing
-gen RET_11A = port_11A_ws/port_11A_w
-gen RETex_11A = RET_11A - rfFFWebsite
+gen RETul_11A = port_11A_ws/port_11A_w
+drop port_11A_ws port_11A_w
+
+bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RETul_intpl*ME), missing
+bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(ME), missing
 duplicates drop datadate QUINTILEjun FF_port_quintile, force
 
-bys QUINTILEjun FF_port_quintile: egen portRET_11A = mean(RET_11A)
-bys QUINTILEjun FF_port_quintile: egen portRETex_11A = mean(RETex_11A)
-keep QUINTILEjun FF_port_quintile portRET_11A RET_11A portRETex_11A RETex_11A datadate
+bys QUINTILEjun FF_port_quintile: egen portRETul_11A = mean(RETul_11A)
+keep QUINTILEjun FF_port_quintile portRETul_11A RETul_11A datadate
 drop if mi(QUINTILEjun) | mi(FF_port_quintile)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_1A.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table3/table1_1A.dta", replace
 restore
 
 **** sort by ME
 preserve
-bys datadate QUINTILEjun: egen port_11B_ws_me = total(RET*ME), missing
+gen RETul = RetExcess*(1-Lev)
+bys datadate QUINTILEjun: egen port_11B_ws_me = total(RETul*ME), missing
 bys datadate QUINTILEjun: egen port_11B_w_me = total(ME), missing
-gen RET_11B_me = port_11B_ws_me/port_11B_w_me
-gen RETex_11B_me = RET_11B_me - rfFFWebsite
+gen RETul_11B_me = port_11B_ws_me/port_11B_w_me
 duplicates drop datadate QUINTILEjun, force
 
-bys QUINTILEjun: egen portRET_11B_me = mean(RET_11B_me)
-bys QUINTILEjun: egen portRETex_11B_me = mean(RETex_11B_me)
+bys QUINTILEjun: egen portRETul_11B_me = mean(RETul_11B_me)
 keep QUINTILEjun portRET_11B_me RET_11B_me portRETex_11B_me RETex_11B_me datadate
 drop if mi(QUINTILEjun)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_1B1.dta", replace
