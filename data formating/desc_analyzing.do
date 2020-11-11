@@ -491,8 +491,8 @@ restore
 ** mean unlevered returns + risk-free rate cross-sectionally, average across time series
 ** monthly adjusted portfolios
 preserve
-gen RETul = RetExcess*(1-Lev)
-gen RETul_intpl = RetExcess*(1-Lev_intpl)
+gen RETul = RetExcess*(1-Lev) + rfFFWebsite
+gen RETul_intpl = RetExcess*(1-Lev_intpl) + rfFFWebsite
 
 bys datadate QUINTILEmth mth_port_quintile: egen port_11A_ws = total(RETul*ME), missing
 bys datadate QUINTILEmth mth_port_quintile: egen port_11A_w = total(ME), missing
@@ -507,13 +507,13 @@ bys QUINTILEmth mth_port_quintile: egen portRETul_11A = mean(RETul_11A)
 bys QUINTILEmth mth_port_quintile: egen portRETul_intpl_11A = mean(RETul_intpl_11A)
 keep QUINTILEmth mth_port_quintile portRETul_11A RETul_11A portRETul_intpl_11A RETul_intpl_11A datadate
 drop if mi(QUINTILEmth) | mi(mth_port_quintile)
-save "F:/Stephen/analysis/descriptive study/Table3/table2_1A.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table3/table3_1A.dta", replace
 restore
 
 **** sort by ME
 preserve
-gen RETul = RetExcess*(1-Lev)
-gen RETul_intpl = RetExcess*(1-Lev_intpl)
+gen RETul = RetExcess*(1-Lev) + rfFFWebsite
+gen RETul_intpl = RetExcess*(1-Lev_intpl) + rfFFWebsite
 
 bys datadate QUINTILEmth: egen port_11B_ws_me = total(RETul*ME), missing
 bys datadate QUINTILEmth: egen port_11B_w_me = total(ME), missing
@@ -528,13 +528,13 @@ bys QUINTILEmth: egen portRETul_11B_me = mean(RETul_11B_me)
 bys QUINTILEmth: egen portRETul_intpl_11B_me = mean(RETul_intpl_11B_me)
 keep QUINTILEmth portRETul_11B_me RETul_11B_me portRETul_intpl_11B_me RETul_intpl_11B_me datadate
 drop if mi(QUINTILEmth)
-save "F:/Stephen/analysis/descriptive study/Table3/table2_1B1.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table3/table3_1B1.dta", replace
 restore
 
 **** sort by BTM
 preserve
-gen RETul = RetExcess*(1-Lev)
-gen RETul_intpl = RetExcess*(1-Lev_intpl)
+gen RETul = RetExcess*(1-Lev) + rfFFWebsite
+gen RETul_intpl = RetExcess*(1-Lev_intpl) + rfFFWebsite
 
 bys datadate QUINTILEmth_BtM: egen port_11B_ws_btm = total(RETul*ME), missing
 bys datadate QUINTILEmth_BtM: egen port_11B_w_btm = total(ME), missing
@@ -549,5 +549,5 @@ bys QUINTILEmth_BtM: egen portRETul_11B_btm = mean(RETul_11B_btm)
 bys QUINTILEmth_BtM: egen portRETul_intpl_11B_btm = mean(RETul_intpl_11B_btm)
 keep QUINTILEmth_BtM portRETul_11B_btm RETul_11B_btm portRETul_intpl_11B_btm RETul_intpl_11B_btm datadate
 drop if mi(QUINTILEmth_BtM)
-save "F:/Stephen/analysis/descriptive study/Table3/table2_1B2.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table3/table3_1B2.dta", replace
 restore
