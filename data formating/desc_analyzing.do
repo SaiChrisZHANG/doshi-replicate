@@ -287,7 +287,7 @@ restore
 * ==============================================================================
 ** 5-by-5: Doshi et al 2012
 * Table 3.1 --------------------------------------------------------------------
-** mean unlevered returns cross-sectionally, average across time series
+** mean unlevered excess returns cross-sectionally, average across time series
 ** R_A = R_E*(1-Lev(t-1)), 
 ** for portfolio formed in July t, take leverage in December t-1
 
@@ -354,7 +354,7 @@ save "F:/Stephen/analysis/descriptive study/Table3/table1_1B2.dta", replace
 restore
 
 * Table 3.2 --------------------------------------------------------------------
-** mean unlevered returns cross-sectionally, average across time series
+** mean unlevered excess returns cross-sectionally, average across time series
 ** monthly adjusted portfolios
 preserve
 gen RETul = RetExcess*(1-Lev)
