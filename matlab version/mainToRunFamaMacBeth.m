@@ -5,12 +5,12 @@ measures, it will compute the pre-betas, post betas, and run the
 fama-macbeth regression. Fama-MacBeth regression with 5 lags for the autocorrelation adjustment. 
 %}
 
-function mainToRunFamaMacBeth(RetSeries,LagAssetId,d,File,Mkt)
+function mainToRunFamaMacBeth(RetSeries,LagAssetId,dt,File,Mkt)
 
     %{
     RetSeries: The return measure (variable) for which we want to perform Fama-MacBeth regression
     LagAssetId: Set this equal to 1 if want to use Lagged Asset Value to create the market portfolio instead of using Lagged market equity
-    d: This is the table that contains all the required data, see pseudo data file
+    dt: This is the table that contains all the required data, see pseudo data file
     File: This will specify the output file name
     Mkt: If market portfolio is already computed, use it as input. In that
     case, the code will skip the computation of the market portfolio based on
@@ -41,16 +41,16 @@ function mainToRunFamaMacBeth(RetSeries,LagAssetId,d,File,Mkt)
     BetaSeries = 'PostBeta';
     
     %Compute the Pre-Betas
-    [d,Mkt] =  ComputePreBetas(RetSeries,LagAssetId,d,Mkt);
+    [dt,Mkt] =  ComputePreBetas(RetSeries,LagAssetId,dt,Mkt);
     
     %compute returns of the 100 portfolios, assign the betas of these 100 portfolios to each firm
-    [d,allPtf] = getBetaPortfoliosJune(d,Mkt);
+    [dt,allPtf] = getBetaPortfoliosJune(dt,Mkt);
     cd(strcat(Path,'\output'));
-    save(strcat('June_',RetSeries,'_priorto',File,'.mat'),'d','RetSeries','BetaSeries');
+    save(strcat('June_',RetSeries,'_priorto',File,'.mat'),'dt','RetSeries','BetaSeries');
     
     %perform FamaMacBeth
     cd(Path)
-    Final = performFamaMacBeth(d,RetSeries,BetaSeries);
+    Final = performFamaMacBeth(dt,RetSeries,BetaSeries);
     cd(strcat(Path,'\output'));
     save(File,'Final','allPtf','Mkt');
     
