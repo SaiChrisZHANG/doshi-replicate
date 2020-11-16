@@ -183,7 +183,7 @@ drop if _merge==2
 drop _merge
 
 * merge with Fama-French risk free rate ========================================
-merge m:1 yyyymm using "F:/Stephen/french_website/french_fama", keepusing(rfFFWebsite)
+merge m:1 yyyymm using "F:/Stephen/french_website/french_fama.dta", keepusing(rfFFWebsite)
 drop if _merge==2
 drop _merge
 replace rfFFWebsite = rfFFWebsite/100 /*from percentage to number*/
@@ -453,6 +453,14 @@ replace QUINTILEmth_BtM = ceil(QUINTILEmth_BtM/2)
 * ==============================================================================
 * Generate variables used for Fama-French regression
 * ==============================================================================
+* merge with market returns from Kennith French's website
+merge m:1 yyyymm using "F:/Stephen/french_website/french_fama.dta", keepusing(Mkr_Ret)
+drop if _merge==2
+drop _merge
+replace rfFFWebsite = rfFFWebsite/100 /*from percentage to number*/
+gen RetExcess = RET - rfFFWebsite
+
+
 * generate Debt
 gen Debt = ltq_f
 
