@@ -454,11 +454,12 @@ replace QUINTILEmth_BtM = ceil(QUINTILEmth_BtM/2)
 * Generate variables used for Fama-French regression
 * ==============================================================================
 * merge with market returns from Kennith French's website
-merge m:1 yyyymm using "F:/Stephen/french_website/french_fama.dta", keepusing(Mkr_Ret)
+merge m:1 yyyymm using "F:/Stephen/french_website/french_fama.dta", keepusing(Mkt_prem)
 drop if _merge==2
 drop _merge
-replace rfFFWebsite = rfFFWebsite/100 /*from percentage to number*/
-gen RetExcess = RET - rfFFWebsite
+replace Mkt_prem = Mkt_prem/100 /*from percentage to number*/
+
+
 
 
 * generate Debt
