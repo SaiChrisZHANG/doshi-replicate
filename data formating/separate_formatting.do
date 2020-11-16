@@ -451,7 +451,7 @@ gen QUINTILEmth_BtM = DECILEmth_BtM
 replace QUINTILEmth_BtM = ceil(QUINTILEmth_BtM/2)
 
 * ==============================================================================
-* Generate variables used for Merton estimation
+* Generate variables used for Fama-French regression
 * ==============================================================================
 * generate Debt
 gen Debt = ltq_f
