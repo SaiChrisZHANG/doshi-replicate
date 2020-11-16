@@ -3,7 +3,6 @@
 function [d,allPtf] = getBetaPortfoliosJune(d,Mkt)
 
 %% this function computes the decile portfolios for betas using the NYSE cut-offs
-%%
 [d,Dates] = assignBetaDecilePortfolios(d);
 
 %to double check
