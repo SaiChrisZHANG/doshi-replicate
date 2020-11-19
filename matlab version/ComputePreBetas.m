@@ -6,7 +6,7 @@ dt = getFirmSpecificData(RetSeries,dt);
 
 %compute excess market returns
 if isempty(Mkt)
-    Mkt = getMarketData(d,LagAssetId);
+    Mkt = getMarketData(dt,LagAssetId);
 end
 
 Mkt(:,3) = NaN;
@@ -15,29 +15,29 @@ Mkt(2:end,3) = Mkt(1:end-1,2);
 disp(nanmean(Mkt(:,2:3)))
 
 %compute firm-specific betas and assign to next year
-d = getFirmBetas(d,Mkt);
+dt = getFirmBetas(dt,Mkt);
 
-function d = getFirmSpecificData(RetSeries,d)
-d.Name = eval(strcat('d.',RetSeries));
-d.NameExcess = d.Name - d.rfFFWebsite;
+function dt = getFirmSpecificData(RetSeries,dt)
+dt.Name = eval(strcat('dt.',RetSeries));
+dt.NameExcess = dt.Name - dt.rfFFWebsite;
 
 
-function Mkt = getMarketData(d,LagAssetId) 
+function Mkt = getMarketData(dt,LagAssetId) 
 % only called when market excess returns are not available (e.g. asset-value weighted one)
 % equity value weighted portfolio returns can be retrieved from Kennith French's website
 
-Dates = unique(d.yyyymm);
+Dates = unique(dt.yyyymm);
 Dates(isnan(Dates))  = [];
 Dates(Dates<197107) = []; % keep unique dates before 1971 Jul.
 
 for j = 1:length(Dates)
     
-    loc = find(d.yyyymm == Dates(j));
+    loc = find(dt.yyyymm == Dates(j));
     
     if LagAssetId == 1
-        y = [d.NameExcess(loc),d.AssetValueLag(loc)]; %return and equity value
+        y = [dt.NameExcess(loc),dt.AssetValueLag(loc)]; %return and equity value
     else
-        y = [d.NameExcess(loc),d.meLag(loc)]; %return and asset value
+        y = [dt.NameExcess(loc),dt.meLag(loc)]; %return and asset value
     end
     
     [ir,ic] = find(isnan(y) == 1);
