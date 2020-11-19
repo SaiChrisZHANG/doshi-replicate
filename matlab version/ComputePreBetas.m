@@ -51,16 +51,16 @@ for j = 1:length(Dates)
 
 end
     
-function d = getFirmBetas(d,Mkt)
+function dt = getFirmBetas(dt,Mkt)
 
 %%run the capm model with lagged market to eestimate the betas using past five year of data
-Dates = unique(d.yyyymm);
+Dates = unique(dt.yyyymm);
 Dates(isnan(Dates))  = [];
 Dates(Dates<197101) = [];
 
-Perm = unique(d.PERMNO);
+Perm = unique(dt.PERMNO);
 Perm(isnan(Perm)) = [];
-d1 = [];
+dt1 = [];
 disp(size(Perm))
 
 %running the estimation firm-by-firm
@@ -69,17 +69,17 @@ parfor k = 1:length(Perm) %loop over firms
     if mod(k,100) == 0
         disp(k);
     end
-    loc = d.PERMNO == Perm(k);
-    temp = d(loc,:);
+    loc = dt.PERMNO == Perm(k);
+    temp = dt(loc,:);
     
     %for each firm compute the betas
     temp = computeFirmBetas(temp,Mkt); 
     % returns the june beta both as next year's beta and a seperate column
-    d1 = [d1;temp];
+    dt1 = [dt1;temp];
     
 end
 
-d = d1; clear d1;
+dt = dt1; clear dt1;
 
 function temp = computeFirmBetas(temp,Mkt)
 temp.FirmBetas = NaN*temp.yyyymm;
@@ -93,7 +93,6 @@ for j = 1971:2012 %loop over years
     y = [temp.yyyymm(loc), temp.NameExcess(loc)];
     [ir,~] = find(isnan(y) == 1);
     y(ir,:) = [];
-    
     
     %perform the capm regression if at least 24 monthly data points available
     if size(y,1) >= 24
