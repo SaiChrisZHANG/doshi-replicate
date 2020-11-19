@@ -17,8 +17,8 @@ disp(nanmean(Mkt(:,2:3)))
 %compute firm-specific betas and assign to next year
 d = getFirmBetas(d,Mkt);
 
-function d = getFirmSpecificData(ReturnSeries,d)
-d.Name = eval(strcat('d.',ReturnSeries));
+function d = getFirmSpecificData(RetSeries,d)
+d.Name = eval(strcat('d.',RetSeries));
 d.NameExcess = d.Name - d.rfFFWebsite;
 
 
