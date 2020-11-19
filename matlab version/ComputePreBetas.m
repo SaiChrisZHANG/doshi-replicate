@@ -2,7 +2,7 @@
 function [d,Mkt] = ComputePreBetas(RetSeries,LagAssetId,d,Mkt)
 
 %% read the returns data i.e., compute excess returns
-d = getFirmSpecificData(ReturnSeries,d);
+d = getFirmSpecificData(RetSeries,d);
 
 %compute excess market returns
 if isempty(Mkt)
