@@ -1,5 +1,5 @@
 %This function is called by mainToRunFamaMacBeth
-function [d,Mkt] = ComputePreBetas(ReturnSeries,LagAssetId,d,Mkt)
+function [d,Mkt] = ComputePreBetas(RetSeries,LagAssetId,d,Mkt)
 
 %% read the returns data i.e., compute excess returns
 d = getFirmSpecificData(ReturnSeries,d);
