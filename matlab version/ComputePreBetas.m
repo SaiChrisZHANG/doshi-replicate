@@ -84,6 +84,7 @@ dt = dt1; clear dt1;
 function temp = computeFirmBetas(temp,Mkt)
 temp.FirmBetas = NaN*temp.yyyymm;
 temp.JuneFirmBetas = temp.FirmBetas;
+
 for j = 1971:2012 %loop over years
     
     %identify June, as well as identify past five year 
