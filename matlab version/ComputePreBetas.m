@@ -21,7 +21,6 @@ function dt = getFirmSpecificData(RetSeries,dt)
 dt.Name = eval(strcat('dt.',RetSeries));
 dt.NameExcess = dt.Name - dt.rfFFWebsite;
 
-
 function Mkt = getMarketData(dt,LagAssetId) 
 % only called when market excess returns are not available (e.g. asset-value weighted one)
 % equity value weighted portfolio returns can be retrieved from Kennith French's website
