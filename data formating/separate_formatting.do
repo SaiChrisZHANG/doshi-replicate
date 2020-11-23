@@ -462,8 +462,7 @@ replace Mkt_prem = Mkt_prem/100 /*from percentage to number*/
 * convert the data set into matlab format
 ** This would require package "matwrite"
 preserve
-keep yyyymm Mkt_prem cusip 
-
+keep yyyymm Mkt_prem cusip RET BEdec atdec ME MElag Mejun Medec DECILEjun DecDate ltq_f ltq_f_intpl rfFFWebsite RetExcess Lev Lev_intpl Levdec Levdec_intpl LevLag exchcd EquityVolatility
 
 * generate Debt
 gen Debt = ltq_f
