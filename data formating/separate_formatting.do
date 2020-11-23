@@ -462,7 +462,7 @@ replace Mkt_prem = Mkt_prem/100 /*from percentage to number*/
 * convert the data set into matlab format
 ** This would require 
 preserve
-keep yyyymm 
+keep yyyymm Mkt_prem cusip 
 
 
 * generate Debt
