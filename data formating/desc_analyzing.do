@@ -335,8 +335,8 @@ restore
 ** for portfolio formed in Month t, take leverage in Month t-1
 
 preserve
-gen RETul = RetExcess*(1-Levdec)
-gen RETul_intpl = RetExcess*(1-Levdec_intpl)
+gen RETul = RetExcess*(1-Lev)
+gen RETul_intpl = RetExcess*(1-Lev_intpl)
 
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RETul*ME), missing
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(ME), missing
@@ -397,14 +397,14 @@ save "F:/Stephen/analysis/descriptive study/Table3/table1_1B2.dta", replace
 restore
 
 ** 5-by-5: Doshi et al 2012
-* Table 3.3 --------------------------------------------------------------------
+* Table 3.2.2 --------------------------------------------------------------------
 ** mean unlevered excess returns + risk-free rate cross-sectionally, average across time series
-** R_A = R_E*(1-Lev(t-1)), 
+** R_A = R_E*(1-Lev(t-1))
 ** for portfolio formed in Month t, take leverage in Month t-1
 
 preserve
-gen RETul = RetExcess*(1-Levdec) + rfFFWebsite
-gen RETul_intpl = RetExcess*(1-Levdec_intpl) + rfFFWebsite
+gen RETul = RetExcess*(1-Lev) + rfFFWebsite
+gen RETul_intpl = RetExcess*(1-Lev_intpl) + rfFFWebsite
 
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RETul*ME), missing
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(ME), missing
@@ -424,8 +424,8 @@ restore
 
 **** sort by ME
 preserve
-gen RETul = RetExcess*(1-Levdec) + rfFFWebsite
-gen RETul_intpl = RetExcess*(1-Levdec_intpl) + rfFFWebsite
+gen RETul = RetExcess*(1-Lev) + rfFFWebsite
+gen RETul_intpl = RetExcess*(1-Lev_intpl) + rfFFWebsite
 
 bys datadate QUINTILEjun: egen port_11B_ws_me = total(RETul*ME), missing
 bys datadate QUINTILEjun: egen port_11B_w_me = total(ME), missing
@@ -445,8 +445,8 @@ restore
 
 **** sort by BTM
 preserve
-gen RETul = RetExcess*(1-Levdec) + rfFFWebsite
-gen RETul_intpl = RetExcess*(1-Levdec_intpl) + rfFFWebsite
+gen RETul = RetExcess*(1-Lev) + rfFFWebsite
+gen RETul_intpl = RetExcess*(1-Lev_intpl) + rfFFWebsite
 
 bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RETul*ME), missing
 bys datadate QUINTILEdec_BtM: egen port_11B_w_btm = total(ME), missing
