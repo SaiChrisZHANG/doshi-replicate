@@ -3,7 +3,7 @@
 * This project is prepared for the project of Prof. Stephen Schaefer
 
 * ==============================================================================
-* Table 1: Returns by portfolios
+* Table 1: Returns by portfolios (Panel A, B)
 * ==============================================================================
 * Table 1.1.1 ------------------------------------------------------------------
 ** 5-by-5: Doshi et al 2012
@@ -191,7 +191,7 @@ save "F:/Stephen/analysis/descriptive study/Table2/table1_2B2.dta", replace
 restore
 
 * ==============================================================================
-* Table 3: Unlevered Return: the simple way
+* Table 3: Unlevered Return: the simple way (Panel A, B)
 * ==============================================================================
 ** 5-by-5: Doshi et al 2012
 * Table 3.1 --------------------------------------------------------------------
