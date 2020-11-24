@@ -196,7 +196,7 @@ restore
 ** 5-by-5: Doshi et al 2012
 * Table 3.1.1 --------------------------------------------------------------------
 ** mean unlevered excess returns cross-sectionally, average across time series
-** R_A = R_E*(1-Lev(t-1)), 
+** R_A = R_E*(1-Lev(t-1))
 ** for portfolio formed in July t, take leverage in December t-1
 
 preserve
@@ -264,7 +264,7 @@ restore
 ** 5-by-5: Doshi et al 2012
 * Table 3.1.2 --------------------------------------------------------------------
 ** mean unlevered excess returns + risk-free rate cross-sectionally, average across time series
-** R_A = R_E*(1-Lev(t-1)), using the leverage of December last year
+** R_A = R_E*(1-Lev(t-1))
 ** for portfolio formed in July t, take leverage in December t-1
 
 preserve
@@ -400,7 +400,7 @@ restore
 * Table 3.3 --------------------------------------------------------------------
 ** mean unlevered excess returns + risk-free rate cross-sectionally, average across time series
 ** R_A = R_E*(1-Lev(t-1)), 
-** for portfolio formed in July t, take leverage in December t-1
+** for portfolio formed in Month t, take leverage in Month t-1
 
 preserve
 gen RETul = RetExcess*(1-Levdec) + rfFFWebsite
