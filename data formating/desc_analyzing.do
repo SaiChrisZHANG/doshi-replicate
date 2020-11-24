@@ -284,7 +284,7 @@ bys QUINTILEjun FF_port_quintile: egen portRETul_11A = mean(RETul_11A)
 bys QUINTILEjun FF_port_quintile: egen portRETul_intpl_11A = mean(RETul_intpl_11A)
 keep QUINTILEjun FF_port_quintile portRETul_11A RETul_11A portRETul_intpl_11A RETul_intpl_11A datadate
 drop if mi(QUINTILEjun) | mi(FF_port_quintile)
-save "F:/Stephen/analysis/descriptive study/Table3/table3_1A.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table3/table3_2A.dta", replace
 restore
 
 **** sort by ME
@@ -305,7 +305,7 @@ bys QUINTILEjun: egen portRETul_11B_me = mean(RETul_11B_me)
 bys QUINTILEjun: egen portRETul_intpl_11B_me = mean(RETul_intpl_11B_me)
 keep QUINTILEjun portRETul_11B_me RETul_11B_me portRETul_intpl_11B_me RETul_intpl_11B_me datadate
 drop if mi(QUINTILEjun)
-save "F:/Stephen/analysis/descriptive study/Table3/table3_1B1.dta", replace
+save "F:/Stephen/analysis/delagscriptive study/Table3/table3_2B1.dta", replace
 restore
 
 **** sort by BTM
@@ -326,6 +326,6 @@ bys QUINTILEdec_BtM: egen portRETul_11B_btm = mean(RETul_11B_btm)
 bys QUINTILEdec_BtM: egen portRETul_intpl_11B_btm = mean(RETul_intpl_11B_btm)
 keep QUINTILEdec_BtM portRETul_11B_btm RETul_11B_btm portRETul_intpl_11B_btm RETul_intpl_11B_btm datadate
 drop if mi(QUINTILEdec_BtM)
-save "F:/Stephen/analysis/descriptive study/Table3/table3_1B2.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table3/table3_2B2.dta", replace
 restore
 
