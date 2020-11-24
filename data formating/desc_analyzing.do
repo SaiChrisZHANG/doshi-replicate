@@ -268,8 +268,8 @@ restore
 ** for portfolio formed in Month t, take leverage in Month t-1
 
 preserve
-gen RETul = RetExcess*(1-Lev) + rfFFWebsite
-gen RETul_intpl = RetExcess*(1-Lev_intpl) + rfFFWebsite
+gen RETul = RetExcess*(1-LevLag) + rfFFWebsite
+gen RETul_intpl = RetExcess*(1-LevLag_intpl) + rfFFWebsite
 
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RETul*ME), missing
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(ME), missing
@@ -289,8 +289,8 @@ restore
 
 **** sort by ME
 preserve
-gen RETul = RetExcess*(1-Lev) + rfFFWebsite
-gen RETul_intpl = RetExcess*(1-Lev_intpl) + rfFFWebsite
+gen RETul = RetExcess*(1-LevLag) + rfFFWebsite
+gen RETul_intpl = RetExcess*(1-LevLag_intpl) + rfFFWebsite
 
 bys datadate QUINTILEjun: egen port_11B_ws_me = total(RETul*ME), missing
 bys datadate QUINTILEjun: egen port_11B_w_me = total(ME), missing
@@ -310,8 +310,8 @@ restore
 
 **** sort by BTM
 preserve
-gen RETul = RetExcess*(1-Lev) + rfFFWebsite
-gen RETul_intpl = RetExcess*(1-Lev_intpl) + rfFFWebsite
+gen RETul = RetExcess*(1-LevLag) + rfFFWebsite
+gen RETul_intpl = RetExcess*(1-LevLag_intpl) + rfFFWebsite
 
 bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RETul*ME), missing
 bys datadate QUINTILEdec_BtM: egen port_11B_w_btm = total(ME), missing
