@@ -11,8 +11,8 @@
 ** yearly adjusted portfolios
 **** double sorting
 preserve
-bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RET*ME), missing
-bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(ME), missing
+bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RET*MElag), missing
+bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(MElag), missing
 gen RET_11A = port_11A_ws/port_11A_w
 gen RETex_11A = RET_11A - rfFFWebsite
 duplicates drop datadate QUINTILEjun FF_port_quintile, force
@@ -26,8 +26,8 @@ restore
 
 **** sort by ME
 preserve
-bys datadate QUINTILEjun: egen port_11B_ws_me = total(RET*ME), missing
-bys datadate QUINTILEjun: egen port_11B_w_me = total(ME), missing
+bys datadate QUINTILEjun: egen port_11B_ws_me = total(RET*MElag), missing
+bys datadate QUINTILEjun: egen port_11B_w_me = total(MElag), missing
 gen RET_11B_me = port_11B_ws_me/port_11B_w_me
 gen RETex_11B_me = RET_11B_me - rfFFWebsite
 duplicates drop datadate QUINTILEjun, force
@@ -41,8 +41,8 @@ restore
 
 **** sort by BTM
 preserve
-bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RET*ME), missing
-bys datadate QUINTILEdec_BtM: egen port_11B_w_btm = total(ME), missing
+bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RET*MElag), missing
+bys datadate QUINTILEdec_BtM: egen port_11B_w_btm = total(MElag), missing
 gen RET_11B_btm = port_11B_ws_btm/port_11B_w_btm
 gen RETex_11B_btm = RET_11B_btm - rfFFWebsite
 duplicates drop datadate QUINTILEdec_BtM, force
