@@ -451,30 +451,40 @@ replace mth_port_quintile = ceil(mth_port_decile/2)
 gen QUINTILEmth_BtM = DECILEmth_BtM
 replace QUINTILEmth_BtM = ceil(QUINTILEmth_BtM/2)
 
-* ==============================================================================
-* Generate variables used for Fama-French regression
-* ==============================================================================
+* Other variables --------------------------------------------------------------
 * merge with market returns from Kennith French's website
 merge m:1 yyyymm using "F:/Stephen/french_website/french_fama.dta", keepusing(Mkt_prem)
 drop if _merge==2
 drop _merge
 replace Mkt_prem = Mkt_prem/100 /*from percentage to number*/
 
-* convert the data set into matlab format
-** This would require package "matwrite"
-preserve
-keep yyyymm Mkt_prem cusip RET BEdec atdec ME MElag Mejun Medec DECILEjun DecDate ltq_f ltq_f_intpl rfFFWebsite RetExcess Lev Lev_intpl Levdec Levdec_intpl LevLag exchcd EquityVolatility
+* merge with volatility calculated with daily returns
+* -----volatility: annualized volatility of past two years' daily returns of any given month
+merge 1:1 cusip8 yyyymm using "F:/Stephen/auxilary data/monthly_volatility.dta", keepusing(EquityVolatility)
+drop if _merge==2
+drop _merge
 
+global id_var = "cusip exchcd"
+global dt_var = "compustat_dt datadate yyyymm DecDate JunDate Lag1"
+global values = "PRC RET RetExcess at BE ME prc_lag Lev Lev_intpl Levdec Levdec_intpl ltq_f ltq_f_intpl MElag LevLag LevLag_intpl atdec BEdec MEdec MEjun EquityVolatility BtM BtMdec BtMjun"
+global givens = "rfFFWebsite Mkt_prem"
+global perctl = " DECILEmth DECILEjun DECILEdec DECILEmth_BtM DECILEdec_BtM FF_port_decile mth_port_decile QUINTILEjun FF_port_quintile QUINTILEmth mth_port_quintile QUINTILEmth_BtM QUINTILEdec_BtM"
+keep $id_var $dt_var $values $givens $perctl
+
+* ==============================================================================
+* Generate variables used for Fama-French regression
+* ==============================================================================
 * generate Debt
 gen Debt = ltq_f
 
 * Equity
 gen Equity = ME
 
-* merge with volatility calculated with daily returns
-* -----volatility: annualized volatility of past two years' daily returns of any given month
-merge 1:1 cusip8 yyyymm using "F:/Stephen/auxilary data/monthly_volatility.dta", keepusing(EquityVolatility)
-drop if _merge==2
-drop _merge
+* convert the data set into matlab format
+** This would require package "matwrite"
+preserve
+keep yyyymm Mkt_prem cusip RET BEdec atdec ME MElag Mejun Medec DECILEjun DecDate ltq_f ltq_f_intpl rfFFWebsite RetExcess Lev Lev_intpl Levdec Levdec_intpl LevLag exchcd EquityVolatility
+matwrite()
+
 
 clear
