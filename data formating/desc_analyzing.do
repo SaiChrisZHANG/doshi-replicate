@@ -153,19 +153,6 @@ restore
 ** mean leverage cross-sectionally, average across time series
 ** the portfolios are adjusted yearly
 ** the leverages are monthly updated
-preserve
-bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RET*MElag), missing
-bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(MElag), missing
-gen RET_11A = port_11A_ws/port_11A_w
-gen RETex_11A = RET_11A - rfFFWebsite
-duplicates drop datadate QUINTILEjun FF_port_quintile, force
-
-bys QUINTILEjun FF_port_quintile: egen portRET_11A = mean(RET_11A)
-bys QUINTILEjun FF_port_quintile: egen portRETex_11A = mean(RETex_11A)
-keep QUINTILEjun FF_port_quintile portRET_11A RET_11A portRETex_11A RETex_11A datadate
-drop if mi(QUINTILEjun) | mi(FF_port_quintile)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_1A.dta", replace
-restore
 
 preserve 
 bys datadate QUINTILEjun FF_port_quintile: egen Lev_12A = mean(Lev)
@@ -181,16 +168,15 @@ restore
 
 **** sort by ME
 preserve
-duplicates drop cusip DecDate, force
-bys DecDate QUINTILEjun: egen Lev_11B_me = mean(Levdec)
-bys DecDate QUINTILEjun: egen Levipl_11B_me = mean(Levdec_intpl)
-duplicates drop DecDate QUINTILEjun, force
+bys datadate QUINTILEjun: egen Lev_12B_me = mean(Lev)
+bys datadate QUINTILEjun: egen Levipl_12B_me = mean(Lev_intpl)
+duplicates drop datadate QUINTILEjun, force
 
-bys QUINTILEjun: egen portLev_11B_me = mean(Lev_11B_me)
-bys QUINTILEjun: egen portLevipl_11B_me = mean(Levipl_11B_me)
-keep QUINTILEjun Lev_11B_me Levipl_11B_me portLev_11B_me portLevipl_11B_me DecDate
+bys QUINTILEjun: egen portLev_12B_me = mean(Lev_12B_me)
+bys QUINTILEjun: egen portLevipl_12B_me = mean(Levipl_12B_me)
+keep QUINTILEjun Lev_12B_me Levipl_12B_me portLev_12B_me portLevipl_12B_me datadate
 drop if mi(QUINTILEjun)
-save "F:/Stephen/analysis/descriptive study/Table2/table1_1B1.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table2/table2_1B1.dta", replace
 restore
 
 **** sort by BTM
