@@ -203,8 +203,8 @@ preserve
 gen RETul = RetExcess*(1-Levdec) + rfFFWebsite
 gen RETul_intpl = RetExcess*(1-Levdec_intpl) + rfFFWebsite
 
-bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RETul*ME), missing
-bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(ME), missing
+bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RETul*MElag), missing
+bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(MElag), missing
 gen RETul_11A = port_11A_ws/port_11A_w
 drop port_11A_ws
 
