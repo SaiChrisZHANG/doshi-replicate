@@ -305,7 +305,7 @@ bys QUINTILEjun: egen portRETul_11B_me = mean(RETul_11B_me)
 bys QUINTILEjun: egen portRETul_intpl_11B_me = mean(RETul_intpl_11B_me)
 keep QUINTILEjun portRETul_11B_me RETul_11B_me portRETul_intpl_11B_me RETul_intpl_11B_me datadate
 drop if mi(QUINTILEjun)
-save "F:/Stephen/analysis/delagscriptive study/Table3/table3_2B1.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table3/table3_2B1.dta", replace
 restore
 
 **** sort by BTM
