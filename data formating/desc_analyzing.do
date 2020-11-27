@@ -157,10 +157,10 @@ restore
 preserve 
 bys datadate QUINTILEjun FF_port_quintile: egen Lev_12A = mean(Lev)
 bys datadate QUINTILEjun FF_port_quintile: egen Levipl_12A = mean(Lev_intpl)
-duplicates drop DecDate QUINTILEjun FF_port_quintile, force
+duplicates drop datadate QUINTILEjun FF_port_quintile, force
 
-bys QUINTILEjun FF_port_quintile: egen portLev_11A = mean(Lev_11A)
-bys QUINTILEjun FF_port_quintile: egen portLevipl_11A = mean(Levipl_11A)
+bys QUINTILEjun FF_port_quintile: egen portLev_12A = mean(Lev_12A)
+bys QUINTILEjun FF_port_quintile: egen portLevipl_12A = mean(Levipl_12A)
 keep QUINTILEjun FF_port_quintile Lev_11A Levipl_11A portLev_11A portLevipl_11A DecDate
 drop if mi(QUINTILEjun) | mi(FF_port_quintile)
 save "F:/Stephen/analysis/descriptive study/Table2/table1_1A.dta", replace
