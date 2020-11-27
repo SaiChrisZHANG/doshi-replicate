@@ -151,23 +151,7 @@ restore
 merge m:1 gvkey DecDate using `data_dec'
 drop if _merge==2
 drop _merge
-/*
-* generate atFq4 BEFq4 meFq4
-preserve
-tempfile data_fq4
-keep at BE ME gvkey datafqtr
-duplicates drop gvkey datafqtr, force
-rename at atfq4
-rename BE BEfq4
-rename ME MEfq4
-rename datafqtr Fq4Date
-save `data_fq4', replace
-restore
 
-merge m:1 gvkey Fq4Date using `data_fq4'
-drop if _merge==2
-drop _merge
-*/
 * generate MEjun
 preserve
 tempfile ME_june
@@ -190,7 +174,6 @@ drop _merge
 replace rfFFWebsite = rfFFWebsite/100
 gen RetExcess = RET - rfFFWebsite
 
-* generate ME decile ===========================================================
 * drop financial firms, based on https://www.osha.gov/pls/imis/sic_manual.html
 destring sic, replace
 drop if inrange(sic,6000,6999)
@@ -201,6 +184,7 @@ drop if mi(at) | mi(BE) | mi(ME) | mi(Lev) | mi(RET)
 * drop data before July 1971, since then, there're at leat 123 firms per month
 keep if yyyymm>=197107
 
+* generate ME decile ===========================================================
 * generate DECILE of monthly adjusted portfolio, the size decile markers
 gen DECILE = .
 
@@ -456,7 +440,7 @@ replace QUINTILEmth_BtM = ceil(QUINTILEmth_BtM/2)
 merge m:1 yyyymm using "F:/Stephen/french_website/french_fama.dta", keepusing(Mkt_prem)
 drop if _merge==2
 drop _merge
-replace Mkt_prem = Mkt_prem/100 /*from percentage to number*/
+replace Mkt_prem = Mkt_prem/100
 
 * merge with volatility calculated with daily returns
 * -----volatility: annualized volatility of past two years' daily returns of any given month
