@@ -153,11 +153,10 @@ restore
 ** mean leverage cross-sectionally, average across time series
 ** the portfolios are adjusted yearly
 ** the leverages are monthly updated
-preserve 
-duplicates drop cusip DecDate, force 
 
-bys DecDate QUINTILEjun FF_port_quintile: egen Lev_11A = mean(Levdec)
-bys DecDate QUINTILEjun FF_port_quintile: egen Levipl_11A = mean(Levdec_intpl)
+preserve 
+bys datadate QUINTILEjun FF_port_quintile: egen Lev_12A = mean(Lev)
+bys datadate QUINTILEjun FF_port_quintile: egen Levipl_12A = mean(Lev_intpl)
 duplicates drop DecDate QUINTILEjun FF_port_quintile, force
 
 bys QUINTILEjun FF_port_quintile: egen portLev_11A = mean(Lev_11A)
