@@ -151,7 +151,7 @@ restore
 merge m:1 gvkey DecDate using `data_dec'
 drop if _merge==2
 drop _merge
-
+/*
 * generate atFq4 BEFq4 meFq4
 preserve
 tempfile data_fq4
@@ -167,7 +167,7 @@ restore
 merge m:1 gvkey Fq4Date using `data_fq4'
 drop if _merge==2
 drop _merge
-
+*/
 * generate MEjun
 preserve
 tempfile ME_june
@@ -187,7 +187,7 @@ drop _merge
 merge m:1 yyyymm using "F:/Stephen/french_website/french_fama.dta", keepusing(rfFFWebsite)
 drop if _merge==2
 drop _merge
-replace rfFFWebsite = rfFFWebsite/100 /*from percentage to number*/
+replace rfFFWebsite = rfFFWebsite/100
 gen RetExcess = RET - rfFFWebsite
 
 * generate ME decile ===========================================================
@@ -195,7 +195,7 @@ gen RetExcess = RET - rfFFWebsite
 destring sic, replace
 drop if inrange(sic,6000,6999)
 
-* drop missings
+* drop 135190 missings
 drop if mi(at) | mi(BE) | mi(ME) | mi(Lev) | mi(RET)
 
 * drop data before July 1971, since then, there're at leat 123 firms per month
