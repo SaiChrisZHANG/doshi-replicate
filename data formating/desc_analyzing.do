@@ -181,16 +181,15 @@ restore
 
 **** sort by BTM
 preserve
-duplicates drop cusip DecDate, force
-bys DecDate QUINTILEdec_BtM: egen Lev_11B_btm = mean(Levdec)
-bys DecDate QUINTILEdec_BtM: egen Levipl_11B_btm = mean(Levdec_intpl)
-duplicates drop DecDate QUINTILEdec_BtM, force
+bys datadate QUINTILEdec_BtM: egen Lev_12B_btm = mean(Lev)
+bys datadate QUINTILEdec_BtM: egen Levipl_12B_btm = mean(Lev_intpl)
+duplicates drop datadate QUINTILEdec_BtM, force
 
-bys QUINTILEdec_BtM: egen portLev_11B_btm = mean(Lev_11B_btm)
-bys QUINTILEdec_BtM: egen portLevipl_11B_btm = mean(Levipl_11B_btm)
-keep QUINTILEdec_BtM Lev_11B_btm Levipl_11B_btm portLev_11B_btm portLevipl_11B_btm DecDate
+bys QUINTILEdec_BtM: egen portLev_12B_btm = mean(Lev_12B_btm)
+bys QUINTILEdec_BtM: egen portLevipl_12B_btm = mean(Levipl_12B_btm)
+keep QUINTILEdec_BtM Lev_12B_btm Levipl_12B_btm portLev_12B_btm portLevipl_12B_btm datadate
 drop if mi(QUINTILEdec_BtM)
-save "F:/Stephen/analysis/descriptive study/Table2/table1_1B2.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table2/table2_1B2.dta", replace
 restore
 
 * ==============================================================================
