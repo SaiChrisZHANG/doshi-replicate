@@ -161,7 +161,7 @@ duplicates drop datadate QUINTILEjun FF_port_quintile, force
 
 bys QUINTILEjun FF_port_quintile: egen portLev_12A = mean(Lev_12A)
 bys QUINTILEjun FF_port_quintile: egen portLevipl_12A = mean(Levipl_12A)
-keep QUINTILEjun FF_port_quintile Lev_11A Levipl_11A portLev_11A portLevipl_11A DecDate
+keep QUINTILEjun FF_port_quintile Lev_12A Levipl_12A portLev_12A portLevipl_12A datadate
 drop if mi(QUINTILEjun) | mi(FF_port_quintile)
 save "F:/Stephen/analysis/descriptive study/Table2/table1_1A.dta", replace
 restore
