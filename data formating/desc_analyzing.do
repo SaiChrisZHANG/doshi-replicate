@@ -153,6 +153,19 @@ restore
 ** mean leverage cross-sectionally, average across time series
 ** the portfolios are adjusted yearly
 ** the leverages are monthly updated
+preserve
+bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RET*MElag), missing
+bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(MElag), missing
+gen RET_11A = port_11A_ws/port_11A_w
+gen RETex_11A = RET_11A - rfFFWebsite
+duplicates drop datadate QUINTILEjun FF_port_quintile, force
+
+bys QUINTILEjun FF_port_quintile: egen portRET_11A = mean(RET_11A)
+bys QUINTILEjun FF_port_quintile: egen portRETex_11A = mean(RETex_11A)
+keep QUINTILEjun FF_port_quintile portRET_11A RET_11A portRETex_11A RETex_11A datadate
+drop if mi(QUINTILEjun) | mi(FF_port_quintile)
+save "F:/Stephen/analysis/descriptive study/Table1/table1_1A.dta", replace
+restore
 
 preserve 
 bys datadate QUINTILEjun FF_port_quintile: egen Lev_12A = mean(Lev)
@@ -163,7 +176,7 @@ bys QUINTILEjun FF_port_quintile: egen portLev_12A = mean(Lev_12A)
 bys QUINTILEjun FF_port_quintile: egen portLevipl_12A = mean(Levipl_12A)
 keep QUINTILEjun FF_port_quintile Lev_12A Levipl_12A portLev_12A portLevipl_12A datadate
 drop if mi(QUINTILEjun) | mi(FF_port_quintile)
-save "F:/Stephen/analysis/descriptive study/Table2/table1_1A.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table2/table2_1A.dta", replace
 restore
 
 **** sort by ME
