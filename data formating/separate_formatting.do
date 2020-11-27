@@ -2,6 +2,8 @@
 * Author: Sai Zhang (saizhang@london.edu)
 * This project is prepared for the project of Prof. Stephen Schaefer
 
+quitely log using "F:/Stephen/data_cleaning/analysis/logfile/data_cleaning.smcl", replace
+
 clear
 cd "F:/Stephen/separate"
 
@@ -275,8 +277,9 @@ drop _merge
 * Generate Book-To-Market Ratio and Decile
 * ==============================================================================
 gen BtM = BE/ME
+sort cusip datadate 
+by cusip: gen BtMlag = BtM[_n-1]
 gen BtMdec = BEdec/MEdec
-gen BtMjun = BEdec/MEjun
 
 gen DECILEmth_BtM = .
 
@@ -326,40 +329,6 @@ restore
 merge m:1 cusip DecDate using `decile_dec'
 drop _merge
 
-/*
-* generate DECILE of June-adjusted Portfolio, BTM is calculated with June(t) equity and December(t-1) book value
-* December 
-preserve
-tempfile decile_jun
-
-keep cusip JunDate BtMjun exchcd
-keep if !mi(BtMjun)
-duplicates drop cusip JunDate, force
-
-gen DECILEjun_BtM = .
-
-forvalues i = 1/9{
-    local j = 10*`i'
-    bys JunDate: egen BtM_p`j' = pctile(BtMjun) if exchcd == 1, p(`j')
-    sort JunDate BtM_p`j'
-    by JunDate: replace BtM_p`j' = BtM_p`j'[_n-1] if BtM_p`j' == .
-    replace DECILEjun_BtM = `i' if BtMjun <= BtM_p`j' & DECILEjun_BtM == .
-    drop BtM_p`j'
-}
-
-bys JunDate: egen BtM_p90 = pctile(BtMjun) if exchcd == 1, p(90)
-sort JunDate BtM_p90
-by JunDate: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
-replace DECILEjun_BtM = 10 if BtMjun > BtM_p90 & DECILEjun_BtM == .
-drop BtM_p90
-
-keep cusip JunDate DECILEjun_BtM
-save `decile_jun', replace
-restore
-
-merge m:1 cusip JunDate using `decile_jun'
-drop _merge
-*/
 * ==============================================================================
 * Generate double-sorting portfolio marker
 * ==============================================================================
