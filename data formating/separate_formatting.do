@@ -9,6 +9,7 @@ cd "F:/Stephen/separate"
 * Clean the merged dataset
 *===============================================================================
 use full_data_raw
+destring gvkey, replace
 
 * keep NYSE/AMEX/Nasdaq
 keep if exchcd == 1 | exchcd == 2 | exchcd == 3
