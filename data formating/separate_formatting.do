@@ -285,14 +285,14 @@ gen DECILEmth_BtM = .
 
 forvalues i = 1/9{
     local j=10*`i'
-    bys datadate: egen BtM_p`j' = pctile(BtM) if exchcd == 1, p(`j')
+    bys datadate: egen BtM_p`j' = pctile(BtMlag) if exchcd == 1, p(`j')
     sort datadate BtM_p`j'
     by datadate: replace BtM_p`j' = BtM_p`j'[_n-1] if BtM_p`j' == .
     replace DECILEmth_BtM = `i' if BtM <= BtM_p`j' & DECILEmth_BtM == .
     drop BtM_p`j'
 }
 
-bys datadate: egen BtM_p90 = pctile(BtM) if exchcd == 1, p(90)
+bys datadate: egen BtM_p90 = pctile(BtMlag) if exchcd == 1, p(90)
 sort datadate BtM_p90
 by datadate: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
 replace DECILEmth_BtM = 10 if BtM > BtM_p90 & DECILEmth_BtM == .
