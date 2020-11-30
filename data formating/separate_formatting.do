@@ -423,7 +423,7 @@ global values = "PRC RET RetExcess at BE ME prc_lag Lev Lev_intpl Levdec Levdec_
 global givens = "rfFFWebsite Mkt_prem"
 global perctl = " DECILEmth DECILEjun DECILEmth_BtM DECILEdec_BtM QUINTILEjun QUINTILEmth QUINTILEmth_BtM QUINTILEdec_BtM"
 global dbl_sort = "FF_port_decile mth_port_decile FF_port_quintile mth_port_quintile"
-keep $id_var $dt_var $values $givens $perctl
+keep $id_var $dt_var $values $givens $perctl $dbl_sort
 
 * ==============================================================================
 * Generate variables used for Fama-French regression
