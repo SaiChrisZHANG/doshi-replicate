@@ -192,17 +192,17 @@ gen DECILE = .
 
 forvalues i = 1/9{
     local j=10*`i'
-    bys datadate: egen ME_p`j' = pctile(ME) if exchcd == 1, p(`j')
+    bys datadate: egen ME_p`j' = pctile(MElag) if exchcd == 1, p(`j')
     sort datadate ME_p`j'
     by datadate: replace ME_p`j' = ME_p`j'[_n-1] if ME_p`j' == .
-    replace DECILE = `i' if ME <= ME_p`j' & DECILE == .
+    replace DECILE = `i' if MElag <= ME_p`j' & DECILE == .
     drop ME_p`j'
 }
 
-bys datadate: egen ME_p90 = pctile(ME) if exchcd == 1, p(90)
+bys datadate: egen ME_p90 = pctile(MElag) if exchcd == 1, p(90)
 sort datadate ME_p90
 by datadate: replace ME_p90 = ME_p90[_n-1] if ME_p90 == .
-replace DECILE = 10 if ME > ME_p90 & DECILE == .
+replace DECILE = 10 if MElag > ME_p90 & DECILE == .
 drop ME_p90
 
 rename DECILE DECILEmth
@@ -288,14 +288,14 @@ forvalues i = 1/9{
     bys datadate: egen BtM_p`j' = pctile(BtMlag) if exchcd == 1, p(`j')
     sort datadate BtM_p`j'
     by datadate: replace BtM_p`j' = BtM_p`j'[_n-1] if BtM_p`j' == .
-    replace DECILEmth_BtM = `i' if BtM <= BtM_p`j' & DECILEmth_BtM == .
+    replace DECILEmth_BtM = `i' if BtMlag <= BtM_p`j' & DECILEmth_BtM == .
     drop BtM_p`j'
 }
 
 bys datadate: egen BtM_p90 = pctile(BtMlag) if exchcd == 1, p(90)
 sort datadate BtM_p90
 by datadate: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
-replace DECILEmth_BtM = 10 if BtM > BtM_p90 & DECILEmth_BtM == .
+replace DECILEmth_BtM = 10 if BtMlag > BtM_p90 & DECILEmth_BtM == .
 drop BtM_p90
 
 * generate DECILE of June-adjusted Portfolio, BTM is calcuated with December(t-1) equity and book value
@@ -372,14 +372,14 @@ gen mth_port_decile = .
 
 forvalues i = 1/9{
     local j=10*`i'
-    bys datadate DECILEmth: egen BtM_p`j' = pctile(BtM) if exchcd == 1, p(`j')
+    bys datadate DECILEmth: egen BtM_p`j' = pctile(BtMlag) if exchcd == 1, p(`j')
     sort datadate DECILEmth BtM_p`j'
     by datadate DECILEmth: replace BtM_p`j' = BtM_p`j'[_n-1] if BtM_p`j' == .
     replace mth_port_decile = `i' if BtM <= BtM_p`j' & mth_port_decile == .
     drop BtM_p`j'
 }
 
-bys datadate DECILEmth: egen BtM_p90 = pctile(BtM) if exchcd == 1, p(90)
+bys datadate DECILEmth: egen BtM_p90 = pctile(BtMlag) if exchcd == 1, p(90)
 sort datadate DECILEmth BtM_p90
 by datadate DECILEmth: replace BtM_p90 = BtM_p90[_n-1] if BtM_p90 == .
 replace mth_port_decile = 10 if BtM > BtM_p90 & mth_port_decile == .
@@ -421,7 +421,8 @@ global id_var = "cusip exchcd"
 global dt_var = "compustat_dt datadate yyyymm DecDate JunDate Lag1"
 global values = "PRC RET RetExcess at BE ME prc_lag Lev Lev_intpl Levdec Levdec_intpl ltq_f ltq_f_intpl MElag LevLag LevLag_intpl atdec BEdec MEdec MEjun EquityVolatility BtM BtMdec BtMjun"
 global givens = "rfFFWebsite Mkt_prem"
-global perctl = " DECILEmth DECILEjun DECILEdec DECILEmth_BtM DECILEdec_BtM FF_port_decile mth_port_decile QUINTILEjun FF_port_quintile QUINTILEmth mth_port_quintile QUINTILEmth_BtM QUINTILEdec_BtM"
+global perctl = " DECILEmth DECILEjun DECILEmth_BtM DECILEdec_BtM QUINTILEjun QUINTILEmth QUINTILEmth_BtM QUINTILEdec_BtM"
+global dbl_sort = "FF_port_decile mth_port_decile FF_port_quintile mth_port_quintile"
 keep $id_var $dt_var $values $givens $perctl
 
 * ==============================================================================
