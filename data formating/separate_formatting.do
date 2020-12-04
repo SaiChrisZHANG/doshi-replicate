@@ -440,5 +440,4 @@ preserve
 keep yyyymm Mkt_prem cusip RET BEdec atdec ME MElag Mejun Medec DECILEjun DecDate ltq_f ltq_f_intpl rfFFWebsite RetExcess Lev Lev_intpl Levdec Levdec_intpl LevLag exchcd EquityVolatility
 matwrite()
 
-
 clear
