@@ -54,48 +54,7 @@ drop if mi(QUINTILEdec_BtM)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_1B2.dta", replace
 restore
 
-* Table 1.1.2 ------------------------------------------------------------------
-** 10-by-10: Fama and French 1992
-** EQUAL weighted returns cross-sectionally, average across time series
-** yearly adjusted portfolios
-**** double sorting
-preserve
-bys datadate DECILEjun FF_port_decile: egen RET_12A = mean(RET)
-gen RETex_12A = RET_12A - rfFFWebsite
-duplicates drop datadate DECILEjun FF_port_decile, force
 
-bys DECILEjun FF_port_decile: egen portRET_12A = mean(RET_12A)
-bys DECILEjun FF_port_decile: egen portRETex_12A = mean(RETex_12A)
-keep DECILEjun FF_port_decile portRET_12A RET_12A portRETex_12A RETex_12A datadate
-drop if mi(DECILEjun) | mi(FF_port_decile)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_2A.dta", replace
-restore
-
-**** sort by ME
-preserve
-bys datadate DECILEjun: egen RET_12B_me = mean(RET)
-gen RETex_12B_me = RET_12B_me - rfFFWebsite
-duplicates drop datadate DECILEjun, force
-
-bys DECILEjun: egen portRET_12B_me = mean(RET_12B_me)
-bys DECILEjun: egen portRETex_12B_me = mean(RETex_12B_me)
-keep DECILEjun portRET_12B_me RET_12B_me portRETex_12B_me RETex_12B_me datadate
-drop if mi(DECILEjun)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_2B1.dta", replace
-restore
-
-**** sort by BTM
-preserve
-bys datadate DECILEdec_BtM: egen RET_12B_btm = mean(RET)
-gen RETex_12B_btm = RET_12B_btm - rfFFWebsite
-duplicates drop datadate DECILEdec_BtM, force
-
-bys DECILEdec_BtM: egen portRET_12B_btm = mean(RET_12B_btm)
-bys DECILEdec_BtM: egen portRETex_12B_btm = mean(RETex_12B_btm)
-keep DECILEdec_BtM portRET_12B_btm RET_12B_btm portRETex_12B_btm RETex_12B_btm datadate
-drop if mi(DECILEdec_BtM)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_2B2.dta", replace
-restore
 
 * ==============================================================================
 * Table 2: Leverage
