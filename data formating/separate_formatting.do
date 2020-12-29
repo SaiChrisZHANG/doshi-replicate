@@ -378,15 +378,6 @@ merge 1:1 cusip8 yyyymm using "F:/Stephen/auxilary data/monthly_volatility.dta",
 drop if _merge==2
 drop _merge
 
-global id_var = "cusip exchcd"
-global dt_var = "compustat_dt datadate yyyymm DecDate JunDate Lag1"
-global prcret = "PRC RET RetExcess prc_lag rfFFWebsite Mkt_prem"
-global values = "at BE ME MElag MEjun atdec BEdec MEdec BtM BtMdec BtMjun"
-global levvol = "EquityVolatility Lev Lev_intpl Levdec Levdec_intpl LevLag LevLag_intpl ltq_f ltq_f_intpl"
-global perctl = " DECILEmth DECILEjun DECILEmth_BtM DECILEdec_BtM QUINTILEjun QUINTILEmth QUINTILEmth_BtM QUINTILEdec_BtM"
-global dbl_sort = "FF_port_decile mth_port_decile FF_port_quintile mth_port_quintile"
-keep $id_var $dt_var $prcret $values $levvol $perctl $dbl_sort
-
 * ==============================================================================
 * Generate variables used for Fama-French regression
 * ==============================================================================
@@ -396,10 +387,19 @@ gen Debt = ltq_f
 * Equity
 gen Equity = ME
 
+global id_var = "cusip exchcd yyyymm DecDate"
+global prcret = "PRC RET RetExcess rfFFWebsite Mkt_prem"
+global values = "at BE ME MElag MEjun atdec BEdec MEdec BtM BtMdec BtMjun Debt Equity"
+global levvol = "EquityVolatility Lev Lev_intpl Levdec Levdec_intpl LevLag LevLag_intpl ltq_f ltq_f_intpl"
+global perctl = " DECILEmth DECILEjun DECILEmth_BtM DECILEdec_BtM QUINTILEjun QUINTILEmth QUINTILEmth_BtM QUINTILEdec_BtM"
+global dbl_sort = "FF_port_decile mth_port_decile FF_port_quintile mth_port_quintile"
+keep $id_var $dt_var $prcret $values $levvol $perctl $dbl_sort
+
 * convert the data set into matlab format
 ** This would require package "matwrite"
 preserve
-keep yyyymm Mkt_prem cusip RET BEdec atdec ME MElag Mejun Medec DECILEjun DecDate ltq_f ltq_f_intpl rfFFWebsite RetExcess Lev Lev_intpl Levdec Levdec_intpl LevLag exchcd EquityVolatility
+keep BEdec atdec ME MElag Mejun Medec DECILEjun ltq_f ltq_f_intpl Lev Lev_intpl Levdec Levdec_intpl LevLag EquityVolatility
 matwrite()
+restore
 
 clear
