@@ -110,14 +110,18 @@ drop _merge
 gen ME = cshoq*prc_lag
 label variable ME "market equity"
 
+gen BtM = BE/ME
+label variable BtM "book to market"
+
 * generate MElag Lev LevLag
 gen Lev = ltq_f/(ltq_f+ME)
 gen Lev_intpl = ltq_f_intpl/(ltq_f_intpl+ME)
 
 preserve
-keep cusip yyyymm ME Lev Lev_intpl
+keep cusip yyyymm ME BtM Lev Lev_intpl
 rename yyyymm Lag1
 rename ME MElag
+rename BtM BtMlag
 rename Lev LevLag
 rename Lev_intpl LevLag_intpl
 tempfile lag_me
@@ -131,7 +135,7 @@ drop _merge
 drop curcdq
 
 label variable Lev "Leverage"
-label variable Lev "Leverage, linear interpolating"
+label variable Lev_intpl "Leverage, linear interpolating"
 
 * reassign the at/BE/ME data in Fama-French fashion ============================
 * generate atdec BEdec medec Levdec
@@ -144,6 +148,8 @@ rename BE BEdec
 rename ME MEdec
 rename Lev Levdec
 rename Lev_intpl Levdec_intpl
+
+gen BtMdec = BEdec/MEdec
 
 gen DecDate = 100*year(compustat_dt)+month(compustat_dt)
 drop compustat_dt
@@ -278,7 +284,7 @@ drop _merge
 * ==============================================================================
 * Generate Book-To-Market Ratio and Decile
 * ==============================================================================
-gen BtM = BE/ME
+
 sort cusip datadate 
 by cusip: gen BtMlag = BtM[_n-1]
 gen BtMdec = BEdec/MEdec
