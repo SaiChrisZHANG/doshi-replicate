@@ -26,23 +26,23 @@ restore
 
 **** sort by ME
 preserve
-bys datadate QUINTILEjun: egen port_11B_ws_me = total(RET*MElag), missing
-bys datadate QUINTILEjun: egen port_11B_w_me = total(MElag), missing
-gen RET_11B_me = port_11B_ws_me/port_11B_w_me
-gen RETex_11B_me = RET_11B_me - rfFFWebsite
+bys datadate QUINTILEjun: egen port_11B1_ws_me = total(RET*MElag), missing
+bys datadate QUINTILEjun: egen port_11B1_w_me = total(MElag), missing
+gen RET_11B1_me = port_11B1_ws_me/port_11B1_w_me
+gen RETex_11B1_me = RET_11B1_me - rfFFWebsite
 duplicates drop datadate QUINTILEjun, force
 
-bys QUINTILEjun: egen portRET_11B_me = mean(RET_11B_me)
-bys QUINTILEjun: egen portRETex_11B_me = mean(RETex_11B_me)
-keep QUINTILEjun portRET_11B_me RET_11B_me portRETex_11B_me RETex_11B_me datadate
+bys QUINTILEjun: egen portRET_11B1_me = mean(RET_11B1_me)
+bys QUINTILEjun: egen portRETex_11B1_me = mean(RETex_11B1_me)
+keep QUINTILEjun portRET_11B1_me RET_11B1_me portRETex_11B1_me RETex_11B1_me datadate
 drop if mi(QUINTILEjun)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_1B1.dta", replace
 restore
 
 **** sort by BTM
 preserve
-bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RET*MElag), missing
-bys datadate QUINTILEdec_BtM: egen port_11B_w_btm = total(MElag), missing
+bys datadate QUINTILEdec_BtM: egen port_11B2_ws_btm = total(RET*MElag), missing
+bys datadate QUINTILEdec_BtM: egen port_11B2_w_btm = total(MElag), missing
 gen RET_11B_btm = port_11B_ws_btm/port_11B_w_btm
 gen RETex_11B_btm = RET_11B_btm - rfFFWebsite
 duplicates drop datadate QUINTILEdec_BtM, force
