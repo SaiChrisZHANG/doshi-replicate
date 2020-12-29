@@ -378,6 +378,8 @@ merge 1:1 cusip8 yyyymm using "F:/Stephen/auxilary data/monthly_volatility.dta",
 drop if _merge==2
 drop _merge
 
+
+
 * ==============================================================================
 * Generate variables used for Fama-French regression
 * ==============================================================================
@@ -396,6 +398,6 @@ global bp_mth = "DECILEmth DECILEmth_BtM mth_port_decile"
 
 * convert the data set into matlab format
 ** This would require package "matwrite"
-matwrite $id_var $prcret $values $levvol $bp_FF $bp_mth using 
+matwrite $id_var $prcret $values $levvol $bp_FF $bp_mth using "F:/Stephen/analysis/"
 
 clear
