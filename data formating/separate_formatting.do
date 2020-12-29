@@ -207,6 +207,7 @@ drop ME_p90
 
 rename DECILE DECILEmth
 
+/*
 * generate DECILE of June-adjusted portfolio:
 * the size of firm in December of year t-1
 preserve
@@ -239,6 +240,7 @@ restore
 
 merge m:1 cusip DecDate using `decile_dec'
 drop _merge
+*/
 
 * generate DECILE of June-adjusted portfolio:
 * the size of firm in June of year t, holding from July of year t to June of year t+1
