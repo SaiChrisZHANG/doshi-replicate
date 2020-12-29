@@ -382,7 +382,7 @@ rename EquityVolatility EquityVol
 merge 1:1 cusip8 Lag1 using "F:/Stephen/auxilary data/monthly_volatility.dta", keepusing(EquityVolatility)
 drop if _merge==2
 drop _merge
-rename 
+rename EquityVolatility EquityVolLag
 
 * final outputs
 save "F:/Stephen/analysis/full_data.dta", replace
@@ -399,11 +399,11 @@ gen Equity = ME
 global id_var = "gvkey exchcd yyyymm DecDate"
 global prcret = "PRC RET RetExcess rfFFWebsite Mkt_prem"
 global values = "at BE ME MElag MEjun atdec BEdec MEdec BtM BtMdec Debt Equity"
-global levvol = "EquityVolatility Lev Lev_intpl Levdec Levdec_intpl LevLag LevLag_intpl ltq_f ltq_f_intpl"
+global levvol = "EquityVol EquityVolLag Lev Lev_intpl Levdec Levdec_intpl LevLag LevLag_intpl ltq_f ltq_f_intpl"
 global bp_FF = "DECILEjun DECILEdec_BtM FF_port_decile"
 global bp_mth = "DECILEmth DECILEmth_BtM mth_port_decile"
 
-* convert the data set into .csv format
+* convert the data set into .csv format, for MATLAB analysis
 preserve
 keep $id_var $prcret $values $levvol $bp_FF $bp_mth
 export delimited using "F:\Stephen\analysis\FMreg.csv", replace
