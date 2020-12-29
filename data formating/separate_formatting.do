@@ -355,12 +355,9 @@ drop BtM_p90
 * 5 by 5 =======================================================================
 * Fama-French style: June(t) ME breakpoints by December(t-1) BTM breakpoints for returns from July(t) to June(t+1)
 *** DECILEjun-by-FF_port_decile
-gen QUINTILEjun = DECILEjun
-replace QUINTILEjun = ceil(QUINTILEjun/2)
-gen FF_port_quintile = FF_port_decile
-replace FF_port_quintile = ceil(FF_port_decile/2)
-gen QUINTILEdec_BtM = DECILEdec_BtM
-replace QUINTILEdec_BtM = ceil(QUINTILEdec_BtM/2)
+gen QUINTILEjun = ceil(DECILEjun/2)
+gen FF_port_quintile = ceil(FF_port_decile/2)
+gen QUINTILEdec_BtM = ceil(DECILEdec_BtM/2)
 
 * Higher frequency style: use last month ME and BTM
 *** QUINTILEmth-by-mth_port_quintile
@@ -383,11 +380,12 @@ drop _merge
 
 global id_var = "cusip exchcd"
 global dt_var = "compustat_dt datadate yyyymm DecDate JunDate Lag1"
-global values = "PRC RET RetExcess at BE ME prc_lag Lev Lev_intpl Levdec Levdec_intpl ltq_f ltq_f_intpl MElag LevLag LevLag_intpl atdec BEdec MEdec MEjun EquityVolatility BtM BtMdec BtMjun"
-global givens = "rfFFWebsite Mkt_prem"
+global prcret = "PRC RET RetExcess prc_lag rfFFWebsite Mkt_prem"
+global values = "at BE ME MElag MEjun atdec BEdec MEdec BtM BtMdec BtMjun"
+global levvol = "EquityVolatility Lev Lev_intpl Levdec Levdec_intpl LevLag LevLag_intpl ltq_f ltq_f_intpl"
 global perctl = " DECILEmth DECILEjun DECILEmth_BtM DECILEdec_BtM QUINTILEjun QUINTILEmth QUINTILEmth_BtM QUINTILEdec_BtM"
 global dbl_sort = "FF_port_decile mth_port_decile FF_port_quintile mth_port_quintile"
-keep $id_var $dt_var $values $givens $perctl $dbl_sort
+keep $id_var $dt_var $prcret $values $levvol $perctl $dbl_sort
 
 * ==============================================================================
 * Generate variables used for Fama-French regression
