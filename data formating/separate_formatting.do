@@ -364,12 +364,9 @@ replace QUINTILEdec_BtM = ceil(QUINTILEdec_BtM/2)
 
 * Higher frequency style: use last month ME and BTM
 *** QUINTILEmth-by-mth_port_quintile
-gen QUINTILEmth = DECILEmth
-replace QUINTILEmth = ceil(QUINTILEmth/2)
-gen mth_port_quintile = mth_port_decile
-replace mth_port_quintile = ceil(mth_port_decile/2)
-gen QUINTILEmth_BtM = DECILEmth_BtM
-replace QUINTILEmth_BtM = ceil(QUINTILEmth_BtM/2)
+gen QUINTILEmth = ceil(DECILEmth/2)
+gen mth_port_quintile = ceil(mth_port_decile/2)
+gen QUINTILEmth_BtM = ceil(DECILEmth_BtM/2)
 
 * Other variables --------------------------------------------------------------
 * merge with market returns from Kennith French's website
