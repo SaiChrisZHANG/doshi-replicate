@@ -378,6 +378,8 @@ merge 1:1 cusip8 yyyymm using "F:/Stephen/auxilary data/monthly_volatility.dta",
 drop if _merge==2
 drop _merge
 
+merge 1:1 cusip8 using "F:/Stephen/auxilary data/"
+
 * final outputs
 save "F:/Stephen/analysis/full_data.dta", replace
 
