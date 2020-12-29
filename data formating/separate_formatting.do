@@ -2,7 +2,7 @@
 * Author: Sai Zhang (saizhang@london.edu)
 * This project is prepared for the project of Prof. Stephen Schaefer
 
-qui log using "F:/Stephen/data_cleaning/analysis/logfile/data_cleaning.smcl", replace
+qui log using "F:/Stephen/analysis/logfile/data_cleaning.smcl", replace
 
 clear
 cd "F:/Stephen/separate"
