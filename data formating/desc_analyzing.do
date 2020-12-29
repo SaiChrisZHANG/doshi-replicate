@@ -57,20 +57,20 @@ restore
 * Table 1.2 --------------------------------------------------------------------
 ** 5-by-5: Doshi et al 2012
 ** VALUE weighted returns cross-sectionally, average across time series
-** Fama-French adjusted portfolios
+** monthly adjusted portfolios
 **** double sorting
 preserve
-bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RET*MElag), missing
-bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(MElag), missing
-gen RET_11A = port_11A_ws/port_11A_w
-gen RETex_11A = RET_11A - rfFFWebsite
+bys datadate QUINTILEjun FF_port_quintile: egen port_12A_ws = total(RET*MElag), missing
+bys datadate QUINTILEjun FF_port_quintile: egen port_12A_w = total(MElag), missing
+gen RET_12A = port_12A_ws/port_12A_w
+gen RETex_12A = RET_12A - rfFFWebsite
 duplicates drop datadate QUINTILEjun FF_port_quintile, force
 
-bys QUINTILEjun FF_port_quintile: egen portRET_11A = mean(RET_11A)
-bys QUINTILEjun FF_port_quintile: egen portRETex_11A = mean(RETex_11A)
-keep QUINTILEjun FF_port_quintile portRET_11A RET_11A portRETex_11A RETex_11A datadate
+bys QUINTILEjun FF_port_quintile: egen portRET_12A = mean(RET_12A)
+bys QUINTILEjun FF_port_quintile: egen portRETex_12A = mean(RETex_12A)
+keep QUINTILEjun FF_port_quintile portRET_12A RET_12A portRETex_12A RETex_12A datadate
 drop if mi(QUINTILEjun) | mi(FF_port_quintile)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_1A.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table1/table1_2A.dta", replace
 restore
 
 **** sort by ME
