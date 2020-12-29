@@ -213,41 +213,6 @@ drop ME_p90
 
 rename DECILE DECILEmth
 
-/*
-* generate DECILE of June-adjusted portfolio:
-* the size of firm in December of year t-1
-preserve
-tempfile decile_dec
-
-keep cusip DecDate MEdec exchcd
-keep if !mi(MEdec)
-duplicates drop cusip DecDate, force
-
-gen DECILEdec = .
-
-forvalues i = 1/9{
-    local j = 10*`i'
-    bys DecDate: egen ME_p`j' = pctile(MEdec) if exchcd == 1, p(`j')
-    sort DecDate ME_p`j'
-    by DecDate: replace ME_p`j' = ME_p`j'[_n-1] if ME_p`j' == .
-    replace DECILEdec = `i' if MEdec <= ME_p`j' & DECILEdec == .
-    drop ME_p`j'
-}
-
-bys DecDate: egen ME_p90 = pctile(MEdec) if exchcd == 1, p(90)
-sort DecDate ME_p90
-by DecDate: replace ME_p90 = ME_p90[_n-1] if ME_p90 == .
-replace DECILEdec = 10 if MEdec > ME_p90 & DECILEdec == .
-drop ME_p90
-
-keep cusip DecDate DECILEdec
-save `decile_dec', replace
-restore
-
-merge m:1 cusip DecDate using `decile_dec'
-drop _merge
-*/
-
 * generate DECILE of June-adjusted portfolio:
 * the size of firm in June of year t, holding from July of year t to June of year t+1
 preserve
