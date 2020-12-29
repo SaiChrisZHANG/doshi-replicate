@@ -246,10 +246,8 @@ restore
 merge m:1 cusip JunDate using `decile_jun'
 drop _merge
 
-* ==============================================================================
-* Generate Book-To-Market Ratio and Decile
-* ==============================================================================
-
+* Generate Book-To-Market Ratio and Decile======================================
+* generate DECILE of monthly-adjusted Portfolio, BTM is calcuated with lag 1 month equity and book value
 gen DECILEmth_BtM = .
 
 forvalues i = 1/9{
