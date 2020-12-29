@@ -5,10 +5,10 @@
 * ==============================================================================
 * Table 1: Returns by portfolios (Panel A, B)
 * ==============================================================================
-* Table 1.1.1 ------------------------------------------------------------------
+* Table 1.1 --------------------------------------------------------------------
 ** 5-by-5: Doshi et al 2012
 ** VALUE weighted returns cross-sectionally, average across time series
-** yearly adjusted portfolios
+** Fama-French adjusted portfolios
 **** double sorting
 preserve
 bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RET*MElag), missing
@@ -54,7 +54,54 @@ drop if mi(QUINTILEdec_BtM)
 save "F:/Stephen/analysis/descriptive study/Table1/table1_1B2.dta", replace
 restore
 
+* Table 1.2 --------------------------------------------------------------------
+** 5-by-5: Doshi et al 2012
+** VALUE weighted returns cross-sectionally, average across time series
+** Fama-French adjusted portfolios
+**** double sorting
+preserve
+bys datadate QUINTILEjun FF_port_quintile: egen port_11A_ws = total(RET*MElag), missing
+bys datadate QUINTILEjun FF_port_quintile: egen port_11A_w = total(MElag), missing
+gen RET_11A = port_11A_ws/port_11A_w
+gen RETex_11A = RET_11A - rfFFWebsite
+duplicates drop datadate QUINTILEjun FF_port_quintile, force
 
+bys QUINTILEjun FF_port_quintile: egen portRET_11A = mean(RET_11A)
+bys QUINTILEjun FF_port_quintile: egen portRETex_11A = mean(RETex_11A)
+keep QUINTILEjun FF_port_quintile portRET_11A RET_11A portRETex_11A RETex_11A datadate
+drop if mi(QUINTILEjun) | mi(FF_port_quintile)
+save "F:/Stephen/analysis/descriptive study/Table1/table1_1A.dta", replace
+restore
+
+**** sort by ME
+preserve
+bys datadate QUINTILEjun: egen port_11B_ws_me = total(RET*MElag), missing
+bys datadate QUINTILEjun: egen port_11B_w_me = total(MElag), missing
+gen RET_11B_me = port_11B_ws_me/port_11B_w_me
+gen RETex_11B_me = RET_11B_me - rfFFWebsite
+duplicates drop datadate QUINTILEjun, force
+
+bys QUINTILEjun: egen portRET_11B_me = mean(RET_11B_me)
+bys QUINTILEjun: egen portRETex_11B_me = mean(RETex_11B_me)
+keep QUINTILEjun portRET_11B_me RET_11B_me portRETex_11B_me RETex_11B_me datadate
+drop if mi(QUINTILEjun)
+save "F:/Stephen/analysis/descriptive study/Table1/table1_1B1.dta", replace
+restore
+
+**** sort by BTM
+preserve
+bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RET*MElag), missing
+bys datadate QUINTILEdec_BtM: egen port_11B_w_btm = total(MElag), missing
+gen RET_11B_btm = port_11B_ws_btm/port_11B_w_btm
+gen RETex_11B_btm = RET_11B_btm - rfFFWebsite
+duplicates drop datadate QUINTILEdec_BtM, force
+
+bys QUINTILEdec_BtM: egen portRET_11B_btm = mean(RET_11B_btm)
+bys QUINTILEdec_BtM: egen portRETex_11B_btm = mean(RETex_11B_btm)
+keep QUINTILEdec_BtM portRET_11B_btm RET_11B_btm portRETex_11B_btm RETex_11B_btm datadate
+drop if mi(QUINTILEdec_BtM)
+save "F:/Stephen/analysis/descriptive study/Table1/table1_1B2.dta", replace
+restore
 
 * ==============================================================================
 * Table 2: Leverage
