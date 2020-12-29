@@ -389,17 +389,13 @@ gen Equity = ME
 
 global id_var = "cusip exchcd yyyymm DecDate"
 global prcret = "PRC RET RetExcess rfFFWebsite Mkt_prem"
-global values = "at BE ME MElag MEjun atdec BEdec MEdec BtM BtMdec BtMjun Debt Equity"
+global values = "at BE ME MElag MEjun atdec BEdec MEdec BtM BtMdec Debt Equity"
 global levvol = "EquityVolatility Lev Lev_intpl Levdec Levdec_intpl LevLag LevLag_intpl ltq_f ltq_f_intpl"
-global perctl = " DECILEmth DECILEjun DECILEmth_BtM DECILEdec_BtM QUINTILEjun QUINTILEmth QUINTILEmth_BtM QUINTILEdec_BtM"
-global dbl_sort = "FF_port_decile mth_port_decile FF_port_quintile mth_port_quintile"
-keep $id_var $dt_var $prcret $values $levvol $perctl $dbl_sort
+global bp_FF = "DECILEjun DECILEdec_BtM FF_port_decile"
+global bp_mth = "DECILEmth DECILEmth_BtM mth_port_decile"
 
 * convert the data set into matlab format
 ** This would require package "matwrite"
-preserve
-keep BEdec atdec ME MElag Mejun Medec DECILEjun ltq_f ltq_f_intpl Lev Lev_intpl Levdec Levdec_intpl LevLag EquityVolatility
-matwrite()
-restore
+matwrite $id_var $prcret $values $levvol $bp_FF $bp_mth using 
 
 clear
