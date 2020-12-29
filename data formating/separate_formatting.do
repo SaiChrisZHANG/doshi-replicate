@@ -377,8 +377,12 @@ replace Mkt_prem = Mkt_prem/100
 merge 1:1 cusip8 yyyymm using "F:/Stephen/auxilary data/monthly_volatility.dta", keepusing(EquityVolatility)
 drop if _merge==2
 drop _merge
+rename EquityVolatility EquityVol
 
-merge 1:1 cusip8 using "F:/Stephen/auxilary data/"
+merge 1:1 cusip8 Lag1 using "F:/Stephen/auxilary data/monthly_volatility.dta", keepusing(EquityVolatility)
+drop if _merge==2
+drop _merge
+rename 
 
 * final outputs
 save "F:/Stephen/analysis/full_data.dta", replace
