@@ -250,10 +250,6 @@ drop _merge
 * Generate Book-To-Market Ratio and Decile
 * ==============================================================================
 
-sort cusip datadate 
-by cusip: gen BtMlag = BtM[_n-1]
-gen BtMdec = BEdec/MEdec
-
 gen DECILEmth_BtM = .
 
 forvalues i = 1/9{
