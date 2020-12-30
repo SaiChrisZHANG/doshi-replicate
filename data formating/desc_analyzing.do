@@ -75,32 +75,32 @@ restore
 
 **** sort by ME
 preserve
-bys datadate QUINTILEjun: egen port_11B_ws_me = total(RET*MElag), missing
-bys datadate QUINTILEjun: egen port_11B_w_me = total(MElag), missing
-gen RET_11B_me = port_11B_ws_me/port_11B_w_me
-gen RETex_11B_me = RET_11B_me - rfFFWebsite
+bys datadate QUINTILEjun: egen port_12B1_ws = total(RET*MElag), missing
+bys datadate QUINTILEjun: egen port_12B1_w = total(MElag), missing
+gen RET_12B1 = port_12B1_ws/port_12B1_w
+gen RETex_12B1 = RET_12B1 - rfFFWebsite
 duplicates drop datadate QUINTILEjun, force
 
-bys QUINTILEjun: egen portRET_11B_me = mean(RET_11B_me)
-bys QUINTILEjun: egen portRETex_11B_me = mean(RETex_11B_me)
-keep QUINTILEjun portRET_11B_me RET_11B_me portRETex_11B_me RETex_11B_me datadate
+bys QUINTILEjun: egen portRET_12B1 = mean(RET_12B1)
+bys QUINTILEjun: egen portRETex_12B1 = mean(RETex_12B1)
+keep QUINTILEjun portRET_12B1 RET_12B1 portRETex_12B1 RETex_12B1 datadate
 drop if mi(QUINTILEjun)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_1B1.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table1/table1_2B1.dta", replace
 restore
 
 **** sort by BTM
 preserve
-bys datadate QUINTILEdec_BtM: egen port_11B_ws_btm = total(RET*MElag), missing
-bys datadate QUINTILEdec_BtM: egen port_11B_w_btm = total(MElag), missing
-gen RET_11B_btm = port_11B_ws_btm/port_11B_w_btm
-gen RETex_11B_btm = RET_11B_btm - rfFFWebsite
+bys datadate QUINTILEdec_BtM: egen port_12B2_ws = total(RET*MElag), missing
+bys datadate QUINTILEdec_BtM: egen port_12B2_w = total(MElag), missing
+gen RET_12B2 = port_12B2_ws/port_12B2_w
+gen RETex_12B2 = RET_12B2 - rfFFWebsite
 duplicates drop datadate QUINTILEdec_BtM, force
 
-bys QUINTILEdec_BtM: egen portRET_11B_btm = mean(RET_11B_btm)
-bys QUINTILEdec_BtM: egen portRETex_11B_btm = mean(RETex_11B_btm)
-keep QUINTILEdec_BtM portRET_11B_btm RET_11B_btm portRETex_11B_btm RETex_11B_btm datadate
+bys QUINTILEdec_BtM: egen portRET_12B2 = mean(RET_12B2)
+bys QUINTILEdec_BtM: egen portRETex_12B2 = mean(RETex_12B2)
+keep QUINTILEdec_BtM portRET_12B2 RET_12B2 portRETex_12B2 RETex_12B2 datadate
 drop if mi(QUINTILEdec_BtM)
-save "F:/Stephen/analysis/descriptive study/Table1/table1_1B2.dta", replace
+save "F:/Stephen/analysis/descriptive study/Table1/table1_2B2.dta", replace
 restore
 
 * ==============================================================================
