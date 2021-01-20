@@ -3,6 +3,13 @@
 * This project is prepared for the project of Prof. Stephen Schaefer
 
 * This script examine the debt structure of high/low BTM firms (constructed in data_formatting.do)
+
+*===============================================================================
+* Process debt information
+*===============================================================================
+use "F:/Stephen/separate/raw/compustat_debt.dta", clear
+
+
 *===============================================================================
 * Merge the debt data to the firms of high/low BTM
 *===============================================================================
