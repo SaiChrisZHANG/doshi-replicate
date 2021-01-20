@@ -4,5 +4,5 @@
 
 * This script examine the debt structure of high/low BTM firms (constructed in data_formatting.do)
 *===============================================================================
-* Clean variables: direct analysis
+* Merge the debt data to the firms of high/low BTM
 *===============================================================================
