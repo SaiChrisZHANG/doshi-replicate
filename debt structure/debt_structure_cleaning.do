@@ -6,3 +6,6 @@
 *===============================================================================
 * Merge the debt data to the firms of high/low BTM
 *===============================================================================
+
+* open the formatted data:
+use "F:\Stephen\analysis\full_data.dta", clear
