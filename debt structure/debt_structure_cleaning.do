@@ -35,9 +35,14 @@ drop if _merge==2
 drop _merge
 
 * keep variables of interest
-global debt_info = "apq dd1q dlcq dlttq lcoq lctq lltq loq ltmibq ltq npq txdbclq xintq dltisy dltry intpny xinty"
+global debt_info = "apq dd1q dlcq dlttq lctq lltq ltmibq ltq npq txdbclq xintq dltisy dltry intpny xinty"
 global other_info = "gvkey compustat_dt yyyymm DecDate at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM"
 keep $debt_info $indicator
+
+* generate percentage
+gen dlcq_perc = dlcq/ lctq
+gen dlttq_perc = dlttq/ lltq
+
 
 * save to another file for further analysis
 save "F:/Stephen/analysis/debt structure/debt_btm.dta", replace
@@ -46,4 +51,7 @@ save "F:/Stephen/analysis/debt structure/debt_btm.dta", replace
 * produce analysis: a monthly graphic analysis
 *===============================================================================
 * Mean of firms in highest BtM portfolios versus lowest BtM portfolios 
+preserve
+
+
 * merge with debt data
