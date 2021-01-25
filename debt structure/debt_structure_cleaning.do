@@ -35,7 +35,7 @@ drop _merge
 replace ltq = ltmibq if mi(ltq)
 drop ltmibq
 
-global debt_info = "apq dd1q dlcq dlttq lctq lltq ltq npq txdbclq xintq dltisy dltry intpny xinty"
+global debt_info = "apq dd1q dlcq dlttq lctq lltq ltq npq txdbclq xintq dltisy dltry intpny"
 global other_info = "gvkey compustat_dt yyyymm DecDate at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM"
 keep $debt_info $other_info
 
