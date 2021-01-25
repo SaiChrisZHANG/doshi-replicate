@@ -27,7 +27,7 @@ keep gvkey compustat_dt yyyymm DecDate BtM BtMdec DECILEmth_BtM DECILEdec_BtM QU
 keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
 
 * merge with debt data
-
+merge 1:1 gvkey datadate using "F:/Stephen/separate/raw/compustat_debt.dta"
 
 * save to another file for further analysis
 save "F:/Stephen/analysis/debt structure/debt_btm.dta", replace
