@@ -34,6 +34,11 @@ merge 1:1 gvkey datadate using "F:/Stephen/separate/raw/compustat_debt.dta"
 drop if _merge==2
 drop _merge
 
+* keep variables of interest
+global debt_info = "apq dd1q dlcq dlttq lcoq lctq lltq loq ltmibq ltq txdbclq xintq dltisy dltry intpny xinty"
+global indicator = "gvkey compustat_dt yyyymm DecDate BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM"
+keep $debt_info $indicator
+
 * save to another file for further analysis
 save "F:/Stephen/analysis/debt structure/debt_btm.dta", replace
 
