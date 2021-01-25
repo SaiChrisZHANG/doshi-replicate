@@ -9,6 +9,10 @@
 *===============================================================================
 use "F:/Stephen/separate/raw/compustat_debt.dta", clear
 
+* clean duplicates
+duplicates tag gvkey datadate, g(dup)
+drop if dup==1 & mi(datacqtr)
+duplicates report gkvey datadate /*should be none*/
 
 *===============================================================================
 * Merge the debt data to the firms of high/low BTM
