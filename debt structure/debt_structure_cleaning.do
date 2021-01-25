@@ -55,9 +55,6 @@ label variable lctq_perc "Current Liabilities in Total in %"
 gen lltq_perc = lltq/ ltq
 label variable lltq_perc "Long-Term Liabilities in Total in %"
 
-
-
-
 * save to another file for further analysis
 save "F:/Stephen/analysis/debt structure/debt_btm.dta", replace
 
