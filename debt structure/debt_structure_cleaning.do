@@ -14,8 +14,7 @@ duplicates tag gvkey datadate, g(dup)
 drop if dup==1 & mi(datacqtr)
 duplicates report gkvey datadate /*should be none*/
 drop dup
-
-
+save, replace
 
 *===============================================================================
 * Merge the debt data to the firms of high/low BTM
@@ -26,6 +25,9 @@ keep gvkey compustat_dt yyyymm DecDate BtM BtMdec DECILEmth_BtM DECILEdec_BtM QU
 
 * keep the firms in highest BtM portfolios and firms in the lowest BtM portfolios
 keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
+
+* merge with debt data
+
 
 * save to another file for further analysis
 save "F:/Stephen/analysis/debt structure/debt_btm.dta", replace
