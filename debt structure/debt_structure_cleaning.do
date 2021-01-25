@@ -40,8 +40,8 @@ global other_info = "gvkey compustat_dt yyyymm DecDate at lseq BtM BtMdec DECILE
 keep $debt_info $indicator
 
 * generate percentage
-gen dlcq_perc = dlcq/ lctq
-gen dlttq_perc = dlttq/ lltq
+gen dlcq_perc = dlcq/lctq
+gen dlttq_perc = dlttq/lltq
 
 
 * save to another file for further analysis
