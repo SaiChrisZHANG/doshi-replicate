@@ -36,13 +36,26 @@ drop _merge
 
 * keep variables of interest
 replace ltq = ltmibq if mi(ltq)
+drop ltmibq
+
 global debt_info = "apq dd1q dlcq dlttq lctq lltq ltq npq txdbclq xintq dltisy dltry intpny xinty"
 global other_info = "gvkey compustat_dt yyyymm DecDate at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM"
 keep $debt_info $indicator
 
 * generate percentage
 gen dlcq_perc = dlcq/lctq
+label variable dlcq_perc "Debt in Current Liabilities in %"
+
 gen dlttq_perc = dlttq/lltq
+label variable dlttq_perc "Debt in Long-term Liabilities in %"
+
+gen lctq_perc = lctq/ ltq
+label variable lctq_perc "Current Liabilities in Total in %"
+
+gen lltq_perc = lltq/ ltq
+label variable lltq_perc "Long-Term Liabilities in Total in %"
+
+
 
 
 * save to another file for further analysis
