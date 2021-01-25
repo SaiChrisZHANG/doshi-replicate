@@ -23,3 +23,4 @@ save "F:/Stephen/analysis/debt structure/debt_btm.dta", replace
 * keep the firms in highest BtM portfolios and firms in the lowest BtM portfolios
 keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
 
+* merge with debt data
