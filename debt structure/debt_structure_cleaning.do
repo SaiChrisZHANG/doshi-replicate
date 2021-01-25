@@ -60,7 +60,8 @@ save "F:/Stephen/analysis/debt structure/debt_btm.dta", replace
 *===============================================================================
 * keep the firms in highest BtM portfolios and firms in the lowest BtM portfolios, sorted by December BtM
 keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
-* 
+
+* since the portfolios are updated annually, 
 duplicates drop gvkey compustat_dt, force
 
 * Mean of firms in highest BtM portfolios versus lowest BtM portfolios 
