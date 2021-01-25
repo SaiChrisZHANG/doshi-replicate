@@ -55,11 +55,14 @@ label variable lltq_perc "Long-Term Liabilities in Total in %"
 * save to another file for further analysis
 save "F:/Stephen/analysis/debt structure/debt_btm.dta", replace
 
+*===============================================================================
+* graphic analysis: a quarterly graphic analysis
+*===============================================================================
 * keep the firms in highest BtM portfolios and firms in the lowest BtM portfolios, sorted by December BtM
 keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
-*===============================================================================
-* produce analysis: a monthly graphic analysis
-*===============================================================================
+* 
+duplicates drop gvkey compustat_dt, force
+
 * Mean of firms in highest BtM portfolios versus lowest BtM portfolios 
 preserve
 
