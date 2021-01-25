@@ -43,6 +43,6 @@ keep $debt_info $indicator
 save "F:/Stephen/analysis/debt structure/debt_btm.dta", replace
 
 *===============================================================================
-* 
+* produce analysis: a monthly 1 versus 5
 *===============================================================================
 * merge with debt data
