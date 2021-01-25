@@ -30,13 +30,13 @@ keep gvkey compustat_dt yyyymm DecDate BtM BtMdec DECILEmth_BtM DECILEdec_BtM QU
 keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
 
 * merge with debt data
-merge m:1 gvkey datadate using "F:/Stephen/separate/raw/compustat_debt.dta"
+merge m:1 gvkey compustat_dt using "F:/Stephen/separate/raw/compustat_debt.dta"
 drop if _merge==2
 drop _merge
 
 * keep variables of interest
 global debt_info = "apq dd1q dlcq dlttq lcoq lctq lltq loq ltmibq ltq txdbclq xintq dltisy dltry intpny xinty"
-global indicator = "gvkey compustat_dt yyyymm DecDate BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM"
+global other_info = "gvkey compustat_dt yyyymm DecDate at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM"
 keep $debt_info $indicator
 
 * save to another file for further analysis
