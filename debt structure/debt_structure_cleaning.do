@@ -10,6 +10,9 @@
 use "F:/Stephen/separate/raw/compustat_debt.dta", clear
 
 * clean duplicates
+destring gvkey, replace
+rename datdate compustat_dt
+
 duplicates tag gvkey datadate, g(dup)
 drop if dup==1 & mi(datacqtr)
 duplicates report gkvey datadate /*should be none*/
