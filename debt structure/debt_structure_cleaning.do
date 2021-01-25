@@ -26,9 +26,6 @@ save, replace
 use "F:\Stephen\analysis\full_data.dta", clear
 keep gvkey compustat_dt yyyymm DecDate BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM
 
-* keep the firms in highest BtM portfolios and firms in the lowest BtM portfolios
-keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
-
 * merge with debt data
 merge m:1 gvkey compustat_dt using "F:/Stephen/separate/raw/compustat_debt.dta"
 drop if _merge==2
@@ -40,7 +37,7 @@ drop ltmibq
 
 global debt_info = "apq dd1q dlcq dlttq lctq lltq ltq npq txdbclq xintq dltisy dltry intpny xinty"
 global other_info = "gvkey compustat_dt yyyymm DecDate at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM"
-keep $debt_info $indicator
+keep $debt_info $other_info
 
 * generate percentage
 gen dlcq_perc = dlcq/lctq
@@ -58,6 +55,8 @@ label variable lltq_perc "Long-Term Liabilities in Total in %"
 * save to another file for further analysis
 save "F:/Stephen/analysis/debt structure/debt_btm.dta", replace
 
+* keep the firms in highest BtM portfolios and firms in the lowest BtM portfolios, sorted by December BtM
+keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
 *===============================================================================
 * produce analysis: a monthly graphic analysis
 *===============================================================================
