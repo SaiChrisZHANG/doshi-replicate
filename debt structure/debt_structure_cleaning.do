@@ -43,6 +43,7 @@ keep $debt_info $indicator
 save "F:/Stephen/analysis/debt structure/debt_btm.dta", replace
 
 *===============================================================================
-* produce analysis: a monthly 1 versus 5
+* produce analysis: a monthly graphic analysis
 *===============================================================================
+* Mean of firms in highest BtM portfolios versus lowest BtM portfolios 
 * merge with debt data
