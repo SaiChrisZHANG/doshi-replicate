@@ -64,7 +64,8 @@ keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
 * since the portfolios are updated annually, the analysis would be done quarterly
 duplicates drop gvkey compustat_dt, force
 
-* Mean of firms in highest BtM portfolios versus lowest BtM portfolios 
+* Mean of firms in highest BtM portfolios versus lowest BtM portfolios
+foreach var in  
 preserve
 bys compustat_dt QUINTILEdec_BtM: 
 
