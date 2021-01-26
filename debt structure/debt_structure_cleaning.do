@@ -66,7 +66,7 @@ duplicates drop gvkey compustat_dt, force
 
 * Mean of firms in highest BtM portfolios versus lowest BtM portfolios 
 preserve
-
+bys 
 
 
 * merge with debt data
