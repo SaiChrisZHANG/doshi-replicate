@@ -9,6 +9,8 @@
 *===============================================================================
 global inputdir F:/Stephen/separate/raw
 global outputdir F:/Stephen/analysis
+* define folder to store graphs
+global figdir ${outputdir}/debt structure/debt descriptive
 
 *===============================================================================
 * Process debt information
@@ -67,30 +69,38 @@ save "${outputdir}/debt structure/debt_btm.dta", replace
 *===============================================================================
 * graphic analysis: a quarterly graphic analysis
 *===============================================================================
-* keep the firms in highest BtM portfolios and firms in the lowest BtM portfolios, sorted by December BtM
-keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
+* generate a "smoother" version of BtM portfolios
+gen BtM_big=1 if QUINTILEdec_BtM==4 | QUINTILEdec_BtM==5
+replace BtM_big=0 if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==2
 
 * since the portfolios are updated annually, the analysis would be done quarterly
 duplicates drop gvkey compustat_dt, force
 
+* BtM 5 versus BtM 1
 * Mean of firms in highest BtM portfolios versus lowest BtM portfolios
 preserve
+keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
 
 * generate variables for figures
 foreach var in $debt_info lseq dlcq_perc dlttq_perc lctq_perc lltq_perc ltq_perc{
     bys compustat_dt QUINTILEdec_BtM: egen `var'_mean = mean(`var')
-    bys compustat_dt QUINTILEdec_BtM: egen `var'_se = sd(`var')
-    gen `var'_l = `var'_mean - 1.96*`var'_se
-    gen `var'_r = `var'_mean + 1.96*`var'_se
+    *bys compustat_dt QUINTILEdec_BtM: egen `var'_se = sd(`var')
+    *gen `var'_l = `var'_mean - 1.96*`var'_se
+    *gen `var'_r = `var'_mean + 1.96*`var'_se
 }
 bys compustat_dt QUINTILEdec_BtM: egen n_obs = count(gvkey)
 
 * keep a date by portfolio data set for figures
 duplicates drop compustat_dt QUINTILEdec_BtM, force
-keep compustat_dt QUINTILEdec_BtM n_obs *_mean *_l *_r
-
-* define folder to store graphs
-global figdir F:/
+keep compustat_dt QUINTILEdec_BtM n_obs *_mean
 
 * draw graphs
-twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Accounts payable (quarterly, in million $)", size(medsmall)) title("Accounts Payable and BtM (5-1)",size(medlarge)) legend(order(1 "Lowest BtM portfolio" 2 "Highest BtM portfolio")) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))")
+twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Accounts payable (quarterly, in million $)", size(medsmall)) title("Accounts Payable and BtM-sorted portfolios (5 vs 1)",size(medlarge)) legend(order(1 "Lowest BtM portfolio" 2 "Highest BtM portfolio")) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/apq_1.gph", replace)
+twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Accounts payable (quarterly, in million $)", size(medsmall)) title("Accounts Payable and BtM-sorted portfolios (5 vs 1)",size(medlarge)) legend(order(1 "Lowest BtM portfolio" 2 "Highest BtM portfolio")) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/apq_1.gph", replace)
+twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Accounts payable (quarterly, in million $)", size(medsmall)) title("Accounts Payable and BtM-sorted portfolios (5 vs 1)",size(medlarge)) legend(order(1 "Lowest BtM portfolio" 2 "Highest BtM portfolio")) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/apq_1.gph", replace)
+twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Accounts payable (quarterly, in million $)", size(medsmall)) title("Accounts Payable and BtM-sorted portfolios (5 vs 1)",size(medlarge)) legend(order(1 "Lowest BtM portfolio" 2 "Highest BtM portfolio")) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/apq_1.gph", replace)
+twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Accounts payable (quarterly, in million $)", size(medsmall)) title("Accounts Payable and BtM-sorted portfolios (5 vs 1)",size(medlarge)) legend(order(1 "Lowest BtM portfolio" 2 "Highest BtM portfolio")) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/apq_1.gph", replace)
+twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Accounts payable (quarterly, in million $)", size(medsmall)) title("Accounts Payable and BtM-sorted portfolios (5 vs 1)",size(medlarge)) legend(order(1 "Lowest BtM portfolio" 2 "Highest BtM portfolio")) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/apq_1.gph", replace)
+twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Accounts payable (quarterly, in million $)", size(medsmall)) title("Accounts Payable and BtM-sorted portfolios (5 vs 1)",size(medlarge)) legend(order(1 "Lowest BtM portfolio" 2 "Highest BtM portfolio")) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/apq_1.gph", replace)
+twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Accounts payable (quarterly, in million $)", size(medsmall)) title("Accounts Payable and BtM-sorted portfolios (5 vs 1)",size(medlarge)) legend(order(1 "Lowest BtM portfolio" 2 "Highest BtM portfolio")) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/apq_1.gph", replace)
+twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Accounts payable (quarterly, in million $)", size(medsmall)) title("Accounts Payable and BtM-sorted portfolios (5 vs 1)",size(medlarge)) legend(order(1 "Lowest BtM portfolio" 2 "Highest BtM portfolio")) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/apq_1.gph", replace)
