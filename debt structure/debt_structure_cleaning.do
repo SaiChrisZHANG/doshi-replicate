@@ -68,6 +68,7 @@ duplicates drop gvkey compustat_dt, force
 preserve
 
 foreach var in $debt_info dlcq_perc dlttq_perc lctq_perc lltq_perc
+
 bys compustat_dt QUINTILEdec_BtM: 
 
 
