@@ -67,9 +67,10 @@ duplicates drop gvkey compustat_dt, force
 * Mean of firms in highest BtM portfolios versus lowest BtM portfolios
 preserve
 
-foreach var in $debt_info dlcq_perc dlttq_perc lctq_perc lltq_perc
-
-bys compustat_dt QUINTILEdec_BtM: 
+foreach var in $debt_info dlcq_perc dlttq_perc lctq_perc lltq_perc{
+    bys compustat_dt QUINTILEdec_BtM: egen `var'_mean = mean(`var')
+    bys compustat_dt QUINTILEdec_BtM: 
+}
 
 
 * merge with debt data
