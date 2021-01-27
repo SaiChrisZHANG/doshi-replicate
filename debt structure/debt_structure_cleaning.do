@@ -69,7 +69,7 @@ preserve
 
 foreach var in $debt_info dlcq_perc dlttq_perc lctq_perc lltq_perc{
     bys compustat_dt QUINTILEdec_BtM: egen `var'_mean = mean(`var')
-    bys compustat_dt QUINTILEdec_BtM: 
+    bys compustat_dt QUINTILEdec_BtM: egen `var'_se = sd(`var')
 }
 
 
