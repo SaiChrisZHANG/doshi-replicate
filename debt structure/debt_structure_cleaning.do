@@ -123,7 +123,6 @@ twoway line lctq_perc_med compustat_dt if QUINTILEdec_BtM==1 & !mi(lctq_perc_med
 twoway line lltq_perc_med compustat_dt if QUINTILEdec_BtM==1 & !mi(lltq_perc_med), lw(thin) lc(navy) || line lltq_perc_med compustat_dt if QUINTILEdec_BtM==5 & !mi(lltq_perc_med), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("% Long-term liabilities in total (quarterly)", size(medsmall)) title("% Long-term Liabilities in Total: Median",size(medlarge)) legend(order(1 "Lowest BtM portfolio" 2 "Highest BtM portfolio")) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/lltq_perc_2.gph", replace)
 twoway line ltq_perc_med compustat_dt if QUINTILEdec_BtM==1 & !mi(ltq_perc_med), lw(thin) lc(navy) || line ltq_perc_med compustat_dt if QUINTILEdec_BtM==5 & !mi(ltq_perc_med), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("% Liabilities in assets (quarterly)", size(medsmall)) title("% Liabilities in Assets: Median",size(medlarge)) legend(order(1 "Lowest BtM portfolio" 2 "Highest BtM portfolio")) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/ltq_perc_2.gph", replace)
 
-
 restore
 
 
