@@ -65,8 +65,9 @@ keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
 duplicates drop gvkey compustat_dt, force
 
 * Mean of firms in highest BtM portfolios versus lowest BtM portfolios
-foreach var in  
 preserve
+
+foreach var in $debt_info dlcq_perc dlttq_perc lctq_perc lltq_perc
 bys compustat_dt QUINTILEdec_BtM: 
 
 
