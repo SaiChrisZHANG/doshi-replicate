@@ -74,11 +74,19 @@ preserve
 foreach var in $debt_info lseq dlcq_perc dlttq_perc lctq_perc lltq_perc ltq_perc{
     bys compustat_dt QUINTILEdec_BtM: egen `var'_mean = mean(`var')
     bys compustat_dt QUINTILEdec_BtM: egen `var'_se = sd(`var')
+    gen `var'_l = `var'_mean - 1.96*`var'_se
+    gen `var'_r = `var'_mean + 1.96*`var'_se
 }
 bys compustat_dt QUINTILEdec_BtM: egen n_obs = count(gvkey)
 
 * keep a date by portfolio data set for figures
 duplicates drop compustat_dt QUINTILEdec_BtM, force
-keep compustat_dt QUINTILEdec_BtM  *_mean *_se
+keep compustat_dt QUINTILEdec_BtM  *_mean *_l *_r
 
-* merge with debt data
+twoway rspike ltq_perc_l ltq_perc_r compustat_dt if QUINTILEdec_BtM==1, lwidth(medthick) lcolor(navy) || ///
+scatter ltq_perc_mean compustat_dt if QUINTILEdec_BtM==1, mcolor(navy) msymbol(circle) || ///
+rspike affirm_l affirm_u pr, lwidth(medthick) lcolor(dkorange) || scatter affirm pr, mcolor(dkorange) msymbol(circle) ///
+xlabel(1 "-6" 2 "-5" 3 "-4" 4 "-3" 5 "-2" 6 "-1" 7 "0" 8 "1" 9 "2" 10 "3" 11 "4" 12 "5" 13 "6") ///
+xtitle("14-day periods before and after appeal court decision") ytitle("Period fixed effect") ///
+title("Aggregate Lower Court Grant Rate (by Judge)", size(medlarge)) yline(0, lcolor(black)) xline(7, lcolor(black)) ///
+legend(order(2 "Reversed cases" 4 "Affirmed cases")) note("(With appeal decision year fixed effect)")
