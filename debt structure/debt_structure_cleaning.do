@@ -83,9 +83,12 @@ bys compustat_dt QUINTILEdec_BtM: egen n_obs = count(gvkey)
 duplicates drop compustat_dt QUINTILEdec_BtM, force
 keep compustat_dt QUINTILEdec_BtM  *_mean *_l *_r
 
-twoway rspike ltq_perc_l ltq_perc_r compustat_dt if QUINTILEdec_BtM==1, lwidth(medthick) lcolor(navy) || ///
-scatter ltq_perc_mean compustat_dt if QUINTILEdec_BtM==1, mcolor(navy) msymbol(circle) || ///
-rspike affirm_l affirm_u pr, lwidth(medthick) lcolor(dkorange) || scatter affirm pr, mcolor(dkorange) msymbol(circle) ///
+* draw graphs
+
+twoway rspike ltq_perc_l ltq_perc_r compustat_dt if QUINTILEdec_BtM==1, lwidth(thin) lcolor(navy) || ///
+scatter ltq_perc_mean compustat_dt if QUINTILEdec_BtM==1, mcolor(navy) msymbol(circle) msize(small) || ///
+rspike ltq_perc_l ltq_perc_r compustat_dt if QUINTILEdec_BtM==5, lwidth(thin) lcolor(dkorange) || ///
+scatter ltq_perc_mean compustat_dt if QUINTILEdec_BtM==1, mcolor(dkorange) msymbol(circle) msize(small) ///
 xlabel(1 "-6" 2 "-5" 3 "-4" 4 "-3" 5 "-2" 6 "-1" 7 "0" 8 "1" 9 "2" 10 "3" 11 "4" 12 "5" 13 "6") ///
 xtitle("14-day periods before and after appeal court decision") ytitle("Period fixed effect") ///
 title("Aggregate Lower Court Grant Rate (by Judge)", size(medlarge)) yline(0, lcolor(black)) xline(7, lcolor(black)) ///
