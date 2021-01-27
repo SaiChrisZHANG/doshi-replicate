@@ -46,11 +46,14 @@ label variable dlcq_perc "Debt in Current Liabilities in %"
 gen dlttq_perc = dlttq/lltq
 label variable dlttq_perc "Debt in Long-term Liabilities in %"
 
-gen lctq_perc = lctq/ ltq
+gen lctq_perc = lctq/ltq
 label variable lctq_perc "Current Liabilities in Total in %"
 
-gen lltq_perc = lltq/ ltq
+gen lltq_perc = lltq/ltq
 label variable lltq_perc "Long-Term Liabilities in Total in %"
+
+gen ltq_perc = ltq/lseq
+label variable ltq_perc "Liabilities in Asset in %"
 
 * save to another file for further analysis
 save "F:/Stephen/analysis/debt structure/debt_btm.dta", replace
@@ -75,6 +78,6 @@ foreach var in $debt_info dlcq_perc dlttq_perc lctq_perc lltq_perc{
 bys compustat_dt QUINTILEdec_BtM: egen n_obs = count(gvkey)
 
 duplic
-keep  *_mean *_se
+keep compustat_dt  *_mean *_se
 
 * merge with debt data
