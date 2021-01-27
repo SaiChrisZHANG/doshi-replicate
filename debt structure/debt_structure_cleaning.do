@@ -7,12 +7,13 @@
 *===============================================================================
 * Define data folders
 *===============================================================================
-
+global inputdir F:/Stephen/separate/raw
+global outputdir F:/Stephen/analysis
 
 *===============================================================================
 * Process debt information
 *===============================================================================
-use "F:/Stephen/separate/raw/compustat_debt.dta", clear
+use "${inputdir}/compustat_debt.dta", clear
 
 * clean duplicates
 destring gvkey, replace
@@ -28,11 +29,11 @@ save, replace
 * Merge the debt data to the firms of high/low BTM
 *===============================================================================
 * open the formatted data:
-use "F:\Stephen\analysis\full_data.dta", clear
+use "${outputdir}/full_data.dta", clear
 keep gvkey compustat_dt yyyymm at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM
 
 * merge with debt data
-merge m:1 gvkey compustat_dt using "F:/Stephen/separate/raw/compustat_debt.dta"
+merge m:1 gvkey compustat_dt using "${inputdir}/compustat_debt.dta"
 drop if _merge==2
 drop _merge
 
@@ -61,7 +62,7 @@ gen ltq_perc = ltq/lseq
 label variable ltq_perc "Liabilities in Asset in %"
 
 * save to another file for further analysis
-save "F:/Stephen/analysis/debt structure/debt_btm.dta", replace
+save "${outputdir}/debt structure/debt_btm.dta", replace
 
 *===============================================================================
 * graphic analysis: a quarterly graphic analysis
