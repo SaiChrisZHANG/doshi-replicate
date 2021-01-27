@@ -81,9 +81,11 @@ bys compustat_dt QUINTILEdec_BtM: egen n_obs = count(gvkey)
 
 * keep a date by portfolio data set for figures
 duplicates drop compustat_dt QUINTILEdec_BtM, force
-keep compustat_dt QUINTILEdec_BtM  *_mean *_l *_r
+keep compustat_dt QUINTILEdec_BtM n_obs *_mean *_l *_r
 
 * draw graphs
+twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || 
+line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean)
 
 twoway rspike ltq_perc_l ltq_perc_r compustat_dt if QUINTILEdec_BtM==1, lwidth(thin) lcolor(navy) || ///
 scatter ltq_perc_mean compustat_dt if QUINTILEdec_BtM==1, mcolor(navy) msymbol(circle) msize(small) || ///
