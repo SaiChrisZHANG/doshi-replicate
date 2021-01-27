@@ -24,7 +24,7 @@ save, replace
 *===============================================================================
 * open the formatted data:
 use "F:\Stephen\analysis\full_data.dta", clear
-keep gvkey compustat_dt yyyymm DecDate at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM
+keep gvkey compustat_dt yyyymm at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM
 
 * merge with debt data
 merge m:1 gvkey compustat_dt using "F:/Stephen/separate/raw/compustat_debt.dta"
@@ -71,13 +71,14 @@ duplicates drop gvkey compustat_dt, force
 preserve
 
 * generate variables for figures
-foreach var in $debt_info dlcq_perc dlttq_perc lctq_perc lltq_perc{
+foreach var in $debt_info lseq dlcq_perc dlttq_perc lctq_perc lltq_perc ltq_perc{
     bys compustat_dt QUINTILEdec_BtM: egen `var'_mean = mean(`var')
     bys compustat_dt QUINTILEdec_BtM: egen `var'_se = sd(`var')
 }
 bys compustat_dt QUINTILEdec_BtM: egen n_obs = count(gvkey)
 
+* keep 
 duplicates drop compustat_dt QUINTILEdec_BtM, force
-keep compustat_dt QUINTILEdec_BtM *_mean *_se
+keep compustat_dt QUINTILEdec_BtM  *_mean *_se
 
 * merge with debt data
