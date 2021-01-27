@@ -87,6 +87,7 @@ keep compustat_dt QUINTILEdec_BtM n_obs *_mean *_l *_r
 twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || 
 line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean), lw(thin) lc(dkorange) ||
 xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Accounts payable (in million $", size(medsmall)) ||
+title("",size(medlarge)) legend(order(1 ""))
 
 twoway rspike ltq_perc_l ltq_perc_r compustat_dt if QUINTILEdec_BtM==1, lwidth(thin) lcolor(navy) || ///
 scatter ltq_perc_mean compustat_dt if QUINTILEdec_BtM==1, mcolor(navy) msymbol(circle) msize(small) || ///
