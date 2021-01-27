@@ -5,6 +5,11 @@
 * This script examine the debt structure of high/low BTM firms (constructed in data_formatting.do)
 
 *===============================================================================
+* Define data folders
+*===============================================================================
+
+
+*===============================================================================
 * Process debt information
 *===============================================================================
 use "F:/Stephen/separate/raw/compustat_debt.dta", clear
@@ -83,17 +88,8 @@ bys compustat_dt QUINTILEdec_BtM: egen n_obs = count(gvkey)
 duplicates drop compustat_dt QUINTILEdec_BtM, force
 keep compustat_dt QUINTILEdec_BtM n_obs *_mean *_l *_r
 
-* draw graphs
-twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || 
-line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean), lw(thin) lc(dkorange) ||
-xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Accounts payable (in million $", size(medsmall)) ||
-title("",size(medlarge)) legend(order(1 ""))
+* define folder to store graphs
+global figdir F:/
 
-twoway rspike ltq_perc_l ltq_perc_r compustat_dt if QUINTILEdec_BtM==1, lwidth(thin) lcolor(navy) || ///
-scatter ltq_perc_mean compustat_dt if QUINTILEdec_BtM==1, mcolor(navy) msymbol(circle) msize(small) || ///
-rspike ltq_perc_l ltq_perc_r compustat_dt if QUINTILEdec_BtM==5, lwidth(thin) lcolor(dkorange) || ///
-scatter ltq_perc_mean compustat_dt if QUINTILEdec_BtM==1, mcolor(dkorange) msymbol(circle) msize(small) ///
-xlabel(1 "-6" 2 "-5" 3 "-4" 4 "-3" 5 "-2" 6 "-1" 7 "0" 8 "1" 9 "2" 10 "3" 11 "4" 12 "5" 13 "6") ///
-xtitle("14-day periods before and after appeal court decision") ytitle("Period fixed effect") ///
-title("Aggregate Lower Court Grant Rate (by Judge)", size(medlarge)) yline(0, lcolor(black)) xline(7, lcolor(black)) ///
-legend(order(2 "Reversed cases" 4 "Affirmed cases")) note("(With appeal decision year fixed effect)")
+* draw graphs
+twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Accounts payable (quarterly, in million $)", size(medsmall)) title("Accounts Payable and BtM (5-1)",size(medlarge)) legend(order(1 "Lowest BtM portfolio" 2 "Highest BtM portfolio")) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))")
