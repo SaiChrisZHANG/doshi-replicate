@@ -77,7 +77,7 @@ foreach var in $debt_info lseq dlcq_perc dlttq_perc lctq_perc lltq_perc ltq_perc
 }
 bys compustat_dt QUINTILEdec_BtM: egen n_obs = count(gvkey)
 
-* keep 
+* keep a date by portfolio data set for figures
 duplicates drop compustat_dt QUINTILEdec_BtM, force
 keep compustat_dt QUINTILEdec_BtM  *_mean *_se
 
