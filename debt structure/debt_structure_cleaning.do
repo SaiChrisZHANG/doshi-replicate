@@ -142,6 +142,8 @@ gr combine lctq_perc_1.gph lctq_perc_2.gph, rows(1) cols(2) imargin(medlarge) xs
 gr combine lltq_perc_1.gph lltq_perc_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("% Long-term Liabilities in Total: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/lltq_perc.gph", replace)
 gr combine ltq_perc_1.gph ltq_perc_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("% Liabilities in Assets: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/ltq_perc.gph", replace)
 
+foreach vark
+
 * BtM 5/4 versus BtM 1/2 =======================================================
 * Mean of firms in 2 higher BtM portfolios versus 2 lower BtM portfolios
 preserve
