@@ -126,7 +126,7 @@ twoway line ltq_perc_med compustat_dt if QUINTILEdec_BtM==1 & !mi(ltq_perc_med),
 restore
 
 * BtM 5/4 versus BtM 1/2 =======================================================
-* Mean of firms in highest BtM portfolios versus lowest BtM portfolios
+* Mean of firms in 2 higher BtM portfolios versus 2 lower BtM portfolios
 preserve
 * generate a "smoother" version of BtM portfolios
 gen BtM_big=1 if QUINTILEdec_BtM==4 | QUINTILEdec_BtM==5
