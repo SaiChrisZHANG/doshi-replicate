@@ -125,6 +125,23 @@ twoway line ltq_perc_med compustat_dt if QUINTILEdec_BtM==1 & !mi(ltq_perc_med),
 
 restore
 
+* produce the final output: average versus median in the same figure
+cd "${figdir}"
+gr combine apq_1.gph apq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/apq.gph", replace)
+gr combine dd1q_1.gph dd1q_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/dd1q.gph", replace)
+gr combine dlcq_1.gph dlcq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/dlcq.gph", replace)
+gr combine dlttq_1.gph dlttq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/dlttq.gph", replace)
+gr combine lctq_1.gph lctq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/lctq.gph", replace)
+gr combine lltq_1.gph lltq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/lltq.gph", replace)
+gr combine ltq_1.gph ltq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/ltq.gph", replace)
+gr combine xintq_1.gph xintq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/xintq.gph", replace)
+gr combine lseq_1.gph lseq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/lseq.gph", replace)
+gr combine dlcq_perc_1.gph dlcq_perc_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/apq.gph", replace)
+gr combine dlttq_perc_1.gph dlttq_perc_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/apq.gph", replace)
+gr combine lctq_perc_1.gph lctq_perc_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/apq.gph", replace)
+gr combine lltq_perc_1.gph lltq_perc_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/apq.gph", replace)
+gr combine ltq_perc_1.gph ltq_perc_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/apq.gph", replace)
+
 * BtM 5/4 versus BtM 1/2 =======================================================
 * Mean of firms in 2 higher BtM portfolios versus 2 lower BtM portfolios
 preserve
@@ -181,3 +198,4 @@ twoway line lltq_perc_med compustat_dt if BtM_big==0 & !mi(lltq_perc_med), lw(th
 twoway line ltq_perc_med compustat_dt if BtM_big==0 & !mi(ltq_perc_med), lw(thin) lc(navy) || line ltq_perc_med compustat_dt if BtM_big==1 & !mi(ltq_perc_med), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("% Liabilities in assets (quarterly)", size(medsmall)) title("% Liabilities in Assets: Median",size(medlarge)) legend(order(1 "Firms in 2 lower BtM portfolios" 2 "Firms in 2 higher BtM portfolios") size(small)) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/2port/ltq_perc_2.gph", replace)
 
 restore
+
