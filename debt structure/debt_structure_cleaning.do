@@ -132,15 +132,15 @@ preserve
 gen BtM_big=1 if QUINTILEdec_BtM==4 | QUINTILEdec_BtM==5
 replace BtM_big=0 if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==2
 
-keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
+keep if !mi(BtM_big)
 
 * generate variables for figures
 foreach var in $debt_info lseq dlcq_perc dlttq_perc lctq_perc lltq_perc ltq_perc{
-    bys compustat_dt QUINTILEdec_BtM: egen `var'_mean = mean(`var')
-    bys compustat_dt QUINTILEdec_BtM: egen `var'_med = median(`var')
+    bys compustat_dt BtM_big: egen `var'_mean = mean(`var')
+    bys compustat_dt BtM_big: egen `var'_med = median(`var')
     *bys compustat_dt QUINTILEdec_BtM: egen `var'_se = sd(`var')
     *gen `var'_l = `var'_mean - 1.96*`var'_se
     *gen `var'_r = `var'_mean + 1.96*`var'_se
 }
-bys compustat_dt QUINTILEdec_BtM: egen n_obs = count(gvkey)
+bys compustat_dt BtM_big: egen n_obs = count(gvkey)
 
