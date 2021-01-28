@@ -128,6 +128,10 @@ restore
 * BtM 5/4 versus BtM 1/2 =======================================================
 * Mean of firms in highest BtM portfolios versus lowest BtM portfolios
 preserve
+* generate a "smoother" version of BtM portfolios
+gen BtM_big=1 if QUINTILEdec_BtM==4 | QUINTILEdec_BtM==5
+replace BtM_big=0 if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==2
+
 keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
 
 * generate variables for figures
@@ -140,6 +144,3 @@ foreach var in $debt_info lseq dlcq_perc dlttq_perc lctq_perc lltq_perc ltq_perc
 }
 bys compustat_dt QUINTILEdec_BtM: egen n_obs = count(gvkey)
 
-* generate a "smoother" version of BtM portfolios
-gen BtM_big=1 if QUINTILEdec_BtM==4 | QUINTILEdec_BtM==5
-replace BtM_big=0 if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==2
