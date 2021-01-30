@@ -221,3 +221,58 @@ foreach var in $debt_info lseq dlcq_perc dlttq_perc lctq_perc lltq_perc ltq_perc
     gr use "${figdir}/2port/`var'.gph"
     gr export "${figdir}/2port/`var'.png", wid(1200) hei(500)
 }
+
+
+*===============================================================================
+* Process debt information
+*===============================================================================
+use "${inputdir}/compustat_debt.dta", clear
+
+* clean duplicates
+destring gvkey, replace
+rename datdate compustat_dt
+
+duplicates tag gvkey datadate, g(dup)
+drop if dup==1 & mi(datacqtr)
+duplicates report gkvey datadate /*should be none*/
+drop dup
+save, replace
+
+*===============================================================================
+* Merge the debt data to the firms of high/low BTM
+*===============================================================================
+* open the formatted data:
+use "${outputdir}/full_data.dta", clear
+keep gvkey compustat_dt yyyymm at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM
+
+* merge with debt data
+merge m:1 gvkey compustat_dt using "${inputdir}/compustat_debt.dta"
+drop if _merge==2
+drop _merge
+
+* keep variables of interest
+replace ltq = ltmibq if mi(ltq)
+drop ltmibq
+
+global debt_info = "apq dlcq dlttq lctq lltq ltq xintq"
+global other_info = "gvkey compustat_dt yyyymm DecDate at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM"
+keep $debt_info $other_info
+
+* generate percentage
+gen dlcq_perc = dlcq/lctq
+label variable dlcq_perc "Debt in Current Liabilities in %"
+
+gen dlttq_perc = dlttq/lltq
+label variable dlttq_perc "Debt in Long-term Liabilities in %"
+
+gen lctq_perc = lctq/ltq
+label variable lctq_perc "Current Liabilities in Total in %"
+
+gen lltq_perc = lltq/ltq
+label variable lltq_perc "Long-Term Liabilities in Total in %"
+
+gen ltq_perc = ltq/lseq
+label variable ltq_perc "Liabilities in Asset in %"
+
+* save to another file for further analysis
+save "${outputdir}/debt structure/debt_btm.dta", replace
