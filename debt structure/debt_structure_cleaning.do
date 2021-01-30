@@ -245,8 +245,8 @@ use "${outputdir}/full_data.dta", clear
 keep gvkey compustat_dt yyyymm at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM
 
 * merge with debt data
-merge m:1 gvkey compustat_dt using "${inputdir}/compustat_debt.dta"
-drop if _merge==2
+merge m:1 gvkey compustat_dt using "${inputdir}/compustat_debt_annual.dta"
+keep if merge==3
 drop _merge
 
 * keep variables of interest
