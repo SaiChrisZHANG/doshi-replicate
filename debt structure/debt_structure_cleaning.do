@@ -222,9 +222,8 @@ foreach var in $debt_info lseq dlcq_perc dlttq_perc lctq_perc lltq_perc ltq_perc
     gr export "${figdir}/2port/`var'.png", wid(1200) hei(500)
 }
 
-
 *===============================================================================
-* Process debt information
+* Process annual debt information
 *===============================================================================
 use "${inputdir}/compustat_debt.dta", clear
 
