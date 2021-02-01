@@ -234,9 +234,9 @@ use "${inputdir}/compustat_debt_annual.dta", clear
 
 * clean duplicates
 destring gvkey, replace
-replace fyear = year(datadate)
+replace fyear = year(datadate) if mi(fyear)
 
-duplicates tag gvkey compustat_dt, g(dup)
+duplicates tag gvkey fyear, g(dup)
 drop if dup==1 & indfmt=="FS"
 duplicates report gvkey compustat_dt /*should be none*/
 drop dup fyear indfmt consol popsrc datafmt curcd costat
