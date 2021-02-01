@@ -287,7 +287,7 @@ bys compustat_dt QUINTILEdec_BtM: egen n_obs = count(gvkey)
 * keep a date by portfolio data set for figures
 duplicates drop compustat_dt QUINTILEdec_BtM, force
 keep compustat_dt QUINTILEdec_BtM *_mean *_med
-*cld2 cld3 cld4 cld5 dclo dcvt dd dd1 dd2 dd3 dd4 dd5 dltis dltr dm dn dxd2 dxd3 dxd4 dxd5
+
 * draw graphs: mean
 ** Capitalized Leases
 twoway line cld2_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(cld2_mean), lw(thin) lc(navy) || line cld2_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(cld2_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Capialized Leases: Due in 2nd Year (in M$)", size(medsmall)) title("Capitalized Leases: Average",size(medlarge)) legend(order(1 "Firms in the lowest BtM portfolio" 2 "Firms in highest BtM portfolio") size(small)) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/annual/1port/cld_2_1.gph", replace)
