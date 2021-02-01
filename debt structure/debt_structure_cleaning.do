@@ -47,7 +47,7 @@ replace ltq = ltmibq if mi(ltq)
 drop ltmibq
 
 global debt_info = "apq dlcq dlttq lctq lltq ltq xintq"
-global other_info = "gvkey compustat_dt yyyymm DecDate at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM"
+global other_info = "gvkey compustat_dt yyyymm at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM"
 keep $debt_info $other_info
 
 * generate percentage
@@ -247,7 +247,7 @@ save, replace
 *===============================================================================
 * open the formatted data:
 use "${outputdir}/full_data.dta", clear
-keep gvkey compustat_dt yyyymm at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM
+keep gvkey compustat_dt yyyymm BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM
 
 * merge with debt data
 merge m:1 gvkey compustat_dt using "${inputdir}/compustat_debt_annual.dta"
@@ -256,25 +256,9 @@ drop _merge
 
 * keep variables of interest
 
-global debt_info = "apq dlcq dlttq lctq lltq ltq xintq"
-global other_info = "gvkey compustat_dt yyyymm DecDate at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM"
+global debt_info = "cld2 cld3 cld4 cld5 dclo dcvt dd dd1 dd2 dd3 dd4 dd5 dltis dltr dm dn dxd2 dxd3 dxd4 dxd5"
+global other_info = "gvkey compustat_dt yyyymm BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM"
 keep $debt_info $other_info
-
-* generate percentage
-gen dlcq_perc = dlcq/lctq
-label variable dlcq_perc "Debt in Current Liabilities in %"
-
-gen dlttq_perc = dlttq/lltq
-label variable dlttq_perc "Debt in Long-term Liabilities in %"
-
-gen lctq_perc = lctq/ltq
-label variable lctq_perc "Current Liabilities in Total in %"
-
-gen lltq_perc = lltq/ltq
-label variable lltq_perc "Long-Term Liabilities in Total in %"
-
-gen ltq_perc = ltq/lseq
-label variable ltq_perc "Liabilities in Asset in %"
 
 * save to another file for further analysis
 save "${outputdir}/debt structure/debt_btm_annual.dta", replace
