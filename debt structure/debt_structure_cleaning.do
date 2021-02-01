@@ -24,9 +24,9 @@ use "${inputdir}/compustat_debt.dta", clear
 destring gvkey, replace
 rename datadate compustat_dt
 
-duplicates tag gvkey datadate, g(dup)
+duplicates tag gvkey compustat_dt, g(dup)
 drop if dup==1 & mi(datacqtr)
-duplicates report gkvey datadate /*should be none*/
+duplicates report gvkey compustat_dt /*should be none*/
 drop dup
 save, replace
 
@@ -236,9 +236,9 @@ use "${inputdir}/compustat_debt_annual.dta", clear
 destring gvkey, replace
 rename datadate compustat_dt
 
-duplicates tag gvkey datadate, g(dup)
+duplicates tag gvkey compustat_dt, g(dup)
 drop if dup==1 & mi(datacqtr)
-duplicates report gkvey datadate /*should be none*/
+duplicates report gvkey compustat_dt /*should be none*/
 drop dup
 save, replace
 
