@@ -228,7 +228,7 @@ foreach var in $debt_info lseq dlcq_perc dlttq_perc lctq_perc lltq_perc ltq_perc
 * Annual Study ==================---============================================
 *===============================================================================
 *===============================================================================
-* Process annual debt information
+* Process debt information
 *===============================================================================
 use "${inputdir}/compustat_debt.dta", clear
 
