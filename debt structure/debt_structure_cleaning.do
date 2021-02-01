@@ -239,7 +239,7 @@ rename datadate compustat_dt
 duplicates tag gvkey compustat_dt, g(dup)
 drop if dup==1 & indfmt=="FS"
 duplicates report gvkey compustat_dt /*should be none*/
-drop dup
+drop dup fyear indfmt consol popsrc datafmt curcd costat
 save, replace
 
 *===============================================================================
