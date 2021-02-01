@@ -255,8 +255,6 @@ keep if merge==3
 drop _merge
 
 * keep variables of interest
-replace ltq = ltmibq if mi(ltq)
-drop ltmibq
 
 global debt_info = "apq dlcq dlttq lctq lltq ltq xintq"
 global other_info = "gvkey compustat_dt yyyymm DecDate at lseq BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEdec_BtM QUINTILEmth_BtM"
