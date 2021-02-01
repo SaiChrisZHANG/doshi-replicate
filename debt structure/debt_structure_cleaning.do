@@ -275,7 +275,7 @@ preserve
 keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
 
 * generate variables for figures
-foreach var in $debt_info lseq dlcq_perc dlttq_perc lctq_perc lltq_perc ltq_perc{
+foreach var in $debt_info{
     bys compustat_dt QUINTILEdec_BtM: egen `var'_mean = mean(`var')
     bys compustat_dt QUINTILEdec_BtM: egen `var'_med = median(`var')
     *bys compustat_dt QUINTILEdec_BtM: egen `var'_se = sd(`var')
@@ -286,7 +286,7 @@ bys compustat_dt QUINTILEdec_BtM: egen n_obs = count(gvkey)
 
 * keep a date by portfolio data set for figures
 duplicates drop compustat_dt QUINTILEdec_BtM, force
-keep compustat_dt QUINTILEdec_BtM n_obs *_mean *_med
+keep compustat_dt QUINTILEdec_BtM *_mean *_med
 
 * draw graphs: mean
 twoway line apq_mean compustat_dt if QUINTILEdec_BtM==1 & !mi(apq_mean), lw(thin) lc(navy) || line apq_mean compustat_dt if QUINTILEdec_BtM==5 & !mi(apq_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Accounts payable (quarterly, in M$)", size(medsmall)) title("Accounts Payable: Average",size(medlarge)) legend(order(1 "Firms in the lowest BtM portfolio" 2 "Firms in highest BtM portfolio") size(small)) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/1port/apq_1.gph", replace)
