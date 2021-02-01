@@ -22,7 +22,7 @@ use "${inputdir}/compustat_debt.dta", clear
 
 * clean duplicates
 destring gvkey, replace
-rename datdate compustat_dt
+rename datadate compustat_dt
 
 duplicates tag gvkey datadate, g(dup)
 drop if dup==1 & mi(datacqtr)
@@ -230,11 +230,11 @@ foreach var in $debt_info lseq dlcq_perc dlttq_perc lctq_perc lltq_perc ltq_perc
 *===============================================================================
 * Process debt information
 *===============================================================================
-use "${inputdir}/compustat_debt.dta", clear
+use "${inputdir}/compustat_debt_annual.dta", clear
 
 * clean duplicates
 destring gvkey, replace
-rename datdate compustat_dt
+rename datadate compustat_dt
 
 duplicates tag gvkey datadate, g(dup)
 drop if dup==1 & mi(datacqtr)
