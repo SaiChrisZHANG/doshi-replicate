@@ -237,7 +237,7 @@ destring gvkey, replace
 rename datadate compustat_dt
 
 duplicates tag gvkey compustat_dt, g(dup)
-drop if dup==1 & mi(datacqtr)
+drop if dup==1 & indfmt=="FS"
 duplicates report gvkey compustat_dt /*should be none*/
 drop dup
 save, replace
@@ -279,4 +279,4 @@ gen ltq_perc = ltq/lseq
 label variable ltq_perc "Liabilities in Asset in %"
 
 * save to another file for further analysis
-save "${outputdir}/debt structure/debt_btm.dta", replace
+save "${outputdir}/debt structure/debt_btm_annual.dta", replace
