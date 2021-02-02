@@ -233,7 +233,6 @@ foreach var in $debt_info lseq dlcq_perc dlttq_perc lctq_perc lltq_perc ltq_perc
 use "${inputdir}/compustat_debt_annual.dta", clear
 
 * clean duplicates
-
 destring gvkey, replace
 rename datadate compustat_dt
 
