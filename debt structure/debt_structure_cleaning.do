@@ -238,6 +238,7 @@ replace fyear = year(datadate) if mi(fyear)
 
 duplicates tag gvkey fyear, g(dup)
 drop if dup==1 & indfmt=="FS"
+drop if mi(fyear)
 duplicates report gvkey compustat_dt /*should be none*/
 drop dup fyear indfmt consol popsrc datafmt curcd costat
 save, replace
