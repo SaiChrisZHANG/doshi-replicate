@@ -274,7 +274,8 @@ duplicates drop gvkey compustat_dt, force
 preserve
 keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
 
-gen year = 
+gen year = year(compustat_dt)
+bys gvkey year: 
 
 * generate variables for figures
 foreach var in $debt_info{
