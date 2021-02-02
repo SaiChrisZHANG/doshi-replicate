@@ -244,7 +244,7 @@ drop dup
 duplicates tag gvkey fyear, g(dup)
 drop if dup==1 & dltis==.
 
-duplicates report gvkey compustat_dt /*should be none*/
+duplicates report gvkey fyear /*should be none*/
 drop dup fyear indfmt consol popsrc datafmt curcd costat
 save, replace
 
