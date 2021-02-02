@@ -233,6 +233,16 @@ foreach var in $debt_info lseq dlcq_perc dlttq_perc lctq_perc lltq_perc ltq_perc
 use "${inputdir}/compustat_debt_annual.dta", clear
 
 * clean duplicates
+
+destring gvkey, replace
+rename datadate compustat_dt
+
+duplicates tag gvkey compustat_dt, g(dup)
+drop if dup==1 & mi(datacqtr)
+duplicates report gvkey compustat_dt /*should be none*/
+drop dup
+save, replace
+
 destring gvkey, replace
 replace fyear = year(datadate) if mi(fyear)
 
@@ -245,7 +255,7 @@ duplicates tag gvkey fyear, g(dup)
 drop if dup==1 & dltis==.
 
 duplicates report gvkey fyear /*should be none*/
-drop dup fyear indfmt consol popsrc datafmt curcd costat
+drop dup indfmt consol popsrc datafmt curcd costat
 save, replace
 
 *===============================================================================
