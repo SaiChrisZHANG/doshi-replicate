@@ -275,12 +275,12 @@ preserve
 keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
 
 gen year = year(compustat_dt)
-bys gvkey year: 
+bys gvkey year: keep if _n == _N
 
 * generate variables for figures
 foreach var in $debt_info{
-    bys compustat_dt QUINTILEdec_BtM: egen `var'_mean = mean(`var')
-    bys compustat_dt QUINTILEdec_BtM: egen `var'_med = median(`var')
+    bys year QUINTILEdec_BtM: egen `var'_mean = mean(`var')
+    bys year QUINTILEdec_BtM: egen `var'_med = median(`var')
     *bys compustat_dt QUINTILEdec_BtM: egen `var'_se = sd(`var')
     *gen `var'_l = `var'_mean - 1.96*`var'_se
     *gen `var'_r = `var'_mean + 1.96*`var'_se
