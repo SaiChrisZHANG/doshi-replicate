@@ -381,7 +381,16 @@ foreach var in $debt_info{
 * BtM 5&4 versus BtM 1&2 =======================================================
 * Mean of firms in highest BtM portfolios versus lowest BtM portfolios
 preserve
+
+
 keep if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==5
+
+preserve
+* generate a "smoother" version of BtM portfolios
+gen BtM_big=1 if QUINTILEdec_BtM==4 | QUINTILEdec_BtM==5
+replace BtM_big=0 if QUINTILEdec_BtM==1 | QUINTILEdec_BtM==2
+
+keep if !mi(BtM_big)
 
 gen year = year(compustat_dt)
 bys gvkey year: keep if _n == _N
