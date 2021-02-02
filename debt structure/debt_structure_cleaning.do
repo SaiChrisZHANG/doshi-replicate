@@ -282,7 +282,6 @@ foreach var in $debt_info{
     *gen `var'_l = `var'_mean - 1.96*`var'_se
     *gen `var'_r = `var'_mean + 1.96*`var'_se
 }
-bys compustat_dt QUINTILEdec_BtM: egen n_obs = count(gvkey)
 
 * keep a date by portfolio data set for figures
 duplicates drop compustat_dt QUINTILEdec_BtM, force
