@@ -348,7 +348,7 @@ restore
 * produce the final output: average versus median in the same figure
 cd "${figdir}/annual/1port"
 
-gr combine cld_2.gph apq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Accounts Payable: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/apq.gph", replace)
+gr combine cld2_1.gph cld2_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 2nd Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/cld2.gph", replace)
 gr combine dlcq_1.gph dlcq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt in Current Liabilities: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/dlcq.gph", replace)
 gr combine dlttq_1.gph dlttq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/dlttq.gph", replace)
 gr combine lctq_1.gph lctq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Current Liabilities: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/lctq.gph", replace)
