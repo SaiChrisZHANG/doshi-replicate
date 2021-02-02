@@ -363,16 +363,15 @@ gr combine dd3_1.gph dd3_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysiz
 gr combine dd4_1.gph dd4_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 4th Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/dd4.gph", replace)
 gr combine dd5_1.gph dd5_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 5th Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/dd5.gph", replace)
 
-gr combine lctq_1.gph lctq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Current Liabilities: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/lctq.gph", replace)
-gr combine lltq_1.gph lltq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Liabilities: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/lltq.gph", replace)
-gr combine ltq_1.gph ltq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Total Liabilities: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/ltq.gph", replace)
-gr combine xintq_1.gph xintq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Interest and Related Expense: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/xintq.gph", replace)
-gr combine lseq_1.gph lseq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Liabilities and Equity: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/lseq.gph", replace)
-gr combine dlcq_perc_1.gph dlcq_perc_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("% Debt in Current Liabilities: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/dlcq_perc.gph", replace)
-gr combine dlttq_perc_1.gph dlttq_perc_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("% Debt in Long-term Liabilities: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/dlttq_perc.gph", replace)
-gr combine lctq_perc_1.gph lctq_perc_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("% Current Liabilities in Total: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/lctq_perc.gph", replace)
-gr combine lltq_perc_1.gph lltq_perc_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("% Long-term Liabilities in Total: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/lltq_perc.gph", replace)
-gr combine ltq_perc_1.gph ltq_perc_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("% Liabilities in Assets: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/ltq_perc.gph", replace)
+gr combine dltis_1.gph dltis_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 2nd Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/dd2.gph", replace)
+gr combine dltr_1.gph dltr_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 3rd Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/dd3.gph", replace)
+gr combine dm_1.gph dm_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 4th Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/dd4.gph", replace)
+gr combine dn_1.gph dn_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 5th Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/dd5.gph", replace)
+
+gr combine dd2_1.gph dd2_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 2nd Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/dd2.gph", replace)
+gr combine dd3_1.gph dd3_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 3rd Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/dd3.gph", replace)
+gr combine dd4_1.gph dd4_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 4th Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/dd4.gph", replace)
+gr combine dd5_1.gph dd5_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 5th Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/dd5.gph", replace)
 
 foreach var in $debt_info lseq dlcq_perc dlttq_perc lctq_perc lltq_perc ltq_perc{
     gr use "${figdir}/1port/`var'.gph"
