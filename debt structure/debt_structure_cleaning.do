@@ -349,8 +349,13 @@ restore
 cd "${figdir}/annual/1port"
 
 gr combine cld2_1.gph cld2_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 2nd Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/cld2.gph", replace)
-gr combine dlcq_1.gph dlcq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt in Current Liabilities: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/dlcq.gph", replace)
-gr combine dlttq_1.gph dlttq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/dlttq.gph", replace)
+gr combine cld3_1.gph cld3_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 3rd Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/cld3.gph", replace)
+gr combine cld4_1.gph cld4_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 4th Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/cld4.gph", replace)
+gr combine cld5_1.gph cld5_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 5th Year: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/annual/1port/cld5.gph", replace)
+
+gr combine dclo_1.gph dclo_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt Capitalized Lease Obligations: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/dlcq.gph", replace)
+gr combine dcvt_1.gph dcvt_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt, Convertible: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/dlttq.gph", replace)
+
 gr combine lctq_1.gph lctq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Current Liabilities: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/lctq.gph", replace)
 gr combine lltq_1.gph lltq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Liabilities: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/lltq.gph", replace)
 gr combine ltq_1.gph ltq_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Total Liabilities: Firms in the Highest versus Lowest BtM Quintile") saving("${figdir}/1port/ltq.gph", replace)
