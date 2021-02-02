@@ -375,7 +375,7 @@ gr combine dxd5_1.gph dxd5_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ys
 
 foreach var in $debt_info{
     gr use "${figdir}/annual/1port/`var'.gph"
-    gr export "${figdir}/annual/1port/`var'.png", wid(1200) hei(500)
+    gr export "${figdir}/annual/1port/`var'.png", wid(1200) hei(500) replace
 }
 
 * BtM 5&4 versus BtM 1&2 =======================================================
@@ -461,32 +461,32 @@ restore
 * produce the final output: average versus median in the same figure
 cd "${figdir}/annual/1port"
 
-gr combine cld2_1.gph cld2_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 2nd Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/cld2.gph", replace)
-gr combine cld3_1.gph cld3_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 3rd Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/cld3.gph", replace)
-gr combine cld4_1.gph cld4_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 4th Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/cld4.gph", replace)
-gr combine cld5_1.gph cld5_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 5th Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/cld5.gph", replace)
+gr combine cld2_1.gph cld2_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 2nd Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/cld2.gph", replace)
+gr combine cld3_1.gph cld3_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 3rd Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/cld3.gph", replace)
+gr combine cld4_1.gph cld4_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 4th Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/cld4.gph", replace)
+gr combine cld5_1.gph cld5_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 5th Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/cld5.gph", replace)
 
-gr combine dclo_1.gph dclo_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt Capitalized Lease Obligations: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dclo.gph", replace)
-gr combine dcvt_1.gph dcvt_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt, Convertible: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dcvt.gph", replace)
+gr combine dclo_1.gph dclo_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt Capitalized Lease Obligations: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dclo.gph", replace)
+gr combine dcvt_1.gph dcvt_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt, Convertible: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dcvt.gph", replace)
 
 gr combine dd_1.gph dd_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt Debentures: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dd.gph", replace)
-gr combine dd1_1.gph dd1_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in One Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dd1.gph", replace)
-gr combine dd2_1.gph dd2_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 2nd Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dd2.gph", replace)
-gr combine dd3_1.gph dd3_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 3rd Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dd3.gph", replace)
-gr combine dd4_1.gph dd4_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 4th Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dd4.gph", replace)
-gr combine dd5_1.gph dd5_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 5th Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dd5.gph", replace)
+gr combine dd1_1.gph dd1_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in One Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dd1.gph", replace)
+gr combine dd2_1.gph dd2_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 2nd Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dd2.gph", replace)
+gr combine dd3_1.gph dd3_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 3rd Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dd3.gph", replace)
+gr combine dd4_1.gph dd4_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 4th Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dd4.gph", replace)
+gr combine dd5_1.gph dd5_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Due in 5th Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dd5.gph", replace)
 
-gr combine dltis_1.gph dltis_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Issuance: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dltis.gph", replace)
-gr combine dltr_1.gph dltr_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Reduction: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dltr.gph", replace)
-gr combine dm_1.gph dm_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt Mortgages & Other Secured: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dm.gph", replace)
-gr combine dn_1.gph dn_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt Notes: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dn.gph", replace)
+gr combine dltis_1.gph dltis_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Issuance: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dltis.gph", replace)
+gr combine dltr_1.gph dltr_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Long-term Debt Reduction: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dltr.gph", replace)
+gr combine dm_1.gph dm_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt Mortgages & Other Secured: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dm.gph", replace)
+gr combine dn_1.gph dn_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt Notes: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dn.gph", replace)
 
-gr combine dxd2_1.gph dxd2_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt (excluding capitalized leases) Due in 2nd Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dxd2.gph", replace)
-gr combine dxd3_1.gph dxd3_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt (excluding capitalized leases) Due in 3rd Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dxd3.gph", replace)
-gr combine dxd4_1.gph dxd4_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt (excluding capitalized leases) Due in 4th Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dxd4.gph", replace)
-gr combine dxd5_1.gph dxd5_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt (excluding capitalized leases) Due in 5th Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/1port/dxd5.gph", replace)
+gr combine dxd2_1.gph dxd2_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt (excluding capitalized leases) Due in 2nd Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dxd2.gph", replace)
+gr combine dxd3_1.gph dxd3_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt (excluding capitalized leases) Due in 3rd Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dxd3.gph", replace)
+gr combine dxd4_1.gph dxd4_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt (excluding capitalized leases) Due in 4th Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dxd4.gph", replace)
+gr combine dxd5_1.gph dxd5_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Debt (excluding capitalized leases) Due in 5th Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/dxd5.gph", replace)
 
 foreach var in $debt_info{
-    gr use "${figdir}/annual/1port/`var'.gph"
-    gr export "${figdir}/annual/1port/`var'.png", wid(1200) hei(500)
+    gr use "${figdir}/annual/2port/`var'.gph"
+    gr export "${figdir}/annual/2port/`var'.png", wid(1200) hei(500) replace
 }
