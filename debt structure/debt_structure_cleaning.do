@@ -454,12 +454,12 @@ twoway line dn_med year if QUINTILEdec_BtM==1 & !mi(dn_med), lw(thin) lc(navy) |
 twoway line dxd2_med year if QUINTILEdec_BtM==1 & !mi(dxd2_med), lw(thin) lc(navy) || line dxd2_med year if QUINTILEdec_BtM==5 & !mi(dxd2_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Debt Due in 2nd Year (in M$)", size(medsmall)) title("Debt (excluding capitalized leases) Due in 2nd Year: Median",size(medlarge)) legend(order(1 "Firms in 2 lower BtM portfolios" 2 "Firms in 2 higher BtM portfolios") size(small)) note("(Debt BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/annual/2port/dxd2_2.gph", replace)
 twoway line dxd3_med year if QUINTILEdec_BtM==1 & !mi(dxd3_med), lw(thin) lc(navy) || line dxd3_med year if QUINTILEdec_BtM==5 & !mi(dxd3_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Debt Due in 3rd Year (in M$)", size(medsmall)) title("Debt (excluding capitalized leases) Due in 3rd Year: Median",size(medlarge)) legend(order(1 "Firms in 2 lower BtM portfolios" 2 "Firms in 2 higher BtM portfolios") size(small)) note("(Debt BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/annual/2port/dxd3_2.gph", replace)
 twoway line dxd4_med year if QUINTILEdec_BtM==1 & !mi(dxd4_med), lw(thin) lc(navy) || line dxd4_med year if QUINTILEdec_BtM==5 & !mi(dxd4_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Debt Due in 4th Year (in M$)", size(medsmall)) title("Debt (excluding capitalized leases) Due in 4th Year: Median",size(medlarge)) legend(order(1 "Firms in 2 lower BtM portfolios" 2 "Firms in 2 higher BtM portfolios") size(small)) note("(Debt BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/annual/2port/dxd4_2.gph", replace)
-twoway line dxd5_med year if QUINTILEdec_BtM==1 & !mi(dxd5_med), lw(thin) lc(navy) || line dxd5_med year if QUINTILEdec_BtM==5 & !mi(dxd5_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Debt Due in 5th Year (in M$)", size(medsmall)) title("Debt (excluding capitalized leases) Due in 5th Year: Median",size(medlarge)) legend(order(1 "Firms in 2 lower BtM portfolios" 2 "Firms in 2 higher BtM portfolios") size(small)) note("(Debt BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/annual/port/2dxd5_2.gph", replace)
+twoway line dxd5_med year if QUINTILEdec_BtM==1 & !mi(dxd5_med), lw(thin) lc(navy) || line dxd5_med year if QUINTILEdec_BtM==5 & !mi(dxd5_mean), lw(thin) lc(dkorange) xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Debt Due in 5th Year (in M$)", size(medsmall)) title("Debt (excluding capitalized leases) Due in 5th Year: Median",size(medlarge)) legend(order(1 "Firms in 2 lower BtM portfolios" 2 "Firms in 2 higher BtM portfolios") size(small)) note("(Debt BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/annual/2port/dxd5_2.gph", replace)
 
 restore
 
 * produce the final output: average versus median in the same figure
-cd "${figdir}/annual/1port"
+cd "${figdir}/annual/2port"
 
 gr combine cld2_1.gph cld2_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 2nd Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/cld2.gph", replace)
 gr combine cld3_1.gph cld3_2.gph, rows(1) cols(2) imargin(medlarge) xsize(12) ysize(5) title("Capialized Leases Due in 3rd Year: Firms in the Highest versus Lowest 2 BtM Quintiles") saving("${figdir}/annual/2port/cld3.gph", replace)
@@ -490,3 +490,5 @@ foreach var in $debt_info{
     gr use "${figdir}/annual/2port/`var'.gph"
     gr export "${figdir}/annual/2port/`var'.png", wid(1200) hei(500) replace
 }
+
+clear
