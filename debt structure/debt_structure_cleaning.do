@@ -251,7 +251,7 @@ keep gvkey compustat_dt yyyymm BtM BtMdec DECILEmth_BtM DECILEdec_BtM QUINTILEde
 
 * merge with debt data
 merge m:1 gvkey compustat_dt using "${inputdir}/compustat_debt_annual.dta"
-keep if merge==3
+keep if _merge==3
 drop _merge
 
 * keep variables of interest
