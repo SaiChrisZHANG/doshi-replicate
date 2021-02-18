@@ -34,7 +34,7 @@ cd "F:/Stephen/mergent"
 * Merge the two data sets
 *===============================================================================
 
-* mergent_hist_amt
+* mergent_hist_amt =============================================================
 *+++++++++++++++++++++++++++++++++++++++++++++++
 * Note:
 * There could be multiple transactions happened on the same day for one issue, 
