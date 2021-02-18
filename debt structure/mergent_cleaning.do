@@ -5,6 +5,7 @@
 *===============================================================================
 * Merge the two data sets
 *===============================================================================
+clear
 
 * Clean two Mergent FISD data sets: Mergent Issues and Mergent 
 *+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -31,7 +32,6 @@
 * The merge will between these two data set will be through ISSUE_ID
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-clear
 cd "F:/Stephen/mergent"
 
 * mergent_hist_amt =============================================================
@@ -57,7 +57,8 @@ save mergent_hist_amt.dta, replace
 * mergent_issue ================================================================
 *+++++++++++++++++++++++++++++++++++++++++++++++
 * Note:
-* after merging, there are some issues and 
+* after merging, both some bonds, on the same day (always the last day documented),
+* they have different amount oustanding data in mergent_issue and mergent_hist_amt
 *+++++++++++++++++++++++++++++++++++++++++++++++
 
 use mergent_issue, clear
@@ -109,5 +110,25 @@ save mergent_amtinfo, replace
 *===============================================================================
 * cleaning TRACE data
 *===============================================================================
+clear
 
-cd "F:/"
+* Clean TRACE data
+*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*++++ link to data: 
+*++++ TRACE enhanced (https://wrds-web.wharton.upenn.edu/wrds//ds/trace/trace_enhanced/index.cfm)
+*++++ TRACE - Bond Trades (BTDS) (https://wrds-web.wharton.upenn.edu/wrds//ds/trace/trade/index.cfm)
+*++++
+*++++ TRACE enhanced covers more detailed bond information, from Jul 1st, 2002 to Mar 31st, 2020
+*++++ TRACE-Bond Trades (BTDS) covers longer time series
+*++++ 
+*++++ The final data set is:
+*++++          - TRACE enhanced: Jul/1/2002 to Mar/31/2020
+*++++          - TRACE-Bond Trades (BTDS): Apr/1/2020 to Sep/30/2020
+*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+* Notes: 
+*    - mergent_issue is uniquely defined by ISSUE_ID (also by 9-digit COMPLETE_CUSIP)
+*    - mergent_hist_amt is uniquely defined by ISSUE_IDxTRANSACTION_ID
+* The merge will between these two data set will be through ISSUE_ID
+*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+cd "F:/Stephen/TRACE"
