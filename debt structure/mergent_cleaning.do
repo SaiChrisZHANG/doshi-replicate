@@ -35,13 +35,17 @@ cd "F:/Stephen/mergent"
 *===============================================================================
 
 * mergent_hist_amt
-use mergent_hist_amt, clear
 *+++++++++++++++++++++++++++++++++++++++++++++++
 * Note:
 * There could be multiple transactions happened on the same day for one issue, 
 * TRANSACTION_ID marks the order of them, namely, transactions with a bigger
 * TRANSACTION_ID happens later
 *+++++++++++++++++++++++++++++++++++++++++++++++
+
+import sas TRANSACTION_ID ISSUE_ID EFFECTIVE_DATE AMOUNT_OUTSTANDING using "mergent_hist_amt.sas7bdat"
+
+* keep the final amount for each issue on each effective date
+
 
 use mergent_issue, clear
 
