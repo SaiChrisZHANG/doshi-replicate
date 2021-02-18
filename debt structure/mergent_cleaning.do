@@ -62,11 +62,24 @@ duplicates report ISSUE_ID
 duplicates report COMPLETE_CUSIP
 * should be uniquely defined
 
+* do the merge
 merge 1:m ISSUE_ID using mergent_hist_amt, keepusing(hist_effective_dt hist_amt_out)
 format hist_effective_dt %td
 
+* append the EFFECTIVE_DATE and AMOUNT_OUTSTANDING information of the mergent_issue data set
+* to the historical oustanding amount columns
 preserve
+tempfile recent_amt_out
+
 keep if _merge==3
 duplicates drop ISSUE_ID, force
 replace hist_amt_out = AMOUNT_OUTSTANDING
 replace hist_effective_dt = EFFECTIVE_DATE
+* generate a tag for these information
+gen latest = 1
+
+save `recent_amt_out', replace
+restore
+
+append using `recent_amt_out'
+
