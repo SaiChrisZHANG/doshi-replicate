@@ -84,11 +84,12 @@ restore
 append using `recent_amt_out'
 replace latest = 0 if latest==. & _merge==3
 
-* duplicates tag: 
+* duplicates tag: if duplicates, the 
 duplicates tag ISSUE_ID hist_effective_dt, gen(dup)
 drop if dup==1 & latest==0
 drop dup
 
+* the issues that doesn't have historical data in hist_amt_out
 replace hist_effective_dt = EFFECTIVE_DATE if _merge==1
 replace hist_amt_out = AMOUNT_OUTSTANDING if _merge==1
 replace latest = 1 if latest==. & _merge==1
