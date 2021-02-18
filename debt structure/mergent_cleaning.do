@@ -17,6 +17,11 @@
 *++++              PROC PRINT DATA=WORK.details;
 *++++              RUN;
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+* Notes: 
+*    - mergent_issue is uniquely defined by ISSUE_ID
+*    - mergent_hist_amt is uniquely defined by ISSUE_IDxTRANSACTION_ID
+
+*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * Author: Sai Zhang (saizhang@london.edu)
 * This project is prepared for the project of Prof. Stephen Schaefer
