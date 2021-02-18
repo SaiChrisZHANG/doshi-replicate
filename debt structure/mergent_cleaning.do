@@ -36,7 +36,10 @@ cd "F:/Stephen/mergent"
 
 * mergent_hist_amt
 use mergent_hist_amt, clear
-
+*++++++++++++++++++++++++++++++++++++++++++
+* Note:
+* There could be multiple transactions happened
+*++++++++++++++++++++++++++++++++++++++++++
 
 use mergent_issue, clear
 
