@@ -82,4 +82,7 @@ save `recent_amt_out', replace
 restore
 
 append using `recent_amt_out'
+replace latest=0 if latest==. & _merge==3
 
+replace hist_effective_dt = EFFECTIVE_DATE if _merge==1
+replace hist_amt_out = AMOUNT_OUTSTANDING if _merge==1
