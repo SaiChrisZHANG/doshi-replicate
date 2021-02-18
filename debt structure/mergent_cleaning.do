@@ -1,3 +1,7 @@
+* Author: Sai Zhang (saizhang@london.edu)
+* This project is prepared for the project of Prof. Stephen Schaefer
+* This script merge and generate the 
+
 * Clean two Mergent FISD data sets: Mergent Issues and Mergent 
 *+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 *++++ link to data: 
@@ -23,7 +27,3 @@
 * The merge will between these two data set will be through ISSUE_ID
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* Author: Sai Zhang (saizhang@london.edu)
-* This project is prepared for the project of Prof. Stephen Schaefer
-
-* This script examine the debt structure of high/low BTM firms (constructed in data_formatting.do)
