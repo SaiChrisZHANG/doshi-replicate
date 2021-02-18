@@ -20,7 +20,7 @@
 * Notes: 
 *    - mergent_issue is uniquely defined by ISSUE_ID
 *    - mergent_hist_amt is uniquely defined by ISSUE_IDxTRANSACTION_ID
-
+* The merge will between these two data set will be through ISSUE_ID
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * Author: Sai Zhang (saizhang@london.edu)
