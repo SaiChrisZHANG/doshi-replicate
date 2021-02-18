@@ -85,9 +85,13 @@ append using `recent_amt_out'
 replace latest = 0 if latest==. & _merge==3
 
 duplicates tag ISSUE_ID hist_effective_dt, gen(dup)
-
+drop if dup==1 & latest==0
+drop dup
 
 replace hist_effective_dt = EFFECTIVE_DATE if _merge==1
 replace hist_amt_out = AMOUNT_OUTSTANDING if _merge==1
 replace latest = 0 if latest==. & _merge==1
 
+rename _merge source
+label define data_source 1 "mergent_issue" 3 "mergent_hist_amt"
+label values source data_source
