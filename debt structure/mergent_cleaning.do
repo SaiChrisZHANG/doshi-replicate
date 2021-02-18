@@ -49,6 +49,9 @@ sort ISSUE_ID EFFECTIVE_DATE TRANSACTION_ID
 by ISSUE_ID EFFECTIVE_DATE: keep if _n == _N
 * 10733 obs dropped
 
+rename AMOUNT_OUTSTANDING HIST_AMT_OUT
+
+
 use mergent_issue, clear
 
 duplicates report ISSUE_ID
