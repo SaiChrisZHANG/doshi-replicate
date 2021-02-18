@@ -57,7 +57,7 @@ save mergent_hist_amt.dta, replace
 * mergent_issue ================================================================
 *+++++++++++++++++++++++++++++++++++++++++++++++
 * Note:
-* 
+* after merging, there are some issues and 
 *+++++++++++++++++++++++++++++++++++++++++++++++
 
 use mergent_issue, clear
