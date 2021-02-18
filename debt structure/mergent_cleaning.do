@@ -77,6 +77,7 @@ replace hist_amt_out = AMOUNT_OUTSTANDING
 replace hist_effective_dt = EFFECTIVE_DATE
 * generate a tag for these information
 gen latest = 1
+replace _merge==1
 
 save `recent_amt_out', replace
 restore
