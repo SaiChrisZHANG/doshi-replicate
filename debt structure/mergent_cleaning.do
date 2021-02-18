@@ -50,8 +50,9 @@ by ISSUE_ID EFFECTIVE_DATE: keep if _n == _N
 * 10733 obs dropped
 
 rename AMOUNT_OUTSTANDING HIST_AMT_OUT
+save mergent_hist_amt.dta, replace
 
-
+*===========================================
 use mergent_issue, clear
 
 duplicates report ISSUE_ID
