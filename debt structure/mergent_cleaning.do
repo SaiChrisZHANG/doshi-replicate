@@ -84,7 +84,8 @@ restore
 append using `recent_amt_out'
 replace latest = 0 if latest==. & _merge==3
 
-duplicates tag 
+duplicates tag ISSUE_ID hist_effective_dt, gen(dup)
+
 
 replace hist_effective_dt = EFFECTIVE_DATE if _merge==1
 replace hist_amt_out = AMOUNT_OUTSTANDING if _merge==1
