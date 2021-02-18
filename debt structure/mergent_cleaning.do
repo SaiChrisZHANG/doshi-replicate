@@ -33,3 +33,15 @@ cd "F:/Stephen/mergent"
 *===============================================================================
 * Merge the two data sets
 *===============================================================================
+
+* mergent_hist_amt
+use mergent_hist_amt, clear
+
+
+use mergent_issue, clear
+
+duplicates report ISSUE_ID
+duplicates report COMPLETE_CUSIP
+* should be uniquely defined
+
+merge 1:m ISSUE
