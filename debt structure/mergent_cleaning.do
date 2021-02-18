@@ -77,7 +77,6 @@ replace hist_amt_out = AMOUNT_OUTSTANDING
 replace hist_effective_dt = EFFECTIVE_DATE
 * generate a tag for these information
 gen latest = 1
-replace _merge = 1
 
 save `recent_amt_out', replace
 restore
@@ -85,17 +84,17 @@ restore
 append using `recent_amt_out'
 replace latest = 0 if latest==. & _merge==3
 
-duplicates tag ISSUE_ID hist_effective_dt, gen(dup)
-drop if dup==1 & latest==0
-drop dup
+*duplicates tag ISSUE_ID hist_effective_dt, gen(dup)
+*drop if dup==1 & latest==0
+*drop dup
 
 replace hist_effective_dt = EFFECTIVE_DATE if _merge==1
 replace hist_amt_out = AMOUNT_OUTSTANDING if _merge==1
-replace latest = 0 if latest==. & _merge==1
+replace latest = 1 if latest==. & _merge==1
 
-rename _merge source
-label define data_source 1 "mergent_issue" 3 "mergent_hist_amt"
-label values source data_source
+rename _merge hist_tag
+label define hist_tag_l 1 "No historical data" 3 "With historical data"
+label values hist_tag hist_tag_l
 
 replace source = 1 if latest==1
 replace latest = 1 if source==1
