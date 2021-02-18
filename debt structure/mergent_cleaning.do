@@ -96,5 +96,4 @@ rename _merge hist_tag
 label define hist_tag_l 1 "No historical data" 3 "With historical data"
 label values hist_tag hist_tag_l
 
-replace source = 1 if latest==1
-replace latest = 1 if source==1
+save mergent_amtinfo, replace
