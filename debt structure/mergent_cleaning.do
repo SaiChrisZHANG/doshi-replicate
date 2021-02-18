@@ -42,6 +42,7 @@ cd "F:/Stephen/mergent"
 * TRANSACTION_ID happens later
 *+++++++++++++++++++++++++++++++++++++++++++++++
 
+* import SAS format data, downloaded from WRDS
 import sas TRANSACTION_ID ISSUE_ID EFFECTIVE_DATE AMOUNT_OUTSTANDING using "mergent_hist_amt.sas7bdat"
 
 * keep the final amount for each issue on each effective date
@@ -49,14 +50,13 @@ sort ISSUE_ID EFFECTIVE_DATE TRANSACTION_ID
 by ISSUE_ID EFFECTIVE_DATE: keep if _n == _N
 * 10733 obs dropped
 
-rename AMOUNT_OUTSTANDING HIST_AMT_OUT
+rename AMOUNT_OUTSTANDING hist_amt_out
+rename EFFECTIVE_DATE hist_effective_dt
 save mergent_hist_amt.dta, replace
 
 * mergent_issue ================================================================
 use mergent_issue, clear
 
-duplicates report ISSUE_ID
-duplicates report COMPLETE_CUSIP
 * should be uniquely defined
 
 merge 1:m ISSUE
