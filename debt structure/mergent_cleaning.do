@@ -56,7 +56,17 @@ save mergent_hist_amt.dta, replace
 
 * mergent_issue ================================================================
 use mergent_issue, clear
+keep ISSUE_ID ISSUER_ID ISSUER_CUSIP COMPLETE_CUSIP MATURITY CONVERTIBLE OFFERING_AMT OFFERING_DATE OFFERING_PRICE OFFERING_YIELD DELIVERY_DATE ACTIVE_ISSUE BOND_TYPE EFFECTIVE_DATE AMOUNT_OUTSTANDING
 
+duplicates report ISSUE_ID
+duplicates report COMPLETE_CUSIP
 * should be uniquely defined
 
-merge 1:m ISSUE
+merge 1:m ISSUE_ID using mergent_hist_amt, keepusing(hist_effective_dt hist_amt_out)
+format hist_effective_dt %td
+
+preserve
+keep if _merge==3
+duplicates drop ISSUE_ID, force
+replace hist_amt_out = AMOUNT_OUTSTANDING
+replace hist_effective_dt = EFFECTIVE_DATE
