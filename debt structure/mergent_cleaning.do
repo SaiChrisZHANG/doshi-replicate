@@ -52,9 +52,7 @@ by ISSUE_ID EFFECTIVE_DATE: keep if _n == _N
 rename AMOUNT_OUTSTANDING HIST_AMT_OUT
 save mergent_hist_amt.dta, replace
 
-*===============================================================================
-
-*===============================================================================
+* mergent_issue ================================================================
 use mergent_issue, clear
 
 duplicates report ISSUE_ID
