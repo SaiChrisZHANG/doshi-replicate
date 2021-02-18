@@ -1,6 +1,10 @@
 * Author: Sai Zhang (saizhang@london.edu)
 * This project is prepared for the project of Prof. Stephen Schaefer
-* This script merge and generate the 
+* This script merge and generate the bond amount outstanding information
+
+*===============================================================================
+* Merge the two data sets
+*===============================================================================
 
 * Clean two Mergent FISD data sets: Mergent Issues and Mergent 
 *+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -29,10 +33,6 @@
 
 clear
 cd "F:/Stephen/mergent"
-
-*===============================================================================
-* Merge the two data sets
-*===============================================================================
 
 * mergent_hist_amt =============================================================
 *+++++++++++++++++++++++++++++++++++++++++++++++
@@ -102,5 +102,7 @@ label values hist_tag hist_tag_l
 save mergent_amtinfo, replace
 
 *===============================================================================
-* 
+* cleaning TRACE data
 *===============================================================================
+
+cd "F:/"
