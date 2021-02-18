@@ -96,3 +96,6 @@ replace latest = 0 if latest==. & _merge==1
 rename _merge source
 label define data_source 1 "mergent_issue" 3 "mergent_hist_amt"
 label values source data_source
+
+replace source = 1 if latest==1
+replace latest = 1 if source==1
