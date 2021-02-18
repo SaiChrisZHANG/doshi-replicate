@@ -45,7 +45,9 @@ cd "F:/Stephen/mergent"
 import sas TRANSACTION_ID ISSUE_ID EFFECTIVE_DATE AMOUNT_OUTSTANDING using "mergent_hist_amt.sas7bdat"
 
 * keep the final amount for each issue on each effective date
-
+sort ISSUE_ID EFFECTIVE_DATE TRANSACTION_ID
+by ISSUE_ID EFFECTIVE_DATE: keep if _n == _N
+* 10733 obs dropped
 
 use mergent_issue, clear
 
