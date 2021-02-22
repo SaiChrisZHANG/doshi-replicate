@@ -129,7 +129,7 @@ clear
 *    - mergent_issue is uniquely defined by ISSUE_ID (also by 9-digit COMPLETE_CUSIP)
 *    - mergent_hist_amt is uniquely defined by ISSUE_IDxTRANSACTION_ID
 *
-* The 
+* The purpose of TRACE data is to price the bond value with 
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 cd "F:/Stephen/TRACE"
