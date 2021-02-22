@@ -130,7 +130,7 @@ clear
 *++++ to achieve this, the merge is done as:
 *++++    - for each firm, when the portfolio is adjusted (annually/quarterly)
 *++++    - select all bonds that still have positive amount outstanding from FISD mergent
-*++++    - for these bonds, select the most recent transaction information
+*++++    - for these bonds, select the most recent transaction information as the pricing info for the bond in the period
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 cd "F:/Stephen/TRACE"
