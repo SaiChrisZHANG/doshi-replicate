@@ -128,6 +128,9 @@ clear
 * Notes: 
 *    - mergent_issue is uniquely defined by ISSUE_ID (also by 9-digit COMPLETE_CUSIP)
 *    - mergent_hist_amt is uniquely defined by ISSUE_IDxTRANSACTION_ID
+*
+* The 
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 cd "F:/Stephen/TRACE"
+
