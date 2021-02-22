@@ -126,13 +126,10 @@ clear
 *++++          - TRACE-Bond Trades (BTDS): Apr/1/2020 to Sep/30/2020
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 * Notes: 
-*    - mergent_issue is uniquely defined by ISSUE_ID (also by 9-digit COMPLETE_CUSIP)
-*    - mergent_hist_amt is uniquely defined by ISSUE_IDxTRANSACTION_ID
-*
 * The purpose of TRACE data is to price the bond value with the nearest large trasaction,
 * to achieve this, the merge is done as:
-*    - for each firm, whenever the portfolio is adjusted (annually/quarterly)
-*    - 
+*    - for each firm, when the portfolio is adjusted (annually/quarterly)
+*    - select all bonds that still have positive amount outstanding from FISD mergent
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 cd "F:/Stephen/TRACE"
