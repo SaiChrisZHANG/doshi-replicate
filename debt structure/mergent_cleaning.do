@@ -130,8 +130,8 @@ restore
 append using `maturity'
 
 * generate a tag +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-gen source = .
-replace source = 
+gen dt_type = .
+replace dt_type = 1 if  
 
 
 
