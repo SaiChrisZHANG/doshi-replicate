@@ -131,8 +131,8 @@ append using `maturity'
 
 * generate a tag +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 gen dt_type = .
-replace dt_type = 1 if  
-
+replace dt_type = 1 if first == 1
+replace dt_type = 2 if latest == 0
 
 
 rename _merge hist_tag
