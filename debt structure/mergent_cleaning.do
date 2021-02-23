@@ -84,8 +84,8 @@ replace hist_effective_dt = EFFECTIVE_DATE
 * generate a tag for these information
 gen latest = 1
 save `recent_amt_out', replace
-restore
 
+restore
 append using `recent_amt_out'
 replace latest = 0 if latest==. & _merge==3
 
@@ -111,11 +111,11 @@ drop _merge latest dup_latest
 * generate a tag for these information
 gen first = 1
 save `offering_amount', replace
-restore
 
+restore
 append using `offering_amount'
 
-* 
+* generate a tag
 
 
 
