@@ -138,7 +138,6 @@ drop _merge latest first maturity
 
 * tag the duplicated date information
 duplicates tag ISSUE_ID hist_effective_dt, gen(date_dup)
-* generate an order of date information
 sort ISSUER_ID ISSUE_ID dt_type hist_effective_dt
 
 * use the following codes to keep the 
