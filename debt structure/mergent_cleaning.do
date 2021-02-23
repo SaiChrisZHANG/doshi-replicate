@@ -101,7 +101,7 @@ duplicates drop ISSUE_ID, force
 replace hist_amt_out = OFFERING_AMT
 replace hist_effective_dt = OFFERING_DATE
 replace hist_effective_dt = DELIVERY_DATE if mi(hist_effective_dt) & !mi(DELIVERY_DATE)
-drop _merge latest dup_latest
+drop _merge latest
 * generate a tag for these information
 gen first = 1
 save `offering_amount', replace
@@ -115,7 +115,7 @@ tempfile maturity
 duplicates drop ISSUE_ID, force
 replace hist_amt_out = 0
 replace hist_effective_dt = MATURITY
-drop _merge latest dup_latest first
+drop _merge latest first
 * generate a tage for maturity
 gen maturity = 1
 save `maturity', replace
@@ -133,7 +133,7 @@ replace dt_type = 4 if maturity == 1
 label define date_type_l 1 "Offering date" 2 "Historical date" 3 "Latest date" 4 "Maturity date"
 label values dt_type date_type_l
 
-drop _merge latest dup_latest first maturity
+drop _merge latest first maturity
 save mergent_amtinfo, replace
 
 *===============================================================================
