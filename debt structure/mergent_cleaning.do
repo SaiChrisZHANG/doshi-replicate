@@ -136,8 +136,7 @@ replace dt_type = 2 if latest == 0
 replace dt_type = 3 if latest == 1
 replace dt_type = 4 if maturity == 1
 
-rename _merge hist_tag
-label define hist_tag_l 1 "Historical amount" 3 "Latest amount"
+label define date_type 1 "Offering date" 2 "Historical date" 3 "Latest"
 label values hist_tag hist_tag_l
 
 save mergent_amtinfo, replace
