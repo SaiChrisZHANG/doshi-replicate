@@ -107,7 +107,8 @@ preserve
 tempfile offering_amount
 
 duplicates drop ISSUE_ID, force
-
+replace hist_amt_out = OFFERING_AMT
+replace hist_effective_dt = EFFECTIVE_DATE
 
 
 
