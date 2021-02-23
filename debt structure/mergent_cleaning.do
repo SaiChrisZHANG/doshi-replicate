@@ -115,7 +115,13 @@ save `offering_amount', replace
 restore
 append using `offering_amount'
 
+* add the maturity date and 0 as the maturity information ++++++++++++++++++++++
+
+
+
 * generate a tag
+gen source = .
+replace source = 
 
 
 
