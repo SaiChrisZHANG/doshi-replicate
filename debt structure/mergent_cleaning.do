@@ -121,6 +121,13 @@ tempfile maturity
 duplicates drop ISSUE_ID, force
 replace hist_amt_out = 0
 replace hist_effective_dt = MATURITY
+drop _merge latest dup_latest first
+* generate a tage for maturity
+gen maturity = 1
+save `maturity', replace
+
+restore
+append using `maturity'
 
 
 * generate a tag
