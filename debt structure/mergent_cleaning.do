@@ -72,6 +72,7 @@ duplicates report COMPLETE_CUSIP
 merge 1:m ISSUE_ID using mergent_hist_amt, keepusing(hist_effective_dt hist_amt_out)
 format hist_effective_dt %td
 
+* add the latest amount outstanding as the last historical amount ++++++++++++++
 * append the EFFECTIVE_DATE and AMOUNT_OUTSTANDING information of the mergent_issue data set
 * to the historical oustanding amount columns
 preserve
@@ -101,7 +102,9 @@ replace hist_effective_dt = EFFECTIVE_DATE if _merge==1
 replace hist_amt_out = AMOUNT_OUTSTANDING if _merge==1
 replace latest = 1 if latest==. & _merge==1
 
-* add offering amount and offering date as the 1st historical
+* add offering amount and offering date as the 1st historical amount
+preserve
+
 
 rename _merge hist_tag
 label define hist_tag_l 1 "Historical amount" 3 "Latest amount"
