@@ -133,7 +133,14 @@ replace dt_type = 4 if maturity == 1
 label define date_type_l 1 "Offering date" 2 "Historical date" 3 "Latest date" 4 "Maturity date"
 label values dt_type date_type_l
 
+* drop the intermediary columns
 drop _merge latest first maturity
+
+* tag the duplicated date information
+duplicates tag ISSUE_ID hist_effective_dt, gen(date_dup)
+* use the following codes to keep the 
+
+sort ISSUER_ID ISSUE_ID dt_type hist_effective_dt
 save mergent_amtinfo, replace
 
 *===============================================================================
