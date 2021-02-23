@@ -114,6 +114,10 @@ replace hist_effective_dt = DELIVERY_DATE if mi(hist_effective_dt) & !mi(DELIVER
 drop _merge latest dup_latest
 gen first = 1
 
+save `offering_amount', replace
+restore
+
+append using `offering_amount'
 
 
 
