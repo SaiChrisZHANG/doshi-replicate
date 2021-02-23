@@ -139,6 +139,7 @@ replace dt_type = 4 if maturity == 1
 label define date_type_l 1 "Offering date" 2 "Historical date" 3 "Latest date" 4 "Maturity date"
 label values dt_type date_type_l
 
+drop _merge latest dup_latest first maturity
 save mergent_amtinfo, replace
 
 *===============================================================================
