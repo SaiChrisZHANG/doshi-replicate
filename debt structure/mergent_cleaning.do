@@ -106,7 +106,8 @@ replace latest = 1 if latest==. & _merge==1
 preserve
 tempfile offering_amount
 
-duplicates drop 
+duplicates drop ISSUE_ID, force
+
 
 
 
