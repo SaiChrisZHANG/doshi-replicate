@@ -116,6 +116,9 @@ restore
 append using `offering_amount'
 
 * add the maturity date and 0 as the maturity information ++++++++++++++++++++++
+preserve
+tempfile maturity
+duplicates drop ISSUE_ID, force
 
 
 
