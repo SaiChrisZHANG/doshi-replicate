@@ -112,6 +112,7 @@ append using `offering_amount'
 * add the maturity date and 0 as the maturity information ++++++++++++++++++++++
 preserve
 tempfile maturity
+drop if MATURITY == hist_effective_dt
 duplicates drop ISSUE_ID, force
 replace hist_amt_out = 0
 replace hist_effective_dt = MATURITY
