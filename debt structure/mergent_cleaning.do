@@ -91,7 +91,7 @@ restore
 append using `recent_amt_out'
 replace latest = 0 if latest==. & _merge==3
 
-* duplicates tag: there are bonds that have the same effective date but different amount in the two data sets.
+* duplicates tag: there are 1656 bonds that have the same effective date but different amount in the two data sets.
 duplicates tag ISSUE_ID hist_effective_dt, gen(dup)
 * if needed, the duplicates could be dropped by:
 *   drop if dup==1 & latest==0
@@ -104,6 +104,11 @@ replace latest = 1 if latest==. & _merge==1
 
 * add the offering amount as the last historical amount ++++++++++++++++++++++++
 preserve
+tempfile offering_amount
+
+duplicates drop 
+
+
 
 
 
