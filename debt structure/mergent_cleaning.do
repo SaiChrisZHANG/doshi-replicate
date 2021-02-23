@@ -77,14 +77,12 @@ format hist_effective_dt %td
 * to the historical oustanding amount columns
 preserve
 tempfile recent_amt_out
-
 keep if _merge==3
 duplicates drop ISSUE_ID, force
 replace hist_amt_out = AMOUNT_OUTSTANDING
 replace hist_effective_dt = EFFECTIVE_DATE
 * generate a tag for these information
 gen latest = 1
-
 save `recent_amt_out', replace
 restore
 
