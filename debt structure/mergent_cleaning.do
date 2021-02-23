@@ -129,8 +129,7 @@ save `maturity', replace
 restore
 append using `maturity'
 
-
-* generate a tag
+* generate a tag +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 gen source = .
 replace source = 
 
