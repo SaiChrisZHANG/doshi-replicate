@@ -109,7 +109,10 @@ tempfile offering_amount
 duplicates drop ISSUE_ID, force
 replace hist_amt_out = OFFERING_AMT
 replace hist_effective_dt = OFFERING_DATE
-replace hist_effective_dt = DELIVERY_DATE
+replace hist_effective_dt = DELIVERY_DATE if mi(hist_effective_dt) & !mi(DELIVERY_DATE)
+
+drop _merge latest dup_latest
+gen first = 1
 
 
 
