@@ -101,8 +101,10 @@ replace hist_effective_dt = EFFECTIVE_DATE if _merge==1
 replace hist_amt_out = AMOUNT_OUTSTANDING if _merge==1
 replace latest = 1 if latest==. & _merge==1
 
+* the 
+
 rename _merge hist_tag
-label define hist_tag_l 1 "No historical data" 3 "With historical data"
+label define hist_tag_l 1 "Historical amount" 3 "Latest amount"
 label values hist_tag hist_tag_l
 
 save mergent_amtinfo, replace
