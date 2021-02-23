@@ -94,7 +94,7 @@ replace hist_effective_dt = EFFECTIVE_DATE if _merge==1
 replace hist_amt_out = AMOUNT_OUTSTANDING if _merge==1
 replace latest = 1 if latest==. & _merge==1
 
-* add the offering amount as the last historical amount ++++++++++++++++++++++++
+* add the offering amount as the first historical amount +++++++++++++++++++++++
 preserve
 tempfile offering_amount
 duplicates drop ISSUE_ID, force
