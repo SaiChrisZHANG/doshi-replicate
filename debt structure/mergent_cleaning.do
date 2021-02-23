@@ -119,7 +119,8 @@ append using `offering_amount'
 preserve
 tempfile maturity
 duplicates drop ISSUE_ID, force
-
+replace hist_amt_out = 0
+replace hist_effective_dt = MATURITY
 
 
 * generate a tag
