@@ -103,15 +103,13 @@ replace latest = 1 if latest==. & _merge==1
 * add the offering amount as the last historical amount ++++++++++++++++++++++++
 preserve
 tempfile offering_amount
-
 duplicates drop ISSUE_ID, force
 replace hist_amt_out = OFFERING_AMT
 replace hist_effective_dt = OFFERING_DATE
 replace hist_effective_dt = DELIVERY_DATE if mi(hist_effective_dt) & !mi(DELIVERY_DATE)
-
 drop _merge latest dup_latest
+* generate a tag for these information
 gen first = 1
-
 save `offering_amount', replace
 restore
 
