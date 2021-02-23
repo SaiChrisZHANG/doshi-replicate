@@ -102,8 +102,9 @@ replace hist_effective_dt = EFFECTIVE_DATE if _merge==1
 replace hist_amt_out = AMOUNT_OUTSTANDING if _merge==1
 replace latest = 1 if latest==. & _merge==1
 
-* add offering amount and offering date as the 1st historical amount
+* add the offering amount as the last historical amount ++++++++++++++++++++++++
 preserve
+
 
 
 rename _merge hist_tag
