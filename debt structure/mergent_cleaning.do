@@ -133,7 +133,8 @@ append using `maturity'
 gen dt_type = .
 replace dt_type = 1 if first == 1
 replace dt_type = 2 if latest == 0
-
+replace dt_type = 3 if latest == 1
+replace dt_type = 4 if maturity == 1
 
 rename _merge hist_tag
 label define hist_tag_l 1 "Historical amount" 3 "Latest amount"
