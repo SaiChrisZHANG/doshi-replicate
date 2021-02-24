@@ -61,6 +61,9 @@ save mergent_hist_amt.dta, replace
 * they have different amount oustanding data in mergent_issue and mergent_hist_amt
 *+++++++++++++++++++++++++++++++++++++++++++++++
 
+* action price information
+import sas  using "fisd_amount_outstanding.sas7bdat"
+
 use mergent_issue, clear
 keep ISSUE_ID ISSUER_ID ISSUER_CUSIP COMPLETE_CUSIP MATURITY CONVERTIBLE OFFERING_AMT OFFERING_DATE OFFERING_PRICE OFFERING_YIELD DELIVERY_DATE ACTIVE_ISSUE BOND_TYPE EFFECTIVE_DATE AMOUNT_OUTSTANDING
 
