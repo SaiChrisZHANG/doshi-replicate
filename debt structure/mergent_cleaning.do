@@ -106,6 +106,7 @@ replace current = 0 if current ==. & _merge==3
 replace hist_effective_dt = EFFECTIVE_DATE if _merge==1
 replace hist_amt_out = AMOUNT_OUTSTANDING if _merge==1
 replace current = 1 if current ==. & _merge==1
+drop _merge
 
 * add the offering amount as the first historical amount +++++++++++++++++++++++
 preserve
