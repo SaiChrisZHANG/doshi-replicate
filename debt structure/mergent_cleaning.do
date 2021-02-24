@@ -55,6 +55,7 @@ rename EFFECTIVE_DATE hist_effective_dt
 rename ACTION_TYPE hist_act_type
 rename ACTION_PRICE hist_act_price
 rename ACTION_AMOUNT hist_act_amt
+
 save mergent_hist_amt.dta, replace
 
 * mergent_issue ================================================================
