@@ -108,6 +108,8 @@ replace hist_amt_out = AMOUNT_OUTSTANDING if _merge==1
 replace current = 1 if current ==. & _merge==1
 drop _merge
 
+bys ISSUE_ID hist_effective_dt 
+
 * add the offering amount as the first historical amount +++++++++++++++++++++++
 preserve
 tempfile offering_amount
