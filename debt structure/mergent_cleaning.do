@@ -95,17 +95,17 @@ replace hist_act_type = ACTION_TYPE
 replace hist_act_price = ACTION_PRICE
 replace hist_act_amt = ACTION_AMOUNT
 * generate a tag for these information
-gen latest = 1
+gen current = 1
 save `recent_amt_out', replace
 
 restore
 append using `recent_amt_out'
-replace latest = 0 if latest==. & _merge==3
+replace current = 0 if current ==. & _merge==3
 
 * the issues that doesn't have historical data in hist_amt_out
 replace hist_effective_dt = EFFECTIVE_DATE if _merge==1
 replace hist_amt_out = AMOUNT_OUTSTANDING if _merge==1
-replace latest = 1 if latest==. & _merge==1
+replace current = 1 if current ==. & _merge==1
 
 * add the offering amount as the first historical amount +++++++++++++++++++++++
 preserve
