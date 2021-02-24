@@ -108,7 +108,8 @@ replace hist_amt_out = AMOUNT_OUTSTANDING if _merge==1
 replace current = 1 if current ==. & _merge==1
 drop _merge
 
-bys ISSUE_ID hist_effective_dt 
+sort ISSUE_ID hist_effective_dt current
+by ISSUE_ID hist_effective_dt: keep if _n = _N
 
 * add the offering amount as the first historical amount +++++++++++++++++++++++
 preserve
