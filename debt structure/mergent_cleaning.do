@@ -108,6 +108,7 @@ replace hist_amt_out = AMOUNT_OUTSTANDING if _merge==1
 replace current = 1 if current ==. & _merge==1
 drop _merge
 
+* drop the bonds whose latest historical data (in mergent_hist_amt.dta) are on the same day with the current data (mergent_issue)
 sort ISSUE_ID hist_effective_dt current
 by ISSUE_ID hist_effective_dt: keep if _n = _N
 
