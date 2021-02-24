@@ -79,7 +79,7 @@ duplicates report COMPLETE_CUSIP
 * should be uniquely defined
 
 * do the merge
-merge 1:m ISSUE_ID using mergent_hist_amt, keepusing(hist_effective_dt hist_amt_out)
+merge 1:m ISSUE_ID using mergent_hist_amt, keepusing(hist_effective_dt hist_amt_out hist_act_type hist_act_price hist_act_amt)
 format hist_effective_dt %td
 
 * add the latest amount outstanding as the last historical amount ++++++++++++++
