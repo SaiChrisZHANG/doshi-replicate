@@ -94,7 +94,6 @@ replace hist_effective_dt = EFFECTIVE_DATE
 replace hist_act_type = ACTION_TYPE
 replace hist_act_price = ACTION_PRICE
 replace hist_act_amt = ACTION_AMOUNT
-
 * generate a tag for these information
 gen latest = 1
 save `recent_amt_out', replace
