@@ -110,7 +110,7 @@ drop _merge
 
 * drop the bonds whose latest historical data (in mergent_hist_amt.dta) are on the same day with the current data (mergent_issue)
 sort ISSUE_ID hist_effective_dt current
-by ISSUE_ID hist_effective_dt: keep if _n = _N
+by ISSUE_ID hist_effective_dt: keep if _n == _N
 
 * add the offering amount as the first historical amount +++++++++++++++++++++++
 preserve
