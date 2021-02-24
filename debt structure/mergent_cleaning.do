@@ -50,7 +50,9 @@ sort ISSUE_ID EFFECTIVE_DATE TRANSACTION_ID
 by ISSUE_ID EFFECTIVE_DATE: keep if _n == _N
 * 10733 obs dropped
 
-
+rename AMOUNT_OUTSTANDING hist_amt_out
+rename EFFECTIVE_DATE hist_effective_dt
+save mergent_hist_amt.dta, replace
 
 * mergent_issue ================================================================
 *+++++++++++++++++++++++++++++++++++++++++++++++
