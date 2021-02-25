@@ -139,8 +139,9 @@ append using `offering_amount'
 
 * add the maturity date and 0 as the maturity information ++++++++++++++++++++++
 preserve
+sort ISSUE_ID hist_effective_dt
+by ISSUE_ID: keep if _n==_N
 drop if MATURITY == hist_effective_dt
-duplicates drop ISSUE_ID, force
 replace hist_amt_out = 0
 replace hist_effective_dt = MATURITY
 drop _merge latest first
