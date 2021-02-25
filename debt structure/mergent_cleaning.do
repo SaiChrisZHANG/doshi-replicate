@@ -144,8 +144,11 @@ preserve
 sort ISSUE_ID hist_effective_dt
 by ISSUE_ID: keep if _n==_N
 
-keep if MATURITY > hist_effective_dt
+drop if MATURITY < hist_effective_dt
 drop if mi(MATURITY)
+sum hist_amt_out if MATURITY == hist_effective_dt
+* all 0, safe to drop these
+
 
 replace hist_amt_out = 0
 replace hist_effective_dt = MATURITY
