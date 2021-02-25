@@ -164,10 +164,9 @@ append using `maturity'
 
 * generate a tag +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 gen dt_type = .
-replace dt_type = 1 if first == 1
-replace dt_type = 2 if latest == 0
-replace dt_type = 3 if latest == 1
-replace dt_type = 4 if maturity == 1
+replace dt_type = 1 if offering == 1
+replace dt_type = 2 if current == 1
+replace dt_type = 3 if maturity == 1
 
 label define date_type_l 1 "Offering date" 2 "Historical date" 3 "Latest date" 4 "Maturity date"
 label values dt_type date_type_l
