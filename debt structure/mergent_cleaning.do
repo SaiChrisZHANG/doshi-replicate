@@ -61,8 +61,10 @@ save mergent_hist_amt.dta, replace
 * mergent_issue ================================================================
 *+++++++++++++++++++++++++++++++++++++++++++++++
 * Note:
-* after merging, both some bonds, on the same day (always the last day documented),
-* they have different amount oustanding data in mergent_issue and mergent_hist_amt
+* The final product should, for each bond, contain:
+*     - all historical data, both date and amount outstanding
+*     - offering data, both date and amount offering
+*     - maturity: 
 *+++++++++++++++++++++++++++++++++++++++++++++++
 
 * action price information
@@ -113,7 +115,7 @@ sort ISSUE_ID hist_effective_dt current
 by ISSUE_ID hist_effective_dt: keep if _n == _N
 
 * add the offering amount as the first historical amount +++++++++++++++++++++++
-* NOTE: if the
+**** NOTE: if there are any historical data on the offering date, then don't add the offering amount
 preserve
 tempfile offering_amount
 duplicates drop ISSUE_ID, force
