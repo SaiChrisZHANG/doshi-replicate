@@ -172,7 +172,7 @@ label define date_type_l 1 "Offering date" 2 "Historical date" 3 "Maturity date"
 label values dt_type date_type_l
 
 * drop the intermediary columns
-drop _merge latest first maturity
+drop latest first maturity
 
 * tag the duplicated date information
 duplicates tag ISSUE_ID hist_effective_dt, gen(date_dup)
