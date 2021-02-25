@@ -143,13 +143,16 @@ append using `offering_amount'
 preserve
 sort ISSUE_ID hist_effective_dt
 by ISSUE_ID: keep if _n==_N
+
 keep if MATURITY > hist_effective_dt
+drop if mi(MATURITY)
 
 replace hist_amt_out = 0
 replace hist_effective_dt = MATURITY
-drop _merge latest first
+
 * generate a tage for maturity
 tempfile maturity
+drop current offering
 gen maturity = 1
 save `maturity', replace
 
