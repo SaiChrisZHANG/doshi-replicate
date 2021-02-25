@@ -118,35 +118,34 @@ by ISSUE_ID hist_effective_dt: keep if _n == _N
 * add the offering amount as the first historical amount +++++++++++++++++++++++
 **** NOTE: if there are any historical data on the offering date, then don't add the offering amount
 preserve
-tempfile offering_amount
-keep if OFFERING_DATE != hist_effective_dt
-drop if OFFERING_DATE ==.
 * keep the earliest
 sort ISSUE_ID hist_effective_dt
 by ISSUE_ID: keep if _n == 1
+keep if OFFERING_DATE != hist_effective_dt
+drop if OFFERING_DATE ==.
 * keep if OFFERING_DATE < hist_effective_dt
 keep if OFFERING_DATE < hist_effective_dt
 
 replace hist_amt_out = OFFERING_AMT
 replace hist_effective_dt = OFFERING_DATE
-replace hist_effective_dt = DELIVERY_DATE if mi(hist_effective_dt) & !mi(DELIVERY_DATE)
 drop current
 * generate a tag for these information
 gen offering = 1
-save `offering_amount', replace
 
+tempfile offering_amount
+save `offering_amount', replace
 restore
 append using `offering_amount'
 
 * add the maturity date and 0 as the maturity information ++++++++++++++++++++++
 preserve
-tempfile maturity
 drop if MATURITY == hist_effective_dt
 duplicates drop ISSUE_ID, force
 replace hist_amt_out = 0
 replace hist_effective_dt = MATURITY
 drop _merge latest first
 * generate a tage for maturity
+tempfile maturity
 gen maturity = 1
 save `maturity', replace
 
