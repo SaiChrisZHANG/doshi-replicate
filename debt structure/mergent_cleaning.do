@@ -83,8 +83,8 @@ merge 1:m ISSUE_ID using mergent_hist_amt, keepusing(hist_effective_dt hist_amt_
 format hist_effective_dt %td
 
 * add the latest amount outstanding as the last historical amount ++++++++++++++
-* append the EFFECTIVE_DATE and AMOUNT_OUTSTANDING information of the mergent_issue data set
-* to the historical oustanding amount columns
+**** NOTE: append the EFFECTIVE_DATE and AMOUNT_OUTSTANDING information of the mergent_issue data set
+**** to the historical oustanding amount columns
 preserve
 tempfile recent_amt_out
 keep if _merge==3
@@ -113,6 +113,7 @@ sort ISSUE_ID hist_effective_dt current
 by ISSUE_ID hist_effective_dt: keep if _n == _N
 
 * add the offering amount as the first historical amount +++++++++++++++++++++++
+* NOTE: if the
 preserve
 tempfile offering_amount
 duplicates drop ISSUE_ID, force
