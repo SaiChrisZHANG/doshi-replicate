@@ -64,7 +64,8 @@ save mergent_hist_amt.dta, replace
 * The final product should, for each bond, contain:
 *     - all historical data, both date and amount outstanding
 *     - offering data, both date and amount offering
-*     - maturity: 
+*     - maturity, when the amount would be zero
+* notice that if there are duplicated data on the same day, always keep the later one
 *+++++++++++++++++++++++++++++++++++++++++++++++
 
 * action price information
