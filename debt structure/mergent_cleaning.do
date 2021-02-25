@@ -84,7 +84,7 @@ format hist_effective_dt %td
 
 * add the latest amount outstanding as the last historical amount ++++++++++++++
 **** NOTE: append the EFFECTIVE_DATE and AMOUNT_OUTSTANDING information of the mergent_issue data set to the historical oustanding amount columns
-****       if there are any duplicates (for 1656 bonds, the date of the latest historical data is the same with the date of the current data, only keep the current data)
+****       if there are any duplicates (for 1656 bonds, the date of the latest historical data is the same with the date of the current data), only keep the current data
 preserve
 tempfile recent_amt_out
 keep if _merge==3
