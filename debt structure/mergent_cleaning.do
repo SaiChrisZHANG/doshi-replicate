@@ -141,6 +141,7 @@ append using `offering_amount'
 preserve
 sort ISSUE_ID hist_effective_dt
 by ISSUE_ID: keep if _n==_N
+* keep if 
 drop if MATURITY == hist_effective_dt
 replace hist_amt_out = 0
 replace hist_effective_dt = MATURITY
