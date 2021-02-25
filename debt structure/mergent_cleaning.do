@@ -115,6 +115,8 @@ drop _merge
 sort ISSUE_ID hist_effective_dt current
 by ISSUE_ID hist_effective_dt: keep if _n == _N
 
+drop if mi(hist_effective_dt)
+
 * add the offering amount as the first historical amount +++++++++++++++++++++++
 **** NOTE: if there are any historical data on the offering date, then don't add the offering amount
 preserve
@@ -122,7 +124,7 @@ preserve
 sort ISSUE_ID hist_effective_dt
 by ISSUE_ID: keep if _n == 1
 keep if OFFERING_DATE != hist_effective_dt
-drop if OFFERING_DATE ==.
+drop if OFFERING_DATE == .
 * keep if OFFERING_DATE < hist_effective_dt
 keep if OFFERING_DATE < hist_effective_dt
 
