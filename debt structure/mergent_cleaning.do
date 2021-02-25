@@ -168,7 +168,7 @@ replace dt_type = 1 if offering == 1
 replace dt_type = 2 if current == 1
 replace dt_type = 3 if maturity == 1
 
-label define date_type_l 1 "Offering date" 2 "Historical date" 3 "Latest date" 4 "Maturity date"
+label define date_type_l 1 "Offering date" 2 "Historical date" 3 "Maturity date"
 label values dt_type date_type_l
 
 * drop the intermediary columns
