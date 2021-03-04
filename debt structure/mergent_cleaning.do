@@ -182,6 +182,9 @@ save mergent_amtinfo, replace
 *++++ Note: to save running time, drop all bonds with maturity before July 1, 2002
 *++++       since TRACE only has data after that.
 *+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* keep bonds with maturity after July 1, 2002
+
 * keep identifier
 keep ISSUE_ID ISSUER_ID COMPLETE_CUSIP hist_effective_dt hist_amt_out
 bys ISSUE_ID ISSUER_ID: egen maturit
