@@ -225,7 +225,7 @@ save mergent_issue_dt, replace
 * first, merge with TRACE enhanced data
 global tracedir = "F:/Stephen/TRACE"
 
-foreach i in 3/19{
+forvalues i = 3/19{
     preserve
 
     * do the merge
