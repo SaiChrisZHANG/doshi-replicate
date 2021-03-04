@@ -249,13 +249,20 @@ forvalues i = 3/20{
 
 * then, merge with TRACE data
 preserve
-rangejoin trd_exctn_dt lag_effective_dt hist_effective_dt using `"${tracedir}/trace_20.dta"', by(cusip_id) keepusing(ascii_rptd_vol_tx frmt_cd rptd_pr yld_sign_cd yld_pt side)
+rangejoin trd_exctn_dt lag_effective_dt hist_effective_dt using `"${tracedir}/trace_20.dta"', by(cusip_id) keepusing(ascii_rptd_vol_tx rptd_pr yld_sign_cd yld_pt side)
 drop if mi(trd_exctn_dt)
 replace yld_pt = yld_pt*(-1) if yld_sign_cd=="-"
 drop yld_sign_cd
 
 * rename variables to match TRACE enhanced
 rename side rpt_side_cd
+rename ascii_rptd_vol_tx entrd_vol_qt
+replace entrd_vol_qt = "1000000" if entrd_vol_qt=="1MM+"
+replace entrd_vol_qt = "5000000" if entrd_vol_qt=="5MM+"
+destring entrd_vol_qt, replace
+
+save `"${mergentdir}/merged_with_TRACE/merged_20_extra.dta"', replace
+
 *===============================================================================
 * merge TRACE to mergent
 *===============================================================================
