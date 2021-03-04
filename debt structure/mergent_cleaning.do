@@ -226,6 +226,7 @@ save mergent_issue_dt, replace
 
 * first, merge with TRACE enhanced data
 global tracedir = "F:/Stephen/TRACE"
+global mergentdir = "F:/Stephen/mergent"
 
 forvalues i = 3/19{
     preserve
@@ -237,6 +238,8 @@ forvalues i = 3/19{
 
     replace yld_pt = yld_pt*(-1) if yld_sign_cd =="-"
     drop yld_sign_cd
+
+    save `"${mergentdir}/merged_with_TRACE/merged_`i'.dta"', replace
 
 }
 
