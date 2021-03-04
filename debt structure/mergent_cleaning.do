@@ -177,7 +177,7 @@ drop latest first maturity
 * save the final ouput
 save mergent_amtinfo, replace
 
-* save an intermediary data set to merge with TRACE
+* generate an intermediary data set to merge with TRACE
 
 *===============================================================================
 * cleaning TRACE data
