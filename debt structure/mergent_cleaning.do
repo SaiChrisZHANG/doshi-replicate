@@ -153,7 +153,7 @@ keep if MATURITY > hist_effective_dt
 replace hist_amt_out = 0
 replace hist_effective_dt = MATURITY
 
-* generate a tage for maturity
+* generate a tag for maturity
 tempfile maturity
 drop current offering
 gen maturity = 1
