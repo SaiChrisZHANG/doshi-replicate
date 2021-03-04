@@ -172,7 +172,7 @@ label define date_type_l 1 "Offering date" 2 "Historical date" 3 "Maturity date"
 label values dt_type date_type_l
 
 * drop the intermediary columns
-drop latest first maturity
+drop current offering maturity
 
 * save the final ouput
 save mergent_amtinfo, replace
