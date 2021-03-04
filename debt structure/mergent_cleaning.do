@@ -189,6 +189,7 @@ keep ISSUE_ID ISSUER_ID COMPLETE_CUSIP hist_effective_dt
 sort ISSUE_ID hist_effective_dt
 by ISSUE_ID: gen lag_effective_dt = hist_effective_dt[_n-1]
 replace lag_effective_dt = lag_effective_dt+1 if !mi(lag_effective_dt)
+format %td lag_effective_dt
 
 * drop information before July 1, 2002
 drop if hist_effective_dt < 15522
@@ -198,11 +199,9 @@ rename COMPLETE_CUSIP cusip_id
 save mergent_issue_dt, replace
 
 *===============================================================================
-* clean TRACE data
+* merge with TRACE data
 *===============================================================================
-clear
-
-* Clean TRACE data
+* TRACE data description
 *+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 *++++ link to data: 
 *++++ TRACE enhanced (https://wrds-web.wharton.upenn.edu/wrds//ds/trace/trace_enhanced/index.cfm)
