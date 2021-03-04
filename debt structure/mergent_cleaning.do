@@ -186,11 +186,11 @@ save mergent_amtinfo, replace
 keep ISSUE_ID ISSUER_ID COMPLETE_CUSIP hist_effective_dt
 
 * keep bonds that have no amount information after July 1, 2002
-bys ISSUE_ID ISSUER_ID: egen last_dt = max(hist_effective_dt)
+bys ISSUE_ID: egen last_dt = max(hist_effective_dt)
 drop if last_dt < 15522
 drop last_dt
 
-* generate date range:
+* generate a new variable: the date of last effetive date
 
 save mergent_issue_dt, replace
 
