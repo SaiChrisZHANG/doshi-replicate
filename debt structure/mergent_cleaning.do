@@ -217,4 +217,6 @@ clear
 *++++    - for these bonds, select the information of the large transaction as the pricing information of the bond
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* The merge will use two ssc 
+* The merge will use one ssc commands "rangejoin", this command requires "rangestat"
+ssc install rangestat
+ssc install rangejoin
