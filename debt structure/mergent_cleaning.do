@@ -192,7 +192,7 @@ drop last_dt
 save mergent_issue_dt, replace
 
 *===============================================================================
-* cleaning TRACE data
+* merging with TRACE
 *===============================================================================
 clear
 
@@ -217,5 +217,4 @@ clear
 *++++    - for these bonds, select the information of the large transaction as the pricing information of the bond
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-cd "F:/Stephen/TRACE"
-
+* The merge 
