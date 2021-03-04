@@ -237,12 +237,12 @@ forvalues i = 3/19{
     * drop not merged
     drop if mi(trd_exctn_dt)
 
-    * adjust yield, incorporating the negativity into the 
+    * adjust yield, incorporating the negativity
     replace yld_pt = yld_pt*(-1) if yld_sign_cd =="-"
     drop yld_sign_cd
 
     save `"${mergentdir}/merged_with_TRACE/merged_`i'.dta"', replace
-
+    restore
 }
 
 *===============================================================================
