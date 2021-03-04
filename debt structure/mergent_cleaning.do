@@ -183,7 +183,8 @@ save mergent_amtinfo, replace
 *++++       since TRACE only has data after that.
 *+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 * keep identifier
-keep ISSUE_ID ISSUER_ID COMPLETE_CUSIP hist_effective_dt hist_amt_out
+keep ISSUE_ID ISSUER_ID COMPLETE_CUSIP hist_effective_dt
+
 * keep bonds that have no amount information after July 1, 2002
 bys ISSUE_ID ISSUER_ID: egen last_dt = max(hist_effective_dt)
 drop if last_dt < 15522
@@ -192,7 +193,7 @@ drop last_dt
 save mergent_issue_dt, replace
 
 *===============================================================================
-* merging with TRACE
+* clean TRACE data
 *===============================================================================
 clear
 
@@ -216,6 +217,8 @@ clear
 *++++    - select all bonds that still have positive amount outstanding from FISD mergent
 *++++    - for these bonds, select the information of the large transaction as the pricing information of the bond
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+cd "F:/"
 
 * The merge will use one ssc commands "rangejoin", this command requires "rangestat"
 ssc install rangestat
