@@ -179,12 +179,12 @@ save mergent_amtinfo, replace
 
 * generate an intermediary data set to merge with TRACE
 *+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-*++++ Note: to save running time, drop all bonds with maturity before September 2001
+*++++ Note: to save running time, drop all bonds with maturity before July 1, 2002
 *++++       since TRACE only has data after that.
 *+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 * keep identifier
 keep ISSUE_ID ISSUER_ID COMPLETE_CUSIP hist_effective_dt hist_amt_out
-
+bys ISSUE_ID ISSUER_ID: egen maturit
 
 save mergent_issue_dt, replace
 
