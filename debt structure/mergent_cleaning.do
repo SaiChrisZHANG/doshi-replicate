@@ -220,7 +220,20 @@ clear
 *++++    - for these bonds, select the information of the large transaction as the pricing information of the bond
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-cd "F:/"
+global tracedir = "F:/Stephen/TRACE"
+
+foreach i in 3/19{
+
+}
+
+*===============================================================================
+* merge TRACE to mergent
+*===============================================================================
+*++++++++++++++++++++++++++++++++++++++++++++++++
+* Merging strategy:
+*++++ for each row in mergent_issue_dt.dta (an update of historical amount outstanding)
+*++++ merge all data in TRACE for that bond, from the last one to that update 
+*++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The merge will use one ssc commands "rangejoin", this command requires "rangestat"
 ssc install rangestat
