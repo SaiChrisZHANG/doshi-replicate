@@ -254,6 +254,8 @@ drop if mi(trd_exctn_dt)
 replace yld_pt = yld_pt*(-1) if yld_sign_cd=="-"
 drop yld_sign_cd
 
+* rename variables to match TRACE enhanced
+rename side rpt_side_cd
 *===============================================================================
 * merge TRACE to mergent
 *===============================================================================
