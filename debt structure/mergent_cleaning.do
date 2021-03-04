@@ -234,9 +234,10 @@ forvalues i = 3/19{
     * do the merge
     rangejoin trd_exctn_dt lag_effective_dt hist_effective_dt using `"${tracedir}/traceH_`i'.dta"', by(cusip_id) keepusing(entrd_vol_qt rptd_pr yld_sign_cd yld_pt rpt_side_cd)
 
+    * drop not merged
     drop if mi(trd_exctn_dt)
 
-    * adjust 
+    * adjust yield, incorporating the negativity into the 
     replace yld_pt = yld_pt*(-1) if yld_sign_cd =="-"
     drop yld_sign_cd
 
