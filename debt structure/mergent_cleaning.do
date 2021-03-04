@@ -233,6 +233,8 @@ forvalues i = 3/19{
 
     drop if mi(trd_exctn_dt)
 
+    replace yld_pt = yld_pt*(-1) if yld_sign_cd =="-"
+    drop yld_sign_cd
 
 }
 
