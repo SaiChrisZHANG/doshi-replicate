@@ -222,13 +222,15 @@ save mergent_issue_dt, replace
 *++++    - for these bonds, select the information of the large transaction as the pricing information of the bond
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+* first, merge with TRACE enhanced data
 global tracedir = "F:/Stephen/TRACE"
 
 foreach i in 3/19{
     preserve
 
     * do the merge
-    rangejoin trd_exctn_dt lag_effective_dt hist_effective_dt using `"${tracedir}/traceH_3.dta"', by(cusip_id) keepusing(entrd_vol_qt rptd_pr yld_sign_cd yld_pt rpt_side_cd)
+    rangejoin trd_exctn_dt lag_effective_dt hist_effective_dt using `"${tracedir}/traceH_`i'.dta"', by(cusip_id) keepusing(entrd_vol_qt rptd_pr yld_sign_cd yld_pt rpt_side_cd)
+
     drop if mi(trd_exctn_dt)
 
 
