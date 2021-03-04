@@ -190,6 +190,8 @@ bys ISSUE_ID ISSUER_ID: egen last_dt = max(hist_effective_dt)
 drop if last_dt < 15522
 drop last_dt
 
+* generate date range:
+
 save mergent_issue_dt, replace
 
 *===============================================================================
