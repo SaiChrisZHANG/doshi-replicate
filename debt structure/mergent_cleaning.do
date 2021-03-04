@@ -213,8 +213,8 @@ save mergent_issue_dt, replace
 *++++ TRACE-Bond Trades (BTDS) covers longer time series
 *++++ 
 *++++ The final data set is:
-*++++          - TRACE enhanced: Jul/1/2002 to Mar/31/2020
-*++++          - TRACE-Bond Trades (BTDS): Apr/1/2020 to Sep/30/2020
+*++++          - TRACE enhanced: Jul/1/2002 to Jun/30/2020
+*++++          - TRACE-Bond Trades (BTDS): Jul/1/2020 to Sep/30/2020
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 * Notes: 
 *++++ The purpose of TRACE data is to price the bond value with the nearest large trasaction,
@@ -224,11 +224,11 @@ save mergent_issue_dt, replace
 *++++    - for these bonds, select the information of the large transaction as the pricing information of the bond
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* first, merge with TRACE enhanced data
+* first, merge with TRACE enhanced data (Jul. 2020 to )
 global tracedir = "F:/Stephen/TRACE"
 global mergentdir = "F:/Stephen/mergent"
 
-forvalues i = 3/19{
+forvalues i = 3/20{
     local j = 2000+`i'
     display "Merging `j' data:"
 
@@ -246,6 +246,9 @@ forvalues i = 3/19{
     save `"${mergentdir}/merged_with_TRACE/merged_`i'.dta"', replace
     restore
 }
+
+* then, merge with TRACE data
+
 
 *===============================================================================
 * merge TRACE to mergent
