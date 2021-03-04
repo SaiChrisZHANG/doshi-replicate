@@ -225,6 +225,8 @@ save mergent_issue_dt, replace
 global tracedir = "F:/Stephen/TRACE"
 
 foreach i in 3/19{
+    preserve
+    
     rangejoin trd_exctn_dt lag_effective_dt hist_effective_dt using "F:/Stephen/TRACE/traceH_3", by(cusip_id) keepusing(entrd_vol_qt rptd_pr yld_sign_cd yld_pt rpt_side_cd)
 
 }
