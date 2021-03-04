@@ -229,8 +229,10 @@ global tracedir = "F:/Stephen/TRACE"
 global mergentdir = "F:/Stephen/mergent"
 
 forvalues i = 3/19{
-    preserve
+    local j = 2000+`i'
+    display "Merging `j' data:"
 
+    preserve
     * do the merge
     rangejoin trd_exctn_dt lag_effective_dt hist_effective_dt using `"${tracedir}/traceH_`i'.dta"', by(cusip_id) keepusing(entrd_vol_qt rptd_pr yld_sign_cd yld_pt rpt_side_cd)
 
