@@ -183,7 +183,7 @@ save mergent_amtinfo, replace
 *++++       since TRACE only has data after that.
 *+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 sort ISSUER_ID ISSUE_ID hist_effective_dt
-keep ISSUE_ID ISSUER_ID COMPLETE_CUSIP hist_effective_dt dt_type hist_amt_out
+keep ISSUE_ID ISSUER_ID COMPLETE_CUSIP hist_effective_dt hist_amt_out
 save mergent_issue_dt, replace
 
 *===============================================================================
