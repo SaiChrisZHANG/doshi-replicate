@@ -185,12 +185,15 @@ save mergent_amtinfo, replace
 * keep identifier
 keep ISSUE_ID ISSUER_ID COMPLETE_CUSIP hist_effective_dt
 
-* generate a new variable: the date of last effetive date
+* generate a new variable for merge: the date of last effetive date
 sort ISSUE_ID hist_effective_dt
 by ISSUE_ID: gen lag_effective_dt = hist_effective_dt[_n-1]
+replace lag_effective_dt = lag_effective_dt+1 if !mi(lag_effective_dt)
 
 * drop information before July 1, 2002
 drop if hist_effective_dt < 15522
+* clean for merge
+rename COMPLETE_CUSIP cusip_id
 
 save mergent_issue_dt, replace
 
@@ -223,6 +226,7 @@ clear
 global tracedir = "F:/Stephen/TRACE"
 
 foreach i in 3/19{
+    rangejoin trd_exctn_dt lag_effective_dt hist_effective_dt using "F:/Stephen/TRACE/traceH_3", by(cusip_id) keepusing(entrd_vol_qt rptd_pr yld_sign_cd yld_pt rpt_side_cd)
 
 }
 
