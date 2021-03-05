@@ -301,3 +301,6 @@ save, replace
 *++++++++++++++++++++++++++++++++++++++
 
 * Latest transaction(s) ========================================================
+
+global mergedir = `"${mergentdir}/merged_with_TRACE"'
+global outdir = `"${mergentdir}/output"'
