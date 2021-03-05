@@ -280,12 +280,12 @@ save, replace
 *===============================================================================
 *++++++++++++++++++++++++++++++++++++++
 * Strategy:
-*++++ 1. pricing with latest transaction:
-*++++    - price of the latest transaction
-*++++    - average price of the latest 5 transaction
-*++++    - average price of the latest 10 transaction
+*++++ 1. pricing with latest trade:
+*++++    - price of the latest trade
+*++++    - average price of the latest 5 trades
+*++++    - average price of the latest 10 trades
 *++++
-*++++ 2. pricing with highest volume transaction:
+*++++ 2. pricing with highest volume trades:
 *++++    - over the past 30 days
 *++++    - over the past 90 days 
 *++++    - over the past 180 days
@@ -295,15 +295,36 @@ save, replace
 *++++            - 30/90/180/365, OR
 *++++            - the difference between two effective dates
 *++++       - for each interval, calculate
-*++++            - price of the largest quantity transaction
-*++++            - average price of the largest 5 quantity transaction   
+*++++            - price of the largest quantity trade
+*++++            - average price of the largest 5 quantity trades   
 *++++++++++++++++++++++++++++++++++++++
 
-* Latest transaction(s) ========================================================
+* Latest trade(s) ==============================================================
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
 
 use `"${mergedir}/merged_20_extra.dta"', clear
 sort ISSUE_ID hist_effective_dt trd_exctn_dt
+
+* the latest transaction
+preserve
 by ISSUE_ID hist_effective_dt: keep if _n==_N
 save `"${pricedir}/latest1.dta"', replace
+restore
+
+* the latest 5 transactions
+preserve
+by ISSUE_ID hist_effective_dt: keep if _n >= _N-4
+save `"${pricedir}/latest5.dta"', replace
+restore
+
+* the latest 10 transactions
+preserve
+by ISSUE_ID hist_effective_dt: keep if _n >= _N-9
+save `"${pricedir}/latest5.dta"', replace
+restore
+
+forvalues i = 3/20{
+    local j = 2000+`i'
+    display "Merging `j' data:"
+}
