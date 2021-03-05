@@ -280,7 +280,7 @@ save, replace
 *===============================================================================
 * collect pricing information
 *===============================================================================
-*+++++++++++++++++++++++++++++++++++++
+*++++++++++++++++++++++++++++++++++++++
 * Strategy:
 *++++ 1. pricing with latest transaction:
 *++++    - the latest price transaction
@@ -291,5 +291,5 @@ save, replace
 *++++    - over the past 180 days
 *++++    - over the past 365 days
 *++++    consider the shorter interval: 30/90/180/365 OR the difference between two effective dates
-*++++ 
-*+++++++++++++++++++++++++++++++++++++
+*++++    
+*++++++++++++++++++++++++++++++++++++++
