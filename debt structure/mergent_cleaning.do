@@ -270,8 +270,10 @@ rename ascii_rptd_vol_tx entrd_vol_qt
 replace entrd_vol_qt = "1000000" if entrd_vol_qt=="1MM+"
 replace entrd_vol_qt = "5000000" if entrd_vol_qt=="5MM+"
 destring entrd_vol_qt, replace
-
 save `"${mergentdir}/merged_with_TRACE/merged_20_extra.dta"', replace
+
+* append this data set to the TRACE enhanced merged dataset
+
 
 *===============================================================================
 * merge TRACE to mergent
