@@ -305,7 +305,7 @@ save, replace
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
 
-use `"${mergedir}/merged_3.dta"', clear
+use `"${mergedir}/merged_20_extra.dta"', clear
 sort ISSUE_ID hist_effective_dt trd_exctn_dt
 by ISSUE_ID hist_effective_dt: keep if _n==_N
-save 
+save `"${pricedir}/latest1.dta"', replace
