@@ -285,6 +285,7 @@ save, replace
 *++++ 1. pricing with latest transaction:
 *++++    - price of the latest transaction
 *++++    - average price of the latest 5 transaction
+*++++
 *++++ 2. pricing with highest volume transaction:
 *++++    - over the past 30 days
 *++++    - over the past 90 days 
@@ -298,3 +299,5 @@ save, replace
 *++++            - price of the largest quantity transaction
 *++++            - average price of the largest 5 quantity transaction   
 *++++++++++++++++++++++++++++++++++++++
+
+* Latest transaction(s) ========================================================
