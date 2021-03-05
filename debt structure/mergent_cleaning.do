@@ -285,6 +285,7 @@ save, replace
 *++++ 1. pricing with latest transaction:
 *++++    - price of the latest transaction
 *++++    - average price of the latest 5 transaction
+*++++    - average price of the latest 10 transaction
 *++++
 *++++ 2. pricing with highest volume transaction:
 *++++    - over the past 30 days
@@ -301,6 +302,10 @@ save, replace
 *++++++++++++++++++++++++++++++++++++++
 
 * Latest transaction(s) ========================================================
-
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
-global outdir = `"${mergentdir}/output"'
+global pricedir = `"${mergentdir}/output"'
+
+use `"${mergedir}/merged_3.dta"', clear
+sort ISSUE_ID hist_effective_dt trd_exctn_dt
+by ISSUE_ID hist_effective_dt: keep if _n==_N
+save 
