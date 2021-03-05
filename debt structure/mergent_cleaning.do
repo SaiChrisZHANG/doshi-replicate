@@ -259,7 +259,7 @@ forvalues i = 3/20{
 
 * then, merge with TRACE data
 preserve
-rangejoin trd_exctn_dt lag_effective_dt hist_effective_dt using `"${tracedir}/trace_20.dta"', by(cusip_id) keepusing(ascii_rptd_vol_tx rptd_pr yld_sign_cd yld_pt side)
+rangejoin trd_exctn_dt lag_effective_dt hist_effective_dt using `"${tracedir}/trace_20.dta"', by(cusip_id) keepusing(ascii_rptd_vol_tx frmt_cd rptd_pr yld_sign_cd yld_pt side)
 drop if mi(trd_exctn_dt)
 replace yld_pt = yld_pt*(-1) if yld_sign_cd=="-"
 drop yld_sign_cd
