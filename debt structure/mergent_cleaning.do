@@ -286,9 +286,10 @@ save, replace
 *++++    - the latest price transaction
 *++++    - average price of the latest 5 transaction
 *++++ 2. pricing with highest volume transaction:
+*++++    - over the past 30 days
 *++++    - over the past 90 days 
 *++++    - over the past 180 days
 *++++    - over the past 365 days
-*++++    note that if the number of days between 2 effective dates is less than 90/180/365 days, account it as 
+*++++    consider the shorter interval: 30/90/180/365 OR the difference between two effective dates
 *++++ 
 *+++++++++++++++++++++++++++++++++++++
