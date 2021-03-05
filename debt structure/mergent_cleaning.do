@@ -223,6 +223,14 @@ save mergent_issue_dt, replace
 *++++    - select all bonds that still have positive amount outstanding from FISD mergent
 *++++    - for these bonds, select the information of the large transaction as the pricing information of the bond
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+* Merging strategy:
+*++++ for each row in mergent_issue_dt.dta (an update of historical amount outstanding)
+*++++ merge all data in TRACE for that bond, from the last one to that update 
+*++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The merge will use one ssc commands "rangejoin", this command requires "rangestat"
+ssc install rangestat
+ssc install rangejoin
 
 * first, merge with TRACE enhanced data (Jul. 2020 to Sep. 2020)
 global tracedir = "F:/Stephen/TRACE"
@@ -268,13 +276,5 @@ save `"${mergentdir}/merged_with_TRACE/merged_20_extra.dta"', replace
 *===============================================================================
 * merge TRACE to mergent
 *===============================================================================
-*++++++++++++++++++++++++++++++++++++++++++++++++
-* Merging strategy:
-*++++ for each row in mergent_issue_dt.dta (an update of historical amount outstanding)
-*++++ merge all data in TRACE for that bond, from the last one to that update 
-*++++++++++++++++++++++++++++++++++++++++++++++++
 
-* The merge will use one ssc commands "rangejoin", this command requires "rangestat"
-ssc install rangestat
-ssc install rangejoin
 
