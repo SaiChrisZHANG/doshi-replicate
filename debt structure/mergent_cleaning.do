@@ -321,7 +321,7 @@ restore
 * the latest 10 transactions
 preserve
 by ISSUE_ID hist_effective_dt: keep if _n >= _N-9
-save `"${pricedir}/latest5.dta"', replace
+save `"${pricedir}/latest10.dta"', replace
 restore
 
 forvalues i = 3/20{
