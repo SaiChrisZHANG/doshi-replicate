@@ -278,7 +278,11 @@ append using `"${mergentdir}/merged_with_TRACE/merged_20_extra.dta"'
 save, replace
 
 *===============================================================================
-* merge TRACE to mergent
+* collect pricing information
 *===============================================================================
-
+*+++++++++++++++++++++++++++++++++++++++++++++++
+* Strategy:
+* 
+*
+*
 
