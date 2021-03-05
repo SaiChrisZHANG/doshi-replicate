@@ -282,7 +282,13 @@ save, replace
 *===============================================================================
 *+++++++++++++++++++++++++++++++++++++
 * Strategy:
-*++++ 1. the latest price transaction/average price of the latest 5 transaction
-*++++ 2. 
+*++++ 1. pricing with latest transaction:
+*++++    - the latest price transaction
+*++++    - average price of the latest 5 transaction
+*++++ 2. pricing with highest volume transaction:
+*++++    - over the past 90 days 
+*++++    - over the past 180 days
+*++++    - over the past 365 days
+*++++    note that if the number of days between 2 effective dates is less than 90/180/365 days, account it as 
 *++++ 
 *+++++++++++++++++++++++++++++++++++++
