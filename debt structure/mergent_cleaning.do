@@ -283,7 +283,7 @@ save, replace
 *++++++++++++++++++++++++++++++++++++++
 * Strategy:
 *++++ 1. pricing with latest transaction:
-*++++    - the latest price transaction
+*++++    - price of the latest transaction
 *++++    - average price of the latest 5 transaction
 *++++ 2. pricing with highest volume transaction:
 *++++    - over the past 30 days
@@ -294,5 +294,7 @@ save, replace
 *++++       - consider the shorter interval
 *++++            - 30/90/180/365, OR
 *++++            - the difference between two effective dates
-*++++       - for each interval,   
+*++++       - for each interval, calculate
+*++++            - price of the largest quantity transaction
+*++++            - average price of the largest 5 quantity transaction   
 *++++++++++++++++++++++++++++++++++++++
