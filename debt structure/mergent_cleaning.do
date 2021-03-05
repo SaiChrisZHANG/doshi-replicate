@@ -273,7 +273,9 @@ destring entrd_vol_qt, replace
 save `"${mergentdir}/merged_with_TRACE/merged_20_extra.dta"', replace
 
 * append this data set to the TRACE enhanced merged dataset
-
+use `"${mergentdir}/merged_with_TRACE/merged_20.dta"', clear
+append using `"${mergentdir}/merged_with_TRACE/merged_20_extra.dta"'
+save, replace
 
 *===============================================================================
 * merge TRACE to mergent
