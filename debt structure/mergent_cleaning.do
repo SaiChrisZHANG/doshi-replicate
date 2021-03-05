@@ -326,5 +326,5 @@ restore
 
 forvalues i = 3/20{
     local j = 2000+`i'
-    display "Merging `j' data:"
+    display "Processing `j' data:"
 }
