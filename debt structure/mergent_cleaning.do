@@ -328,7 +328,28 @@ forvalues i = 3/20{
     local j = 2000+`i'
     display "Processing `j' data:"
     use `"${mergedir}/merged_`i'.dta"', clear
-    append using `"${pricedir}/latest1.dta"'
-    sort 
 
+    * the latest transaction
+    preserve
+    append using `"${pricedir}/latest1.dta"'
+    sort ISSUE_ID hist_effective_dt trd_exctn_dt
+    by ISSUE_ID hist_effective_dt: keep if _n==_N
+    save `"${pricedir}/latest1.dta"', replace
+    restore
+
+    * the latest 5 transactions
+    preserve
+    append using `"${pricedir}/latest5.dta"'
+    sort ISSUE_ID hist_effective_dt trd_exctn_dt
+    by ISSUE_ID hist_effective_dt: keep if _n>=_N-4
+    save `"${pricedir}/latest5.dta"', replace
+    restore
+
+    * the latest 10 transactions
+    preserve
+    append using `"${pricedir}/latest10.dta"'
+    sort ISSUE_ID hist_effective_dt trd_exctn_dt
+    by ISSUE_ID hist_effective_dt: keep if _n >= _N-9
+    save `"${pricedir}/latest10.dta"', replace
+    restore
 }
