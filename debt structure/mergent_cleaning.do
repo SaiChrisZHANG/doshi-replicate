@@ -224,7 +224,7 @@ save mergent_issue_dt, replace
 *++++    - for these bonds, select the information of the large transaction as the pricing information of the bond
 *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* first, merge with TRACE enhanced data (Jul. 2020 to )
+* first, merge with TRACE enhanced data (Jul. 2020 to Sep. 2020)
 global tracedir = "F:/Stephen/TRACE"
 global mergentdir = "F:/Stephen/mergent"
 
