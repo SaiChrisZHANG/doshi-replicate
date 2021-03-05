@@ -226,7 +226,7 @@ save mergent_issue_dt, replace
 * Merging strategy:
 *++++ for each row in mergent_issue_dt.dta (an update of historical amount outstanding)
 *++++ merge all data in TRACE for that bond, from the last one to that update 
-*++++++++++++++++++++++++++++++++++++++++++++++++
+*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The merge will use one ssc commands "rangejoin", this command requires "rangestat"
 ssc install rangestat
