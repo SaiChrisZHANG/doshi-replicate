@@ -327,4 +327,8 @@ restore
 forvalues i = 3/20{
     local j = 2000+`i'
     display "Processing `j' data:"
+    use `"${mergedir}/merged_`i'.dta"', clear
+    append using `"${pricedir}/latest1.dta"'
+    sort 
+
 }
