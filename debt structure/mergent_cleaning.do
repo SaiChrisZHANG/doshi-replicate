@@ -290,6 +290,9 @@ save, replace
 *++++    - over the past 90 days 
 *++++    - over the past 180 days
 *++++    - over the past 365 days
-*++++    consider the shorter interval: 30/90/180/365 OR the difference between two effective dates
-*++++    
+*++++    Note:
+*++++       - consider the shorter interval
+*++++            - 30/90/180/365, OR
+*++++            - the difference between two effective dates
+*++++       - for each interval,   
 *++++++++++++++++++++++++++++++++++++++
