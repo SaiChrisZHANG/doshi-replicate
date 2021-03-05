@@ -251,8 +251,6 @@ forvalues i = 3/20{
     replace yld_pt = yld_pt*(-1) if yld_sign_cd =="-"
     drop yld_sign_cd
 
-    sort ISSUER_ID ISSUE_ID hist_effective_dt trd_exctn_dt
-
     save `"${mergentdir}/merged_with_TRACE/merged_`i'.dta"', replace
     restore
 }
