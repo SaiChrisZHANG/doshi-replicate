@@ -126,12 +126,13 @@ by ISSUE_ID: keep if _n == 1
 keep if OFFERING_DATE != hist_effective_dt
 drop if OFFERING_DATE == .
 
+* generate a tag for bonds that (weirdly) have a maturity later than the first effective date 
+gen offering = .
+replace offering = 1 if OFFERING_DATE > hist_effective_dt
+
 replace hist_amt_out = OFFERING_AMT
 replace hist_effective_dt = OFFERING_DATE
 drop current
-* generate a tag for offering information that is (weirdly) 
-gen offering = .
-replace offering = 1 if OFFERING_DATE > hist_effective_dt
 
 tempfile offering_amount
 save `offering_amount', replace
