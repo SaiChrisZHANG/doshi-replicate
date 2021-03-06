@@ -181,7 +181,7 @@ save mergent_amtinfo, replace
 *++++       since TRACE only has data after that.
 *+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 * keep identifier
-keep ISSUE_ID ISSUER_ID COMPLETE_CUSIP MATURITY hist_effective_dt hist_amt_out
+keep ISSUE_ID ISSUER_ID COMPLETE_CUSIP MATURITY hist_effective_dt hist_amt_out dt_type
 
 * generate a new variable for merge: the date of last effetive date or 365 days before the curretn effective date
 sort ISSUE_ID hist_effective_dt
