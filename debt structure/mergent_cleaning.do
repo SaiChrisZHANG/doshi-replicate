@@ -132,7 +132,8 @@ replace hist_amt_out = OFFERING_AMT
 replace hist_effective_dt = OFFERING_DATE
 drop current
 * generate a tag for these information
-gen offering = 1
+gen offering = .
+replace offering = 1 if OFFERING_DATE > hist_effective_dt
 
 tempfile offering_amount
 save `offering_amount', replace
