@@ -131,7 +131,7 @@ keep if OFFERING_DATE < hist_effective_dt
 replace hist_amt_out = OFFERING_AMT
 replace hist_effective_dt = OFFERING_DATE
 drop current
-* generate a tag for these information
+* generate a tag for offering information that is (weirdly) 
 gen offering = .
 replace offering = 1 if OFFERING_DATE > hist_effective_dt
 
