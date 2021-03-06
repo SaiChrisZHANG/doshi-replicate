@@ -148,7 +148,7 @@ drop if MATURITY < hist_effective_dt
 drop if mi(MATURITY)
 sum hist_amt_out if MATURITY == hist_effective_dt
 * all 0, safe to drop these
-keep if MATURITY > hist_effective_dt
+keep if MATURITY != hist_effective_dt
 
 replace hist_amt_out = 0
 replace hist_effective_dt = MATURITY
@@ -191,7 +191,7 @@ by ISSUE_ID: gen lead_effective_dt = hist_effective_dt[_n+1]
 replace lead_effective_dt = lead_effective_dt-1 if !mi(lead_effective_dt)
 format %td lead_effective_dt
 * replace lead_effective_dt if it's more than 730 days before the current effective date
-replace lead_effective_dt = MATURITY if lead_effective_dt < hist_effective_dt-730 & year(hist_effective_dt) < 2020
+replace lead_effective_dt = MATURITY if mi(lead_effective_dt) & MATUIRTY > hist_effective_dt
 
 * drop information before July 1, 2002
 drop if hist_effective_dt < 15522
