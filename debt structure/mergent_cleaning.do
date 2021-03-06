@@ -125,8 +125,6 @@ sort ISSUE_ID hist_effective_dt
 by ISSUE_ID: keep if _n == 1
 keep if OFFERING_DATE != hist_effective_dt
 drop if OFFERING_DATE == .
-* keep if OFFERING_DATE < hist_effective_dt
-keep if OFFERING_DATE < hist_effective_dt
 
 replace hist_amt_out = OFFERING_AMT
 replace hist_effective_dt = OFFERING_DATE
