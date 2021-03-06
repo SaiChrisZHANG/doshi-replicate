@@ -278,22 +278,6 @@ save, replace
 *===============================================================================
 * collect pricing information
 *===============================================================================
-
-*++++
-*++++ 2. pricing with highest volume trades:
-*++++    - over the past 30 days
-*++++    - over the past 90 days 
-*++++    - over the past 180 days
-*++++    - over the past 365 days
-*++++    Note:
-*++++       - consider the shorter interval
-*++++            - 30/90/180/365, OR
-*++++            - the difference between two effective dates
-*++++       - for each interval, calculate
-*++++            - price of the largest quantity trade
-*++++            - average price of the largest 5 quantity trades   
-*++++++++++++++++++++++++++++++++++++++
-
 * Latest trade(s) ==============================================================
 *++++++++++++++++++++++++++++++++++++++
 * Strategy:
@@ -358,3 +342,25 @@ forvalues i = 3/20{
     clear
     display "Finish!"
 }
+
+* Latest trade(s) ==============================================================
+*++++++++++++++++++++++++++++++++++++++
+* Strategy:
+*++++ 2. pricing with highest volume trades:
+*++++    - over the past 90 days 
+*++++    - over the past 180 days
+*++++    - over the past 365 days
+*++++    Note:
+*++++       - consider the shorter interval
+*++++            - 30/90/180/365, OR
+*++++            - the difference between two effective dates
+*++++       - for each interval, calculate
+*++++            - price of the largest quantity trade
+*++++            - average price of the largest 5 quantity trades   
+*++++++++++++++++++++++++++++++++++++++
+
+use `"${mergedir}/merged_20_extra.dta"', clear
+sort ISSUE_ID hist_effective_dt trd_exctn_dt
+
+* daily pricing ================================================================
+* average prices of daily transactions
