@@ -278,12 +278,7 @@ save, replace
 *===============================================================================
 * collect pricing information
 *===============================================================================
-*++++++++++++++++++++++++++++++++++++++
-* Strategy:
-*++++ 1. pricing with latest trade:
-*++++    - price of the latest trade
-*++++    - average price of the latest 5 trades
-*++++    - average price of the latest 10 trades
+
 *++++
 *++++ 2. pricing with highest volume trades:
 *++++    - over the past 30 days
@@ -300,6 +295,13 @@ save, replace
 *++++++++++++++++++++++++++++++++++++++
 
 * Latest trade(s) ==============================================================
+*++++++++++++++++++++++++++++++++++++++
+* Strategy:
+*++++ 1. pricing with latest trade:
+*++++    - price of the latest trade
+*++++    - average price of the latest 5 trades
+*++++    - average price of the latest 10 trades
+*++++++++++++++++++++++++++++++++++++++
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
 
