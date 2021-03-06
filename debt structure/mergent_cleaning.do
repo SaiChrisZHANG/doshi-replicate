@@ -155,7 +155,6 @@ replace hist_effective_dt = MATURITY
 * generate a tag for maturity
 tempfile maturity
 drop current offering
-gen maturity = 1
 save `maturity', replace
 
 restore
@@ -164,10 +163,10 @@ append using `maturity'
 * generate a tag +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 gen dt_type = .
 replace dt_type = 1 if offering == 1
-replace dt_type = 2 if !mi(current)
+replace dt_type = 2 if current == 1
 replace dt_type = 3 if maturity == 1
 
-label define date_type_l 1 "Offering date" 2 "Historical date" 3 "Maturity date"
+label define date_type_l 1 "LATE offering date" 2 "last documented update" 3 "EARLY maturity date"
 label values dt_type date_type_l
 
 * drop the intermediary columns
