@@ -183,15 +183,15 @@ save mergent_amtinfo, replace
 *++++       since TRACE only has data after that.
 *+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 * keep identifier
-keep ISSUE_ID ISSUER_ID COMPLETE_CUSIP hist_effective_dt hist_amt_out
+keep ISSUE_ID ISSUER_ID COMPLETE_CUSIP MATURITY hist_effective_dt hist_amt_out
 
 * generate a new variable for merge: the date of last effetive date or 365 days before the curretn effective date
 sort ISSUE_ID hist_effective_dt
-by ISSUE_ID: gen lag_effective_dt = hist_effective_dt[_n-1]
-replace lag_effective_dt = lag_effective_dt+1 if !mi(lag_effective_dt)
-format %td lag_effective_dt
-* replace lag_effective_dt if it's more than 730 days before the current effective date
-replace lag_effective_dt = hist_effective_dt-730 if lag_effective_dt < hist_effective_dt-730 & year(hist_effective_dt) < 2020
+by ISSUE_ID: gen lead_effective_dt = hist_effective_dt[_n+1]
+replace lead_effective_dt = lead_effective_dt-1 if !mi(lead_effective_dt)
+format %td lead_effective_dt
+* replace lead_effective_dt if it's more than 730 days before the current effective date
+replace lead_effective_dt = MATURITY if lead_effective_dt < hist_effective_dt-730 & year(hist_effective_dt) < 2020
 
 * drop information before July 1, 2002
 drop if hist_effective_dt < 15522
