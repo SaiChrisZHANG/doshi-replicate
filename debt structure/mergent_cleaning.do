@@ -192,7 +192,7 @@ format %td lead_effective_dt
 replace lead_effective_dt = MATURITY if mi(lead_effective_dt) & MATUIRTY > hist_effective_dt
 
 * drop information before July 1, 2002
-drop if hist_effective_dt < 15522
+drop if lead_effective_dt < 15522
 * clean for merge
 rename COMPLETE_CUSIP cusip_id
 
@@ -240,7 +240,7 @@ forvalues i = 3/20{
 
     preserve
     * do the merge
-    rangejoin trd_exctn_dt lag_effective_dt hist_effective_dt using `"${tracedir}/traceH_`i'.dta"', by(cusip_id) keepusing(entrd_vol_qt rptd_pr yld_sign_cd yld_pt rpt_side_cd)
+    rangejoin trd_exctn_dt hist_effective_dt lead_effective_dt using `"${tracedir}/traceH_`i'.dta"', by(cusip_id) keepusing(trd_exctn_tm entrd_vol_qt rptd_pr yld_sign_cd yld_pt rpt_side_cd)
 
     * drop not merged
     drop if mi(trd_exctn_dt)
