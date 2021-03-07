@@ -273,6 +273,9 @@ use `"${mergentdir}/merged_with_TRACE/merged_20.dta"', clear
 append using `"${mergentdir}/merged_with_TRACE/merged_20_extra.dta"'
 save, replace
 
+restore
+clear
+
 *===============================================================================
 * collect pricing information
 *===============================================================================
