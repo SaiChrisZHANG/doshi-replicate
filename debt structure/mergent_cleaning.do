@@ -290,6 +290,7 @@ clear
 *++++++++++++++++++++++++++++++++++++++
 * Strategy:
 *++++ Aggregate daily pricing information:
+*++++    - price the latest trade
 *++++    - price of the largest trade
 *++++    - average/weighted average price of the largest 5 trades
 *++++    - average/weighted average price of the largest 10 trades
@@ -308,6 +309,7 @@ forvalues i = 3/20{
     preserve
     append using `"${pricedir}/latest1.dta"'
     sort ISSUE_ID hist_effective_dt trd_exctn_dt entrd_vol_qt
+
     by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
     save `"${pricedir}/latest1.dta"', replace
     restore
