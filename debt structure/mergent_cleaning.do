@@ -240,10 +240,14 @@ forvalues i = 3/20{
 
     preserve
     * do the merge
-    rangejoin trd_exctn_dt hist_effective_dt lead_effective_dt using `"${tracedir}/traceH_`i'.dta"', by(cusip_id) keepusing(trd_exctn_tm entrd_vol_qt rptd_pr yld_sign_cd yld_pt rpt_side_cd)
+    rangejoin trd_exctn_dt hist_effective_dt lead_effective_dt using `"${tracedir}/traceH_`i'.dta"', by(cusip_id) keepusing(trd_exctn_tm entrd_vol_qt rptd_pr yld_sign_cd yld_pt rpt_side_cd trc_st)
 
     * drop not merged
     drop if mi(trd_exctn_dt)
+    
+    * keep Trade report
+    keep if trc_st == "T"
+    drop trc_st
 
     * adjust yield, incorporating the negativity
     replace yld_pt = yld_pt*(-1) if yld_sign_cd =="-"
@@ -257,6 +261,9 @@ forvalues i = 3/20{
 preserve
 rangejoin trd_exctn_dt hist_effective_dt lead_effective_dt using `"${tracedir}/trace_20.dta"', by(cusip_id) keepusing(trd_exctn_tm ascii_rptd_vol_tx frmt_cd rptd_pr yld_sign_cd yld_pt side)
 drop if mi(trd_exctn_dt)
+* keep Trade report
+keep if trc_st == "M"
+drop trc_st
 replace yld_pt = yld_pt*(-1) if yld_sign_cd=="-"
 drop yld_sign_cd
 
