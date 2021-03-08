@@ -305,11 +305,12 @@ forvalues i = 3/20{
     display "Processing `j' data:"
     use `"${mergedir}/merged_`i'.dta"', clear
 
-    * the latest transaction
-    append using `"${pricedir}/latest1.dta"'
-    sort ISSUE_ID hist_effective_dt trd_exctn_dt entrd_vol_qt
+    * the latest transaction on a given day
+    sort ISSUE_ID hist_effective_dt trd_exctn_dt trd_exctn_tm
+    by ISSUE_ID hist_effective_dt trd_exctn_dt: gen price_latest = rptd_pr[_N]
+    by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_latest5 = mean(rptd_pr) if _n > _N-5
+    by ISSUE_ID hist_effective_dt trd_exctn_dt: 
 
-    by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
     save `"${pricedir}/latest1.dta"', replace
     restore
 
