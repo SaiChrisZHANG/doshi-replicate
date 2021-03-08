@@ -305,8 +305,9 @@ global varlist = "ISSUE_ID MATURITY cusip_id hist_effective_dt trd_exctn_dt entr
 use `"${mergedir}/merged_20.dta"', clear
 
 * the latest transaction
-preserve
 sort ISSUE_ID hist_effective_dt trd_exctn_dt trd_exctn_tm
+**** the latest one transaction
+preserve
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
 keep $varlist
 rename entrd_vol_qt quant_latest
@@ -314,6 +315,16 @@ rename rptd_pr price_latest
 rename yld_pt yield_latest
 save `"${pricedir}/latest.dta"', replace
 restore
+**** the latest 5 transaction
+preserve
+by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n>_N-5
+keep $varlist
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen quant_latest5 = mean(entrd_vol_qt)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_latest5 = mean(rptd_pr)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: 
+
+
+
 
 * the largest transaction
 preserve
