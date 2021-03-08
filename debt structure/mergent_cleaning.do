@@ -358,6 +358,19 @@ drop entrd_vol_qt rptd_pr yld_pt
 save `"${pricedir}/largest5.dta"', replace
 restore
 
+* all transactions
+keep $varlist
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen quant_avg = total(entrd_vol_qt)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_avg = mean(rptd_pr)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_avg = mean(yld_pt)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_avg_w = total(rptd_pr*entrd_vol_qt)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_avg_w = total(yld_pt*entrd_vol_qt)
+duplicates drop ISSUE_ID hist_effective_dt trd_exctn_dt, force
+replace price_avg_w = price_avg_w/quant_avg
+replace yield_avg_w = yield_avg_w/quant_avg
+drop entrd_vol_qt rptd_pr yld_pt
+save `"${pricedir}/average.dta"', replace
+
 
 * process 2003-2019 data =======================================================
 forvalues i = 3/19{
