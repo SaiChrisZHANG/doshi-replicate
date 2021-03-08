@@ -315,7 +315,6 @@ rename rptd_pr price_latest
 rename yld_pt yield_latest
 save `"${pricedir}/latest.dta"', replace
 restore
-
 **** the latest 5 transaction
 preserve
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n>_N-5
@@ -332,8 +331,9 @@ drop entrd_vol_qt rptd_pr yld_pt
 save `"${pricedir}/latest5.dta"', replace
 
 * the largest transaction
-preserve
 sort ISSUE_ID hist_effective_dt trd_exctn_dt entrd_vol_qt
+**** the largest transaction
+preserve
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
 keep $varlist
 rename entrd_vol_qt quant_largest
@@ -342,7 +342,23 @@ rename yld_pt yield_largest
 save `"${pricedir}/largest.dta"', replace
 restore
 
+**** the largest 5 transaction
+preserve
+by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n>_N-5
+keep $varlist
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen quant_latest5 = total(entrd_vol_qt)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_latest5 = mean(rptd_pr)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_latest5 = mean(yld_pt)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_latest5_w = total(rptd_pr*entrd_vol_qt)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_latest5_w = total(yld_pt*entrd_vol_qt)
+duplicates drop ISSUE_ID hist_effective_dt trd_exctn_dt, force
+replace price_latest5_w = price_latest5_w/quant_latest5
+replace yield_latest5_w = yield_latest5_w/quant_latest5
+drop entrd_vol_qt rptd_pr yld_pt
+save `"${pricedir}/latest5.dta"', replace
 
+
+* process 2003-2019 data =======================================================
 forvalues i = 3/19{
     local j = 2000+`i'
     display "Processing `j' data:"
