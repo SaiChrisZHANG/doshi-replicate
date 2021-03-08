@@ -346,16 +346,16 @@ restore
 preserve
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n>_N-5
 keep $varlist
-by ISSUE_ID hist_effective_dt trd_exctn_dt: egen quant_latest5 = total(entrd_vol_qt)
-by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_latest5 = mean(rptd_pr)
-by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_latest5 = mean(yld_pt)
-by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_latest5_w = total(rptd_pr*entrd_vol_qt)
-by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_latest5_w = total(yld_pt*entrd_vol_qt)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen quant_largest5 = total(entrd_vol_qt)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_largest5 = mean(rptd_pr)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_largest5 = mean(yld_pt)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_largest5_w = total(rptd_pr*entrd_vol_qt)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_largest5_w = total(yld_pt*entrd_vol_qt)
 duplicates drop ISSUE_ID hist_effective_dt trd_exctn_dt, force
-replace price_latest5_w = price_latest5_w/quant_latest5
-replace yield_latest5_w = yield_latest5_w/quant_latest5
+replace price_largest5_w = price_largest5_w/quant_largest5
+replace yield_largest5_w = yield_largest5_w/quant_largest5
 drop entrd_vol_qt rptd_pr yld_pt
-save `"${pricedir}/latest5.dta"', replace
+save `"${pricedir}/largest5.dta"', replace
 
 
 * process 2003-2019 data =======================================================
