@@ -300,6 +300,8 @@ global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
 
 
+
+
 forvalues i = 3/20{
     local j = 2000+`i'
     display "Processing `j' data:"
@@ -308,7 +310,10 @@ forvalues i = 3/20{
     * the latest/largest transaction on a given day
     sort ISSUE_ID hist_effective_dt trd_exctn_dt trd_exctn_tm
     by ISSUE_ID hist_effective_dt trd_exctn_dt: gen price_latest = rptd_pr[_N]
+    by ISSUE_ID hist_effective_dt trd_exctn_dt: gen yield_latest = yld_pt[_N]
+    by ISSUE_ID 
     
+
     sort ISSUE_ID hist_effective_dt trd_exctn_dt entrd_vol_qt
     by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_largest = rptd_pr[_N] 
 
