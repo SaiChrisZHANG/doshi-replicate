@@ -319,10 +319,14 @@ restore
 preserve
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n>_N-5
 keep $varlist
-by ISSUE_ID hist_effective_dt trd_exctn_dt: egen quant_latest5 = mean(entrd_vol_qt)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen quant_latest5 = total(entrd_vol_qt)
 by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_latest5 = mean(rptd_pr)
-by ISSUE_ID hist_effective_dt trd_exctn_dt: 
-
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_latest5 = mean(yld_pt)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_latest5_w = total(rptd_pr*entrd_vol_qt)
+by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_latest5_w = total(yld_pt*entrd_vol_qt)
+duplicates drop ISSUE_ID hist_effective_dt trd_exctn_dt, force
+replace price_latest5_w = price_latest5_w/quant_latest5
+replace yield_latest5_w = yield_latest5_w/quant_latest5
 
 
 
