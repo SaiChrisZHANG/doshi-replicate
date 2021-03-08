@@ -294,9 +294,12 @@ clear
 *++++    - average/weighted average price of the last 5 trades
 *++++    - average/weighted average price of the largest 5 trades
 *++++    - average/weighted average price of all trades
+*
+*++++ All output data sets are uniquely defined by ISSUE_IDXhist_effective_dtXtrd_exctn_dt
 *++++++++++++++++++++++++++++++++++++++
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
+global varlist = "ISSUE_ID MATURITY cusip_id hist_effective_dt trd_exctn_dt entrd_vol_qt rptd_pr yld_pt"
 
 * process 2020 data first ======================================================
 use `"${mergedir}/merged_20.dta"', clear
@@ -304,7 +307,7 @@ use `"${mergedir}/merged_20.dta"', clear
 * the latest transaction
 sort ISSUE_ID hist_effective_dt trd_exctn_dt trd_exctn_tm
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
-
+keep $varlist
 
 
 forvalues i = 3/19{
