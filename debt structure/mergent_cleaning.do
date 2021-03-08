@@ -298,9 +298,6 @@ clear
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
 
-use `"${mergedir}/merged_20_extra.dta"', clear
-sort ISSUE_ID hist_effective_dt trd_exctn_dt
-
 * the latest transaction
 preserve
 by ISSUE_ID hist_effective_dt: keep if _n==_N
