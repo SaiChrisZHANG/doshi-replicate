@@ -305,9 +305,26 @@ global varlist = "ISSUE_ID MATURITY cusip_id hist_effective_dt trd_exctn_dt entr
 use `"${mergedir}/merged_20.dta"', clear
 
 * the latest transaction
+preserve
 sort ISSUE_ID hist_effective_dt trd_exctn_dt trd_exctn_tm
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
 keep $varlist
+rename entrd_vol_qt quant_latest
+rename rptd_pr price_latest
+rename yld_pt yield_latest
+save `"${pricedir}/latest.dta"', replace
+restore
+
+* the largest transaction
+preserve
+sort ISSUE_ID hist_effective_dt trd_exctn_dt entrd_vol_qt
+by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
+keep $varlist
+rename entrd_vol_qt quant_largest
+rename rptd_pr price_largest
+rename yld_pt yield_largest
+save `"${pricedir}/largest.dta"', replace
+restore
 
 
 forvalues i = 3/19{
