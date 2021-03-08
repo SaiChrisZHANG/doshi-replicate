@@ -315,6 +315,7 @@ rename rptd_pr price_latest
 rename yld_pt yield_latest
 save `"${pricedir}/latest.dta"', replace
 restore
+
 **** the latest 5 transaction
 preserve
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n>_N-5
@@ -327,8 +328,8 @@ by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_latest5_w = total(yld_pt*
 duplicates drop ISSUE_ID hist_effective_dt trd_exctn_dt, force
 replace price_latest5_w = price_latest5_w/quant_latest5
 replace yield_latest5_w = yield_latest5_w/quant_latest5
-
-
+drop entrd_vol_qt rptd_pr yld_pt
+save `"${pricedir}/latest5.dta"', replace
 
 * the largest transaction
 preserve
