@@ -298,23 +298,6 @@ clear
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
 
-* the latest transaction
-preserve
-by ISSUE_ID hist_effective_dt: keep if _n==_N
-save `"${pricedir}/latest1.dta"', replace
-restore
-
-* the latest 5 transactions
-preserve
-by ISSUE_ID hist_effective_dt: keep if _n >= _N-4
-save `"${pricedir}/latest5.dta"', replace
-restore
-
-* the latest 10 transactions
-preserve
-by ISSUE_ID hist_effective_dt: keep if _n >= _N-9
-save `"${pricedir}/latest10.dta"', replace
-restore
 
 forvalues i = 3/20{
     local j = 2000+`i'
@@ -324,8 +307,8 @@ forvalues i = 3/20{
     * the latest transaction
     preserve
     append using `"${pricedir}/latest1.dta"'
-    sort ISSUE_ID hist_effective_dt trd_exctn_dt
-    by ISSUE_ID hist_effective_dt: keep if _n==_N
+    sort ISSUE_ID hist_effective_dt trd_exctn_dt entrd_vol_qt
+    by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
     save `"${pricedir}/latest1.dta"', replace
     restore
 
