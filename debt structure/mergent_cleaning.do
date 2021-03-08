@@ -293,7 +293,7 @@ clear
 *++++    - price the latest trade
 *++++    - price of the largest trade
 *++++    - average/weighted average price of the largest 5 trades
-*++++    - average/weighted average price of the largest 10 trades
+*++++    - average/weighted average price of the last 5 trades
 *++++    - average/weighted average price of all trades
 *++++++++++++++++++++++++++++++++++++++
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
