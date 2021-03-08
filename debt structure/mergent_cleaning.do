@@ -329,6 +329,7 @@ replace price_latest5_w = price_latest5_w/quant_latest5
 replace yield_latest5_w = yield_latest5_w/quant_latest5
 drop entrd_vol_qt rptd_pr yld_pt
 save `"${pricedir}/latest5.dta"', replace
+restore
 
 * the largest transaction
 sort ISSUE_ID hist_effective_dt trd_exctn_dt entrd_vol_qt
@@ -341,7 +342,6 @@ rename rptd_pr price_largest
 rename yld_pt yield_largest
 save `"${pricedir}/largest.dta"', replace
 restore
-
 **** the largest 5 transaction
 preserve
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n>_N-5
@@ -356,6 +356,7 @@ replace price_largest5_w = price_largest5_w/quant_largest5
 replace yield_largest5_w = yield_largest5_w/quant_largest5
 drop entrd_vol_qt rptd_pr yld_pt
 save `"${pricedir}/largest5.dta"', replace
+restore
 
 
 * process 2003-2019 data =======================================================
