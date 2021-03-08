@@ -282,8 +282,8 @@ clear
 * Latest trade(s) ==============================================================
 *++++++++++++++++++++++++++++++++++++++
 * Strategy:
-*++++ 1. pricing with latest trade:
-*++++    - price of the latest trade
+*++++ Aggregate daily pricing information:
+*++++    - price of the largest trade
 *++++    - average price of the latest 5 trades
 *++++    - average price of the latest 10 trades
 *++++++++++++++++++++++++++++++++++++++
