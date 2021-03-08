@@ -286,7 +286,6 @@ clear
 *===============================================================================
 * collect pricing information
 *===============================================================================
-* Latest trade(s) ==============================================================
 *++++++++++++++++++++++++++++++++++++++
 * Strategy:
 *++++ Aggregate daily pricing information:
@@ -299,10 +298,16 @@ clear
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
 
+* process 2020 data first ======================================================
+use `"${mergedir}/merged_20.dta"', clear
+
+* the latest transaction
+sort ISSUE_ID hist_effective_dt trd_exctn_dt trd_exctn_tm
+by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
 
 
 
-forvalues i = 3/20{
+forvalues i = 3/19{
     local j = 2000+`i'
     display "Processing `j' data:"
     use `"${mergedir}/merged_`i'.dta"', clear
