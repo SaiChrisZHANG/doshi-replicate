@@ -292,8 +292,8 @@ clear
 *++++ Aggregate daily pricing information:
 *++++    - price the latest trade
 *++++    - price of the largest trade
-*++++    - average/weighted average price of the largest 5 trades
 *++++    - average/weighted average price of the last 5 trades
+*++++    - average/weighted average price of the largest 5 trades
 *++++    - average/weighted average price of all trades
 *++++++++++++++++++++++++++++++++++++++
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
@@ -306,7 +306,6 @@ forvalues i = 3/20{
     use `"${mergedir}/merged_`i'.dta"', clear
 
     * the latest transaction
-    preserve
     append using `"${pricedir}/latest1.dta"'
     sort ISSUE_ID hist_effective_dt trd_exctn_dt entrd_vol_qt
 
