@@ -284,9 +284,9 @@ clear
 * Strategy:
 *++++ Aggregate daily pricing information:
 *++++    - price of the largest trade
-*++++    - average price of the largest 5 trades
-*++++    - average price of the largest 10 trades
-*++++    - average price of all trades
+*++++    - average/weighted average price of the largest 5 trades
+*++++    - average/weighted average price of the largest 10 trades
+*++++    - average/weighted average price of all trades
 *++++++++++++++++++++++++++++++++++++++
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
