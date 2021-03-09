@@ -388,6 +388,7 @@ forvalues i = 3/19{
         rename entrd_vol_qt quant_latest
         rename rptd_pr price_latest
         rename yld_pt yield_latest
+        append using `"${pricedir}/latest.dta"'
         save `"${pricedir}/latest.dta"', replace
         restore
         **** the latest 5 transaction
@@ -403,6 +404,7 @@ forvalues i = 3/19{
         replace price_latest5_w = price_latest5_w/quant_latest5
         replace yield_latest5_w = yield_latest5_w/quant_latest5
         drop entrd_vol_qt rptd_pr yld_pt
+        append using `"${pricedir}/latest5.dta"'
         save `"${pricedir}/latest5.dta"', replace
         restore
 
@@ -415,6 +417,7 @@ forvalues i = 3/19{
         rename entrd_vol_qt quant_largest
         rename rptd_pr price_largest
         rename yld_pt yield_largest
+        append using `"${pricedir}/largest.dta"'
         save `"${pricedir}/largest.dta"', replace
         restore
         **** the largest 5 transaction
@@ -430,6 +433,7 @@ forvalues i = 3/19{
         replace price_largest5_w = price_largest5_w/quant_largest5
         replace yield_largest5_w = yield_largest5_w/quant_largest5
         drop entrd_vol_qt rptd_pr yld_pt
+        append using `"${pricedir}/largest5.dta"'
         save `"${pricedir}/largest5.dta"', replace
         restore
 
@@ -444,6 +448,7 @@ forvalues i = 3/19{
         replace price_avg_w = price_avg_w/quant_avg
         replace yield_avg_w = yield_avg_w/quant_avg
         drop entrd_vol_qt rptd_pr yld_pt
+        append using `"${pricedir}/average.dta"'
         save `"${pricedir}/average.dta"', replace
     }
 
