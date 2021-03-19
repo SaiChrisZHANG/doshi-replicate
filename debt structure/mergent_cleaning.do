@@ -464,9 +464,7 @@ forvalues i = 3/19{
 *++++ filter 2: within 5 point of mean price
 *
 *++++++++++++++++++++++++++++++++++++++
-global mergedir = `"${mergentdir}/merged_with_TRACE"'
-global pricedir = `"${mergentdir}/output"'
-global varlist = "ISSUE_ID MATURITY cusip_id hist_effective_dt trd_exctn_dt entrd_vol_qt rptd_pr yld_pt"
+global fpricedir = `"${mergentdir}/output/filtered version"'
 
 * This script is called by "mergent_cleaning.do" to generate daily price information
 * process 2020 data first ======================================================
