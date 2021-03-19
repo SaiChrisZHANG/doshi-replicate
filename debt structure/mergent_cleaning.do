@@ -457,16 +457,12 @@ forvalues i = 3/19{
     display "Finish!"
 }
 
+*===============================================================================
+* NEXT: experiment some filters
 *++++++++++++++++++++++++++++++++++++++
-* Strategy:
-*++++ Aggregate daily pricing information:
-*++++    - price the latest trade
-*++++    - price of the largest trade
-*++++    - average/weighted average price of the last 5 trades
-*++++    - average/weighted average price of the largest 5 trades
-*++++    - average/weighted average price of all trades
+*++++ filter 1: quantity > 100000
+*++++ filter 2: 
 *
-*++++ All output data sets are uniquely defined by ISSUE_IDXhist_effective_dtXtrd_exctn_dt
 *++++++++++++++++++++++++++++++++++++++
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
