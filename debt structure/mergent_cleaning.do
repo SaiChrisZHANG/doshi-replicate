@@ -470,7 +470,10 @@ global fpricedir = `"${mergentdir}/output/filtered version"'
 * process 2020 data first ======================================================
 use `"${mergedir}/merged_20.dta"', clear
 
-* the latest transaction
+* filter 1: quantity > 100000
+keep
+
+* redo the daily aggregation
 sort ISSUE_ID hist_effective_dt trd_exctn_dt trd_exctn_tm
 **** the latest one transaction
 preserve
@@ -479,7 +482,7 @@ keep $varlist
 rename entrd_vol_qt quant_latest
 rename rptd_pr price_latest
 rename yld_pt yield_latest
-save `"${pricedir}/latest.dta"', replace
+save `"${fpricedir}/latest.dta"', replace
 restore
 **** the latest 5 transaction
 preserve
@@ -494,10 +497,9 @@ duplicates drop ISSUE_ID hist_effective_dt trd_exctn_dt, force
 replace price_latest5_w = price_latest5_w/quant_latest5
 replace yield_latest5_w = yield_latest5_w/quant_latest5
 drop entrd_vol_qt rptd_pr yld_pt
-save `"${pricedir}/latest5.dta"', replace
+save `"${fpricedir}/latest5.dta"', replace
 restore
 
-* the largest transaction
 sort ISSUE_ID hist_effective_dt trd_exctn_dt entrd_vol_qt
 **** the largest transaction
 preserve
@@ -506,7 +508,7 @@ keep $varlist
 rename entrd_vol_qt quant_largest
 rename rptd_pr price_largest
 rename yld_pt yield_largest
-save `"${pricedir}/largest.dta"', replace
+save `"${fpricedir}/largest.dta"', replace
 restore
 **** the largest 5 transaction
 preserve
@@ -521,7 +523,7 @@ duplicates drop ISSUE_ID hist_effective_dt trd_exctn_dt, force
 replace price_largest5_w = price_largest5_w/quant_largest5
 replace yield_largest5_w = yield_largest5_w/quant_largest5
 drop entrd_vol_qt rptd_pr yld_pt
-save `"${pricedir}/largest5.dta"', replace
+save `"${fpricedir}/largest5.dta"', replace
 restore
 
 * all transactions
@@ -535,7 +537,7 @@ duplicates drop ISSUE_ID hist_effective_dt trd_exctn_dt, force
 replace price_avg_w = price_avg_w/quant_avg
 replace yield_avg_w = yield_avg_w/quant_avg
 drop entrd_vol_qt rptd_pr yld_pt
-save `"${pricedir}/average.dta"', replace
+save `"${fpricedir}/average.dta"', replace
 clear
 
 * process 2003-2019 data =======================================================
