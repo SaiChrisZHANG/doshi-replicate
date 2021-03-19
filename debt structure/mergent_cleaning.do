@@ -461,7 +461,7 @@ forvalues i = 3/19{
 * NEXT: experiment some filters
 *++++++++++++++++++++++++++++++++++++++
 *++++ filter 1: quantity > 100000
-*++++ filter 2: 
+*++++ filter 2: within 5 point of mean price
 *
 *++++++++++++++++++++++++++++++++++++++
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
