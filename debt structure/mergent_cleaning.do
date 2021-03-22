@@ -481,12 +481,23 @@ forvalues i = 3/19{
     replace drop = 1 if rptd_pr < price_bar - 5
     **** tag every trades on that day when "abnormal" prices happen
     bys ISSUE_ID hist_effective_dt trd_exctn_dt: egen mean_abn = mean( drop )
+    drop drop
 
     * FILTER 3: < ±5 from the nearest trade price
-    gen seq_abn=.
+    gen drop = .
     **** not deviate ±5 from the previous trade
-    by ISSUE_ID hist_effective_dt trd_exctn_dt: replace seq_abn = 1 if rptd_pr < rptd_pr[_n-1]-5 & _n!=1
-    by ISSUE_ID hist_effective_dt trd_exctn_dt: replace seq_abn = 1 if rptd_pr > rptd_pr[_n-1]+5 & _n!=1
+    by ISSUE_ID hist_effective_dt trd_exctn_dt: replace drop = 1 if rptd_pr < rptd_pr[_n-1]-5 & _n!=1
+    by ISSUE_ID hist_effective_dt trd_exctn_dt: replace drop = 1 if rptd_pr > rptd_pr[_n-1]+5 & _n!=1
+    **** not deviate ±5 from the next trade
+    by ISSUE_ID hist_effective_dt trd_exctn_dt: replace drop = 1 if rptd_pr < rptd_pr[_n+1]-5 & _n!=_N
+    by ISSUE_ID hist_effective_dt trd_exctn_dt: replace drop = 1 if rptd_pr > rptd_pr[_n+1]+5 & _n!=_N
+    **** tag every trades on that day
+    bys ISSUE_ID hist_effective_dt trd_exctn_dt: egen seq_abn = mean( drop )
+    drop drop
+
+    * save the samples
+    keep if mean_abn==1 | seq_abn==1
+    save `"${fpricedir}/sample/`i'.dta"', replace
 
 }
 
