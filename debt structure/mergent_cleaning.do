@@ -465,8 +465,16 @@ forvalues i = 3/19{
 *++++ filter 3: 5 point of the previous/proceeding trade, within a day
 *++++++++++++++++++++++++++++++++++++++
 global fpricedir = `"${mergentdir}/output/filtered version"'
+* generate a sample to further check the 
 
-* This script is called by "mergent_cleaning.do" to generate daily price information
+
+
+
+
+
+
+
+
 * process 2020 data first ======================================================
 use `"${mergedir}/merged_20.dta"', clear
 
