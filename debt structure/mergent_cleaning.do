@@ -462,7 +462,7 @@ forvalues i = 3/19{
 *++++++++++++++++++++++++++++++++++++++
 *++++ filter 1: quantity > 100000
 *++++ filter 2: 5 point of mean price, within a day
-*++++ filter 3: 5 point of the previous/proceeding trade, within a day
+*++++ filter 3: 5 point of the previous/next trade, within a day
 *++++++++++++++++++++++++++++++++++++++
 global fpricedir = `"${mergentdir}/output/filtered version"'
 * generate a sample, double check the validility of the filters
@@ -470,8 +470,23 @@ global fpricedir = `"${mergentdir}/output/filtered version"'
 forvalues i = 3/19{
     use `"${mergedir}/merged_`i'.dta"', clear
     keep ISSUE_ID MATURITY cusip_id hist_effective_dt trd_exctn_dt trd_exctn_tm entrd_vol_qt rptd_pr yld_pt
+    keep if !mi(rptd_pr)
 
+    * FILTER 1: quantity > 100000
+    keep if entrd_vol_qt>=100000
 
+    * FILTER 2: < ±5 around the mean price
+    bys ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_bar = mean(rptd_pr)
+    gen drop = 1 if rptd_pr > price_bar + 5
+    replace drop = 1 if rptd_pr < price_bar - 5
+    **** tag every trades on that day when "abnormal" prices happen
+    bys ISSUE_ID hist_effective_dt trd_exctn_dt: egen mean_abn = mean( drop )
+
+    * FILTER 3: < ±5 from the nearest trade price
+    gen seq_abn=.
+    **** not deviate ±5 from the previous trade
+    by ISSUE_ID hist_effective_dt trd_exctn_dt: replace seq_abn = 1 if rptd_pr < rptd_pr[_n-1]-5 & _n!=1
+    by ISSUE_ID hist_effective_dt trd_exctn_dt: replace seq_abn = 1 if rptd_pr > rptd_pr[_n-1]+5 & _n!=1
 
 }
 
