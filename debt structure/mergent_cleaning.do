@@ -468,12 +468,14 @@ global fpricedir = `"${mergentdir}/output/filtered version"'
 * generate a sample, double check the validility of the filters
 
 * keep variables
-global varlist = "ISSUE_ID MATURITY cusip_id hist_effective_dt trd_exctn_dt entrd_vol_qt rptd_pr yld_pt"
-keep $varlist
+"ISSUE_ID MATURITY cusip_id hist_effective_dt trd_exctn_dt entrd_vol_qt rptd_pr yld_pt"
 
 forvalues i = 3/19{
-    use "F:\Stephen\mergent\merged_with_TRACE\merged_3.dta" 
+    use `"${mergedir}/merged_`i'.dta"', clear
+    keep ISSUE_ID MATURITY cusip_id hist_effective_dt trd_exctn_dt entrd_vol_qt rptd_pr yld_pt
     
+
+
 }
 
 
