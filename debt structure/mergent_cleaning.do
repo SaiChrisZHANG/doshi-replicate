@@ -461,8 +461,8 @@ forvalues i = 3/19{
 * NEXT: experiment some filters
 *++++++++++++++++++++++++++++++++++++++
 *++++ filter 1: quantity > 100000
-*++++ filter 2: within 5 point of mean price
-*
+*++++ filter 2: 5 point of mean price, within a day
+*++++ filter 3: 5 point of the previous/proceeding trade, within a day
 *++++++++++++++++++++++++++++++++++++++
 global fpricedir = `"${mergentdir}/output/filtered version"'
 
