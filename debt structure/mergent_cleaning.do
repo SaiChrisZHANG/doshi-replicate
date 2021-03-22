@@ -465,7 +465,8 @@ forvalues i = 3/19{
 *++++ filter 3: 5 point of the previous/proceeding trade, within a day
 *++++++++++++++++++++++++++++++++++++++
 global fpricedir = `"${mergentdir}/output/filtered version"'
-* generate a sample to tag the 
+* generate a sample, double check the validility of the filters
+
 
 
 
