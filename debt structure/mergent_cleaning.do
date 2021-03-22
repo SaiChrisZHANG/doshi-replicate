@@ -467,7 +467,7 @@ forvalues i = 3/19{
 global fpricedir = `"${mergentdir}/output/filtered version"'
 * generate a sample, double check the validility of the filters
 
-forvalues i = 3/19{
+forvalues i = 3/20{
     use `"${mergedir}/merged_`i'.dta"', clear
     keep ISSUE_ID MATURITY cusip_id hist_effective_dt trd_exctn_dt trd_exctn_tm entrd_vol_qt rptd_pr yld_pt
     keep if !mi(rptd_pr)
@@ -497,7 +497,7 @@ forvalues i = 3/19{
 
     * save the samples
     keep if mean_abn==1 | seq_abn==1
-    save `"${fpricedir}/sample/`i'.dta"', replace
+    save `"${fpricedir}/sample/filtered_`i'.dta"', replace
 
 }
 
