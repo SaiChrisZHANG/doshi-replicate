@@ -506,13 +506,6 @@ forvalues i = 3/20{
     di "Finish!"
 }
 
-
-
-
-
-
-
-
 * process 2020 data first ======================================================
 use `"${mergedir}/merged_20.dta"', clear
 
