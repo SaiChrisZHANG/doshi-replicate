@@ -484,7 +484,7 @@ forvalues i = 3/20{
         replace drop = 1 if rptd_pr < price_bar - 5
         **** tag every trades on that day when "abnormal" prices happen
         bys ISSUE_ID hist_effective_dt trd_exctn_dt: egen mean_abn = mean( drop )
-        drop drop
+        drop drop price_bar
 
         * FILTER 3: < ±5 from the nearest trade price
         gen drop = .
