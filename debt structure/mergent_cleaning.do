@@ -564,6 +564,29 @@ forvalues i = 3/19{
     use `"${mergedir}/merged_`i'.dta"', clear
 
     qui{
+        * filter 1: quantity > 100000
+        keep if entrd_vol_qt>=100000
+
+        * FILTER 2: < ±5 around the mean price
+        bys ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_bar = mean(rptd_pr)
+        gen drop = 1 if rptd_pr > price_bar + 5
+        replace drop = 1 if rptd_pr < price_bar - 5
+        **** tag every trades on that day when "abnormal" prices happen
+        bys ISSUE_ID hist_effective_dt trd_exctn_dt: egen mean_abn = mean(drop)
+        drop drop price_bar
+
+        * FILTER 3: < ±5 from the nearest trade price
+        gen drop = .
+        **** not deviate ±5 from the previous trade
+        by ISSUE_ID hist_effective_dt trd_exctn_dt: replace drop = 1 if rptd_pr < rptd_pr[_n-1]-5 & _n!=1
+        by ISSUE_ID hist_effective_dt trd_exctn_dt: replace drop = 1 if rptd_pr > rptd_pr[_n-1]+5 & _n!=1
+        **** not deviate ±5 from the next trade
+        by ISSUE_ID hist_effective_dt trd_exctn_dt: replace drop = 1 if rptd_pr < rptd_pr[_n+1]-5 & _n!=_N
+        by ISSUE_ID hist_effective_dt trd_exctn_dt: replace drop = 1 if rptd_pr > rptd_pr[_n+1]+5 & _n!=_N
+        **** tag every trades on that day
+        bys ISSUE_ID hist_effective_dt trd_exctn_dt: egen seq_abn = mean( drop )
+        drop drop
+
         * the latest transaction
         sort ISSUE_ID hist_effective_dt trd_exctn_dt trd_exctn_tm
         **** the latest one transaction
