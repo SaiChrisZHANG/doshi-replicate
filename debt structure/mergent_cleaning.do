@@ -301,7 +301,6 @@ global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
 global varlist = "ISSUE_ID MATURITY cusip_id hist_effective_dt trd_exctn_dt entrd_vol_qt rptd_pr yld_pt"
 
-* This script is called by "mergent_cleaning.do" to generate daily price information
 * process 2020 data first ======================================================
 use `"${mergedir}/merged_20.dta"', clear
 
