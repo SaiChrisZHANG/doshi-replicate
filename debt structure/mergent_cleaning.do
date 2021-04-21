@@ -490,12 +490,12 @@ by ISSUE_ID hist_effective_dt trd_exctn_dt: replace drop = 1 if rptd_pr > rptd_p
 bys ISSUE_ID hist_effective_dt trd_exctn_dt: egen seq_abn = mean( drop )
 drop drop
 
-* redo the daily aggregation
+* latest transaction
 sort ISSUE_ID hist_effective_dt trd_exctn_dt trd_exctn_tm
 **** the latest one transaction
 preserve
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
-keep $varlist
+keep $varlist mean_abn seq_abn
 rename entrd_vol_qt quant_latest
 rename rptd_pr price_latest
 rename yld_pt yield_latest
@@ -504,7 +504,7 @@ restore
 **** the latest 5 transaction
 preserve
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n>_N-5
-keep $varlist
+keep $varlist mean_abn seq_abn
 by ISSUE_ID hist_effective_dt trd_exctn_dt: egen quant_latest5 = total(entrd_vol_qt)
 by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_latest5 = mean(rptd_pr)
 by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_latest5 = mean(yld_pt)
@@ -521,7 +521,7 @@ sort ISSUE_ID hist_effective_dt trd_exctn_dt entrd_vol_qt
 **** the largest transaction
 preserve
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
-keep $varlist
+keep $varlist mean_abn seq_abn
 rename entrd_vol_qt quant_largest
 rename rptd_pr price_largest
 rename yld_pt yield_largest
@@ -530,7 +530,7 @@ restore
 **** the largest 5 transaction
 preserve
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n>_N-5
-keep $varlist
+keep $varlist mean_abn seq_abn
 by ISSUE_ID hist_effective_dt trd_exctn_dt: egen quant_largest5 = total(entrd_vol_qt)
 by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_largest5 = mean(rptd_pr)
 by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_largest5 = mean(yld_pt)
@@ -544,7 +544,7 @@ save `"${fpricedir}/largest5.dta"', replace
 restore
 
 * all transactions
-keep $varlist
+keep $varlist mean_abn seq_abn
 by ISSUE_ID hist_effective_dt trd_exctn_dt: egen quant_avg = total(entrd_vol_qt)
 by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_avg = mean(rptd_pr)
 by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_avg = mean(yld_pt)
@@ -596,8 +596,8 @@ forvalues i = 3/19{
         rename entrd_vol_qt quant_latest
         rename rptd_pr price_latest
         rename yld_pt yield_latest
-        append using `"${pricedir}/latest.dta"'
-        save `"${pricedir}/latest.dta"', replace
+        append using `"${fpricedir}/latest.dta"'
+        save `"${fpricedir}/latest.dta"', replace
         restore
         **** the latest 5 transaction
         preserve
@@ -612,8 +612,8 @@ forvalues i = 3/19{
         replace price_latest5_w = price_latest5_w/quant_latest5
         replace yield_latest5_w = yield_latest5_w/quant_latest5
         drop entrd_vol_qt rptd_pr yld_pt
-        append using `"${pricedir}/latest5.dta"'
-        save `"${pricedir}/latest5.dta"', replace
+        append using `"${fpricedir}/latest5.dta"'
+        save `"${fpricedir}/latest5.dta"', replace
         restore
 
         * the largest transaction
@@ -625,8 +625,8 @@ forvalues i = 3/19{
         rename entrd_vol_qt quant_largest
         rename rptd_pr price_largest
         rename yld_pt yield_largest
-        append using `"${pricedir}/largest.dta"'
-        save `"${pricedir}/largest.dta"', replace
+        append using `"${fpricedir}/largest.dta"'
+        save `"${fpricedir}/largest.dta"', replace
         restore
         **** the largest 5 transaction
         preserve
@@ -641,8 +641,8 @@ forvalues i = 3/19{
         replace price_largest5_w = price_largest5_w/quant_largest5
         replace yield_largest5_w = yield_largest5_w/quant_largest5
         drop entrd_vol_qt rptd_pr yld_pt
-        append using `"${pricedir}/largest5.dta"'
-        save `"${pricedir}/largest5.dta"', replace
+        append using `"${fpricedir}/largest5.dta"'
+        save `"${fpricedir}/largest5.dta"', replace
         restore
 
         * all transactions
@@ -656,8 +656,8 @@ forvalues i = 3/19{
         replace price_avg_w = price_avg_w/quant_avg
         replace yield_avg_w = yield_avg_w/quant_avg
         drop entrd_vol_qt rptd_pr yld_pt
-        append using `"${pricedir}/average.dta"'
-        save `"${pricedir}/average.dta"', replace
+        append using `"${fpricedir}/average.dta"'
+        save `"${fpricedir}/average.dta"', replace
     }
 
     clear
