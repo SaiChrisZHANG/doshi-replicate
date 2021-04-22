@@ -124,6 +124,9 @@ by ISSUE_ID hist_effective_dt: keep if _n == _N
 drop if mi(hist_effective_dt)
 * 12545 observations deleted
 
+duplicates report ISSUE hist_effective_dt
+* 1130629 observations
+
 * add the offering amount as the first historical amount +++++++++++++++++++++++
 **** NOTE: if there are any historical data on the offering date, then don't add the offering amount
 preserve
