@@ -259,7 +259,7 @@ save mergent_issue_dt, replace
 ssc install rangestat
 ssc install rangejoin
 
-* first, merge with TRACE enhanced data (Jul. 2020 to Sep. 2020)
+* first, merge with TRACE enhanced data
 global tracedir = "F:/Stephen/TRACE"
 global mergentdir = "F:/Stephen/mergent"
 
@@ -286,7 +286,7 @@ forvalues i = 3/20{
     restore
 }
 
-* then, merge with TRACE data
+* then, merge with TRACE data (Jul. 2020 to Sep. 2020)
 preserve
 rangejoin trd_exctn_dt hist_effective_dt lead_effective_dt using `"${tracedir}/trace_20.dta"', by(cusip_id) keepusing(trd_exctn_tm ascii_rptd_vol_tx frmt_cd rptd_pr yld_sign_cd yld_pt side trc_st)
 drop if mi(trd_exctn_dt)
