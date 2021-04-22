@@ -220,6 +220,11 @@ drop if lead_effective_dt < 15522
 * clean for merge
 rename COMPLETE_CUSIP cusip_id
 
+* should be uniquely defined by cusip_idXhist_effective_dt
+duplicates report cusip_id hist_effective_dt
+duplicates report ISSUE_ID hist_effective_dt
+* 1259533 unique observations
+
 save mergent_issue_dt, replace
 
 *===============================================================================
