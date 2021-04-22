@@ -87,7 +87,8 @@ format hist_effective_dt %td
 
 * add the latest amount outstanding as the last historical amount ++++++++++++++
 **** NOTE: append the EFFECTIVE_DATE and AMOUNT_OUTSTANDING information of the mergent_issue data set to the historical oustanding amount columns
-****       if there are any duplicates (for 1656 bonds, the date of the latest historical data is the same with the date of the current data), only keep the current data
+****       if there are any duplicates (for 1656 bonds, the date of the latest historical data is the same with the date of the current data), 
+****       only keep the current data
 preserve
 tempfile recent_amt_out
 keep if _merge==3
@@ -592,7 +593,7 @@ forvalues i = 3/19{
         **** the latest one transaction
         preserve
         by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
-        keep $varlist
+        keep $varlist mean_abn seq_abn
         rename entrd_vol_qt quant_latest
         rename rptd_pr price_latest
         rename yld_pt yield_latest
@@ -602,7 +603,7 @@ forvalues i = 3/19{
         **** the latest 5 transaction
         preserve
         by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n>_N-5
-        keep $varlist
+        keep $varlist mean_abn seq_abn
         by ISSUE_ID hist_effective_dt trd_exctn_dt: egen quant_latest5 = total(entrd_vol_qt)
         by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_latest5 = mean(rptd_pr)
         by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_latest5 = mean(yld_pt)
@@ -621,7 +622,7 @@ forvalues i = 3/19{
         **** the largest transaction
         preserve
         by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
-        keep $varlist
+        keep $varlist mean_abn seq_abn
         rename entrd_vol_qt quant_largest
         rename rptd_pr price_largest
         rename yld_pt yield_largest
@@ -631,7 +632,7 @@ forvalues i = 3/19{
         **** the largest 5 transaction
         preserve
         by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n>_N-5
-        keep $varlist
+        keep $varlist mean_abn seq_abn
         by ISSUE_ID hist_effective_dt trd_exctn_dt: egen quant_largest5 = total(entrd_vol_qt)
         by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_largest5 = mean(rptd_pr)
         by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_largest5 = mean(yld_pt)
@@ -646,7 +647,7 @@ forvalues i = 3/19{
         restore
 
         * all transactions
-        keep $varlist
+        keep $varlist mean_abn seq_abn
         by ISSUE_ID hist_effective_dt trd_exctn_dt: egen quant_avg = total(entrd_vol_qt)
         by ISSUE_ID hist_effective_dt trd_exctn_dt: egen price_avg = mean(rptd_pr)
         by ISSUE_ID hist_effective_dt trd_exctn_dt: egen yield_avg = mean(yld_pt)
