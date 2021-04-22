@@ -165,6 +165,7 @@ by ISSUE_ID: keep if _n==_N
 drop if MATURITY == hist_effective_dt
 drop if mi(MATURITY)
 gen maturity = .
+* also tag those weird issues with a maturity earlier than the last transaction date
 replace maturity = 1 if MATURITY < hist_effective_dt
 
 replace hist_amt_out = 0
@@ -177,6 +178,10 @@ save `maturity', replace
 
 restore
 append using `maturity'
+
+* again, 10 dupliates are due to the weird early maturity dates (tagged by maturity==1)
+duplicates tag ISSUE_ID hist_effective_dt, gen(dup)
+sort ISSUE_ID hist_effective_dt
 
 * generate a tag +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 gen dt_type = .
