@@ -181,7 +181,10 @@ append using `maturity'
 
 * again, 10 dupliates are due to the weird early maturity dates (tagged by maturity==1)
 duplicates tag ISSUE_ID hist_effective_dt, gen(dup)
-sort ISSUE_ID hist_effective_dt
+drop if dup == 1 & maturity == 1
+drop dup
+duplicates report ISSUE_ID hist_effective_dt
+* 1437798 unique observations
 
 * generate a tag +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 gen dt_type = .
