@@ -119,8 +119,10 @@ drop _merge
 * drop the bonds whose latest historical data (in mergent_hist_amt.dta) are on the same day with the current data (mergent_issue)
 sort ISSUE_ID hist_effective_dt current
 by ISSUE_ID hist_effective_dt: keep if _n == _N
+* 1656 observations deleted
 
 drop if mi(hist_effective_dt)
+* 12545 observations deleted
 
 * add the offering amount as the first historical amount +++++++++++++++++++++++
 **** NOTE: if there are any historical data on the offering date, then don't add the offering amount
