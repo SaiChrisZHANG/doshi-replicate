@@ -58,6 +58,10 @@ rename ACTION_AMOUNT hist_act_amt
 
 save mergent_hist_amt.dta, replace
 
+duplicates report ISSUE_ID hist_effective_dt
+* should be 651884 unique observations
+clear
+
 * mergent_issue ================================================================
 *+++++++++++++++++++++++++++++++++++++++++++++++
 * Note:
@@ -79,7 +83,7 @@ merge 1:1 ISSUE_ID using `action_price', nogen
 
 duplicates report ISSUE_ID
 duplicates report COMPLETE_CUSIP
-* should be uniquely defined
+* should be uniquely defined, 492946 observations
 
 * do the merge
 merge 1:m ISSUE_ID using mergent_hist_amt, keepusing(hist_effective_dt hist_amt_out hist_act_type hist_act_price hist_act_amt)
