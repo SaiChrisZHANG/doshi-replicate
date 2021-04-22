@@ -139,6 +139,7 @@ drop if OFFERING_DATE == .
 * generate a tag for bonds that (weirdly) have a maturity later than the first effective date 
 gen offering = .
 replace offering = 1 if OFFERING_DATE > hist_effective_dt
+* 851 observations are tagged
 
 replace hist_amt_out = OFFERING_AMT
 replace hist_effective_dt = OFFERING_DATE
@@ -148,6 +149,13 @@ tempfile offering_amount
 save `offering_amount', replace
 restore
 append using `offering_amount'
+
+* drop duplicates: they are caused by the weird later offering dates (tagged by offering==1)
+duplicates tag ISSUE_ID hist_effective_dt, gen(dup)
+drop if dup == 1 & offering == 1
+drop dup
+duplicates report ISSUE_ID hist_effective_dt
+* 1156006 observations
 
 * add the maturity date and 0 as the maturity information ++++++++++++++++++++++
 preserve
