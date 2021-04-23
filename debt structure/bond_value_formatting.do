@@ -7,4 +7,12 @@ global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
 global fpricedir = `"${mergentdir}/output/filtered version"'
 
-* merge amount and price information, generate bond debt value
+*===============================================================================
+* Merge
+*===============================================================================
+*++++++++++++++++++++++++++++++++++++++
+* Merging strategy:
+*
+*
+*
+*++++++++++++++++++++++++++++++++++++++
