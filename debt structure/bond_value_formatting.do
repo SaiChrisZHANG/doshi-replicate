@@ -3,6 +3,7 @@
 * This script merge price information of bonds, historical amount 
 * outstanding information and bond issuer firm information in Compustat.
 
+global mergentdir = "F:/Stephen/mergent"
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
 global fpricedir = `"${mergentdir}/output/filtered version"'
@@ -12,7 +13,8 @@ global fpricedir = `"${mergentdir}/output/filtered version"'
 *===============================================================================
 *++++++++++++++++++++++++++++++++++++++
 * Merging strategy:
-*
-*
+* Step 1: merge ${mergentdir}/mergent_amtinfo.dta to price information 
+*         in ${pricedir} and ${fpricedir}
+* Step 2: generate 
 *
 *++++++++++++++++++++++++++++++++++++++
