@@ -30,19 +30,16 @@ use `"${mergentdir}/mergent_amtinfo.dta"', clear
 
 global issue_vars1 = "ISSUE_ID ISSUER_CUSIP COMPLETE_CUSIP hist_effective_dt"
 global issue_vars2 = "CONVERTIBLE ACTIVE_ISSUE hist_amt_out PRINCIPAL_AMT OFFERING_YIELD COUPON"
-
-preserve
 keep $issue_vars1 $issue_vars2
+
 merge 1:m ISSUE_ID hist_effective_dt using `"${fpricedir}/latest.dta"', keepusing(trd_exctn_dt price_latest yield_latest mean_abn seq_abn)
 * 197924 ISSUE_ID-by-hist_effective_dt matched
 keep if _merge==3
 drop _merge
-save `"${outdir}/value_f_latest.dta"', replace
-restore
+save `"${outdir}/value_filtered.dta"', replace
 
 preserve
-keep $issue_vars1 $issue_vars2
-merge 1:m ISSUE_ID hist_effective_dt using `"${fpricedir}/largest.dta"', keepusing(trd_exctn_dt price_largest yield_largest mean_abn seq_abn)
+merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${fpricedir}/largest.dta"', keepusing(price_largest yield_largest)
 * 197924 ISSUE_ID-by-hist_effective_dt matched
 keep if _merge==3
 drop _merge
