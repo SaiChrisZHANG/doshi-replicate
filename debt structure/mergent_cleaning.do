@@ -199,6 +199,9 @@ label values dt_type date_type_l
 drop current offering maturity
 
 * merge coupon/principal information
+merge m:1 ISSUE_ID using mergent_coupon
+drop if _merge==2
+drop _merge
 
 * save the final ouput
 save mergent_amtinfo, replace
