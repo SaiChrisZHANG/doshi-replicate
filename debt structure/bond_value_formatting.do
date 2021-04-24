@@ -7,6 +7,7 @@ global mergentdir = "F:/Stephen/mergent"
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
 global fpricedir = `"${mergentdir}/output/filtered version"'
+global outdir = `"F:/Stephen/analysis/debt structure/bond debt"'
 
 *===============================================================================
 * Merging
@@ -23,4 +24,5 @@ global fpricedir = `"${mergentdir}/output/filtered version"'
 *++++ 2. merge the price information, keep the largest
 *++++++++++++++++++++++++++++++++++++++
 
-use `"${mergent}"' 
+use `"${pricedir}/latest.dta"', clear
+merge m:1 ISSUE_ID hist_effective_dt using 
