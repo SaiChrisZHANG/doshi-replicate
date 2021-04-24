@@ -32,16 +32,32 @@ global issue_vars1 = "ISSUE_ID ISSUER_CUSIP COMPLETE_CUSIP hist_effective_dt"
 global issue_vars2 = "CONVERTIBLE ACTIVE_ISSUE hist_amt_out PRINCIPAL_AMT OFFERING_YIELD COUPON"
 keep $issue_vars1 $issue_vars2
 
+* filtered: price information of big transactions (>100000) only
+preserve
 merge 1:m ISSUE_ID hist_effective_dt using `"${fpricedir}/latest.dta"', keepusing(trd_exctn_dt price_latest yield_latest mean_abn seq_abn)
 * 197924 ISSUE_ID-by-hist_effective_dt matched
 keep if _merge==3
 drop _merge
-save `"${outdir}/value_filtered.dta"', replace
 
-preserve
-merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${fpricedir}/largest.dta"', keepusing(price_largest yield_largest)
-* 197924 ISSUE_ID-by-hist_effective_dt matched
+* merge with the largest transaction's price on a trading day
+merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${fpricedir}/largest.dta"', keepusing(price_largest yield_largest) nogen
+* merge with the average (value-weighted/equal-weighted) transaction day price
+merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${fpricedir}/average.dta"', keepusing(price_avg yield_avg price_avg_w yield_avg_w) nogen
+
+sort ISSUE_ID hist_effective_dt trd_exctn_dt 
+save `"${outdir}/bond_value_f.dta"', replace
+restore
+
+* unfiltered: price information of all transactions
+merge 1:m ISSUE_ID hist_effective_dt using `"${pricedir}/latest.dta"', keepusing(trd_exctn_dt price_latest yield_latest)
+* 212207 ISSUE_ID-by-hist_effective_dt matched
 keep if _merge==3
 drop _merge
-save `"${outdir}/value_f_largest.dta"', replace
-restore
+
+* merge with the largest transaction's price on a trading day
+merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${pricedir}/largest.dta"', keepusing(price_largest yield_largest) nogen
+* merge with the average (value-weighted/equal-weighted) transaction day price
+merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${pricedir}/average.dta"', keepusing(price_avg yield_avg price_avg_w yield_avg_w) nogen
+
+sort ISSUE_ID hist_effective_dt trd_exctn_dt
+save `"${outdir}/bond_value.dta"', replace
