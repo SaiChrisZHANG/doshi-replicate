@@ -19,6 +19,5 @@ global fpricedir = `"${mergentdir}/output/filtered version"'
 * Step 3: merge the value information back to firm information
 
 * Different spcifications will be tested:
-*++++ In Step 1:
-*++++     1. largest daily trade's price, 
+*++++ 1. merge largest daily trade's price t
 *++++++++++++++++++++++++++++++++++++++
