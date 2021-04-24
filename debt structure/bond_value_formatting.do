@@ -28,7 +28,7 @@ global outdir = `"F:/Stephen/analysis/debt structure/bond debt"'
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
 
 global issue_vars1 = "ISSUE_ID ISSUER_ID ISSUER_CUSIP COMPLETE_CUSIP hist_effective_dt"
-global issue_vars2 = "BOND_TYPE hist_amt_out PRINCIPAL_AMT"
+global issue_vars2 = "CONVERTIBLE ACTIVE_ISSUE hist_amt_out PRINCIPAL_AMT COUPON OFFERING_YIELD"
 
 preserve
 
