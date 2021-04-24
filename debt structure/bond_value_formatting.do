@@ -16,5 +16,9 @@ global fpricedir = `"${mergentdir}/output/filtered version"'
 * Step 1: merge ${mergentdir}/mergent_amtinfo.dta to price information 
 *         in ${pricedir} and ${fpricedir}
 * Step 2: generate the value information of bonds
-* Step 3: merge the value information to 
+* Step 3: merge the value information back to firm information
+
+* Different spcifications will be tested:
+*++++ In Step 1:
+*++++       1. largest daily trade's price, 
 *++++++++++++++++++++++++++++++++++++++
