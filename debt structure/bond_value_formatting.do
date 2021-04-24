@@ -15,6 +15,6 @@ global fpricedir = `"${mergentdir}/output/filtered version"'
 * Merging strategy:
 * Step 1: merge ${mergentdir}/mergent_amtinfo.dta to price information 
 *         in ${pricedir} and ${fpricedir}
-* Step 2: generate 
-*
+* Step 2: generate the value information of bonds
+* Step 3: merge the value information to 
 *++++++++++++++++++++++++++++++++++++++
