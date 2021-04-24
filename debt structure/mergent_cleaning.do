@@ -198,6 +198,8 @@ label values dt_type date_type_l
 * drop the intermediary columns
 drop current offering maturity
 
+* merge coupon/principal information
+
 * save the final ouput
 save mergent_amtinfo, replace
 

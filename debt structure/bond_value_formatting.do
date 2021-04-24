@@ -9,7 +9,7 @@ global pricedir = `"${mergentdir}/output"'
 global fpricedir = `"${mergentdir}/output/filtered version"'
 
 *===============================================================================
-* Merge
+* Mergings
 *===============================================================================
 *++++++++++++++++++++++++++++++++++++++
 * Merging strategy:
@@ -22,3 +22,5 @@ global fpricedir = `"${mergentdir}/output/filtered version"'
 *++++ 1. merge the price information, keep the latest
 *++++ 2. merge the price information, keep the largest
 *++++++++++++++++++++++++++++++++++++++
+
+use `"${mergent}"'
