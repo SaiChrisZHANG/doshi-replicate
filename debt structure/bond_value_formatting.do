@@ -20,16 +20,23 @@ global outdir = `"F:/Stephen/analysis/debt structure/bond debt"'
 * Step 3: merge the value information back to firm information
 
 * Different spcifications will be tested:
-*++++ 1. merge the price information, keep the latest
-*++++ 2. merge the price information, keep the largest
+*++++ 1. three types of daily price information: the largest, the latest, the average
+*++++ 2. merge the price information, then keep the largest, the latest
 *++++++++++++++++++++++++++++++++++++++
 
 * filtered version: prices of bigger transactions (quantity>100000)
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
+* 1437798 observations uniquely defined by ISSUE_IDXhist_effective_dt
 
-global issue_vars1 = "ISSUE_ID ISSUER_ID ISSUER_CUSIP COMPLETE_CUSIP hist_effective_dt"
-global issue_vars2 = "CONVERTIBLE ACTIVE_ISSUE hist_amt_out PRINCIPAL_AMT COUPON OFFERING_YIELD"
+global issue_vars1 = "ISSUE_ID ISSUER_CUSIP COMPLETE_CUSIP hist_effective_dt"
+global issue_vars2 = "CONVERTIBLE ACTIVE_ISSUE hist_amt_out PRINCIPAL_AMT OFFERING_YIELD COUPON"
 
 preserve
+keep $issue_vars1 $issue_vars2
+merge 1:m ISSUE_ID hist_effective_dt using `"${fpricedir}/latest.dta"', keepusing(trd_exctn_dt price_latest yield_latest mean_abn seq_abn)
+* 197924 ISSUE_ID-by-hist_effective_dt matched
+keep if _merge==3
+drop _merge
+save `"${outdir}/f_latest.dta"', replace
+restore
 
-merge 1:m ISSUE_ID hist_effective_dt using `"${fpricedir}/latest.dta"', keepusing(trd_exctn_dt price_latest mean_abn seq_abn)
