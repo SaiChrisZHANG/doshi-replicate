@@ -20,5 +20,5 @@ global fpricedir = `"${mergentdir}/output/filtered version"'
 
 * Different spcifications will be tested:
 *++++ In Step 1:
-*++++       1. largest daily trade's price, 
+*++++     1. largest daily trade's price, 
 *++++++++++++++++++++++++++++++++++++++
