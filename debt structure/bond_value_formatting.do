@@ -37,6 +37,14 @@ merge 1:m ISSUE_ID hist_effective_dt using `"${fpricedir}/latest.dta"', keepusin
 * 197924 ISSUE_ID-by-hist_effective_dt matched
 keep if _merge==3
 drop _merge
-save `"${outdir}/f_latest.dta"', replace
+save `"${outdir}/value_f_latest.dta"', replace
 restore
 
+preserve
+keep $issue_vars1 $issue_vars2
+merge 1:m ISSUE_ID hist_effective_dt using `"${fpricedir}/largest.dta"', keepusing(trd_exctn_dt price_largest yield_largest mean_abn seq_abn)
+* 197924 ISSUE_ID-by-hist_effective_dt matched
+keep if _merge==3
+drop _merge
+save `"${outdir}/value_f_largest.dta"', replace
+restore
