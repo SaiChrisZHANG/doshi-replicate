@@ -24,5 +24,12 @@ global outdir = `"F:/Stephen/analysis/debt structure/bond debt"'
 *++++ 2. merge the price information, keep the largest
 *++++++++++++++++++++++++++++++++++++++
 
-use `"${pricedir}/latest.dta"', clear
-merge m:1 ISSUE_ID hist_effective_dt using 
+* filtered version: prices of bigger transactions (quantity>100000)
+use `"${mergentdir}/mergent_amtinfo.dta"', clear
+
+global issue_vars1 = "ISSUE_ID ISSUER_ID ISSUER_CUSIP COMPLETE_CUSIP hist_effective_dt"
+global issue_vars2 = "BOND_TYPE hist_amt_out PRINCIPAL_AMT"
+
+preserve
+
+merge 1:m ISSUE_ID hist_effective_dt using `"${fpricedir}/latest.dta"', keepusing(trd_exctn_dt price_latest mean_abn seq_abn)
