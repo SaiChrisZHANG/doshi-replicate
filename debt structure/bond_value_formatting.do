@@ -10,7 +10,7 @@ global fpricedir = `"${mergentdir}/output/filtered version"'
 global outdir = `"F:/Stephen/analysis/debt structure/bond debt"'
 
 *===============================================================================
-* Merging
+* Merging price
 *===============================================================================
 *++++++++++++++++++++++++++++++++++++++
 * Merging strategy:
@@ -24,6 +24,7 @@ global outdir = `"F:/Stephen/analysis/debt structure/bond debt"'
 *++++ 2. merge the price information, then keep the largest, the latest
 *++++++++++++++++++++++++++++++++++++++
 
+* Step 1: Merge price with amount outstanding =================================
 * filtered version: prices of bigger transactions (quantity>100000)
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
 * 1437798 observations uniquely defined by ISSUE_IDXhist_effective_dt
@@ -61,3 +62,6 @@ merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${pricedir}/average.dt
 
 sort ISSUE_ID hist_effective_dt trd_exctn_dt
 save `"${outdir}/bond_value.dta"', replace
+
+* Step 2: generate bond value ==================================================
+use `"${outdir}/bond_value_f.dta"', clear
