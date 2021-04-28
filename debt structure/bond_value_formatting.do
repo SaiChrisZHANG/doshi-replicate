@@ -7,7 +7,9 @@ global mergentdir = "F:/Stephen/mergent"
 global mergedir = `"${mergentdir}/merged_with_TRACE"'
 global pricedir = `"${mergentdir}/output"'
 global fpricedir = `"${mergentdir}/output/filtered version"'
-global analysisdir = `"F:/Stephen/analysis/debt structure/bond debt"'
+
+global analysisdir = `"F:/Stephen/analysis"'
+global bonddir = `"${analysisdir}/debt structure/bond debt"'
 
 *===============================================================================
 * Merging price
@@ -46,7 +48,7 @@ merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${fpricedir}/largest.d
 merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${fpricedir}/average.dta"', keepusing(price_avg yield_avg price_avg_w yield_avg_w) nogen
 
 sort ISSUE_ID hist_effective_dt trd_exctn_dt 
-save `"${analysisdir}/bond_value_f.dta"', replace
+save `"${bonddir}/bond_value_f.dta"', replace
 restore
 
 * unfiltered: price information of all transactions
@@ -61,16 +63,16 @@ merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${pricedir}/largest.dt
 merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${pricedir}/average.dta"', keepusing(price_avg yield_avg price_avg_w yield_avg_w) nogen
 
 sort ISSUE_ID hist_effective_dt trd_exctn_dt
-save `"${analysisdir}/bond_value.dta"', replace
+save `"${bonddir}/bond_value.dta"', replace
 
 * Step 2: Generate bond value ==================================================
-use `"${analysisdir}/bond_value_f.dta"', clear
+use `"${bonddir}/bond_value_f.dta"', clear
 foreach pr in latest largest avg avg_w{
     gen value_`pr' = hist_amt_out*price_`pr'/100
 }
 save, replace
 
-use `"${analysisdir}/bond_value.dta"', clear
+use `"${bonddir}/bond_value.dta"', clear
 foreach pr in latest largest avg avg_w{
     gen value_`pr' = hist_amt_out*price_`pr'/100
 }
@@ -78,4 +80,4 @@ save, replace
 clear
 
 * Step 3: Merge the bond value to firm information =============================
-* to save memory, generate a 
+* to save memory, used the id first
