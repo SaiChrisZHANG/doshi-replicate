@@ -65,3 +65,7 @@ save `"${outdir}/bond_value.dta"', replace
 
 * Step 2: generate bond value ==================================================
 use `"${outdir}/bond_value_f.dta"', clear
+
+foreach pr in "latest largest avg avg_w"{
+    gen value_`pr' = hist_amt_out*price_`pr'
+}
