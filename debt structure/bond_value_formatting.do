@@ -82,4 +82,10 @@ clear
 * Step 3: Merge the bond value to firm information =============================
 * to save memory, used a sub set of only gvkey + datadate + cusip6
 
+use `"${analysisdir}/full_data.dta"', clear
+keep gvkey datadate cusip
+gen ISSUER_CUSIP = substr(cusip,1,6)
+drop cusip
 
+tempfile fullid
+save `fullid', replace
