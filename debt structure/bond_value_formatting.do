@@ -80,4 +80,6 @@ save, replace
 clear
 
 * Step 3: Merge the bond value to firm information =============================
-* to save memory, used the id first
+* to save memory, used a sub set of only gvkey + datadate + cusip6
+
+
