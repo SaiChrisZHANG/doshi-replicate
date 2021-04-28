@@ -20,7 +20,7 @@ global outdir = `"F:/Stephen/analysis/debt structure/bond debt"'
 * Step 3: merge the value information back to firm information
 
 * Different spcifications will be tested:
-*++++ 1. three types of daily price information: the largest, the latest, the average
+*++++ 1. three types of daily price information: the largest, the latest, the average (equal-weighted/value-weighted)
 *++++ 2. merge the price information, then keep the largest, the latest
 *++++++++++++++++++++++++++++++++++++++
 
@@ -63,9 +63,11 @@ merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${pricedir}/average.dt
 sort ISSUE_ID hist_effective_dt trd_exctn_dt
 save `"${outdir}/bond_value.dta"', replace
 
-* Step 2: generate bond value ==================================================
+* Step 2: Generate bond value ==================================================
 use `"${outdir}/bond_value_f.dta"', clear
 
-foreach pr in "latest largest avg avg_w"{
-    gen value_`pr' = hist_amt_out*price_`pr'
+foreach pr in latest largest avg avg_w{
+    gen value_`pr' = hist_amt_out*price_`pr'/100
 }
+
+* Step 3: Merge the bond value to firm information =============================
