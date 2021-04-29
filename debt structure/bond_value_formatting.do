@@ -84,8 +84,12 @@ clear
 
 use `"${analysisdir}/full_data.dta"', clear
 keep gvkey datadate cusip
+* generate firm CUSIP ids
 gen ISSUER_CUSIP = substr(cusip,1,6)
 drop cusip
+* generate 
+egen datadate_lag = eomd(datadate), f(%td) lag(1)
+replace datadate_lag= datadate_lag+1
 
 tempfile fullid
 save `fullid', replace
