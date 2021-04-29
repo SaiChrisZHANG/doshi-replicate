@@ -87,9 +87,13 @@ keep gvkey datadate cusip
 * generate firm CUSIP ids
 gen ISSUER_CUSIP = substr(cusip,1,6)
 drop cusip
-* generate 
+* generate the month beginning date
 egen datadate_lag = eomd(datadate), f(%td) lag(1)
 replace datadate_lag= datadate_lag+1
 
 tempfile fullid
 save `fullid', replace
+
+* do the range merge: 
+* for each month from datadate_lag to datadate, find all bond value information
+rangejoin
