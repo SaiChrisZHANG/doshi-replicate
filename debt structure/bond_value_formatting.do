@@ -23,7 +23,7 @@ global bonddir = `"${analysisdir}/debt structure/bond debt"'
 
 * Different spcifications will be tested:
 *++++ 1. three types of daily price information: the largest, the latest, the average (equal-weighted/value-weighted)
-*++++ 2. merge the price information, then keep the largest, the latest
+*++++ 2. merge the price information, then keep the latest, the average
 *++++++++++++++++++++++++++++++++++++++
 
 * Step 1: Merge price with amount outstanding =================================
@@ -91,10 +91,27 @@ drop cusip
 egen datadate_lag = eomd(datadate), f(%td) lag(1)
 replace datadate_lag= datadate_lag+1
 
-* do the range merge: 
-* for each month from datadate_lag to datadate, find all bond value information
-rangejoin trd_exctn_dt datadate_lag datadate using `"${bonddir}/bond_value_f.dta"', by(ISSUER_CUSIP) keepusing(CONVERTIBLE COUPON PRINCIPAL_AMT price_* yield_* value_* *_abn)
+* drop information before July 1, 2002
+drop if datadate < 15522
+
+tempfile fullid
+save `fullid', replace
+
+* do the range merge: for each month from datadate_lag to datadate, find all bond value information
+*** filtered value
+rangejoin trd_exctn_dt datadate_lag datadate using `"${bonddir}/bond_value_f.dta"', by(ISSUER_CUSIP) keepusing(ISSUE_ID CONVERTIBLE COUPON PRINCIPAL_AMT price_* yield_* value_* *_abn)
+sort ISSUER_CUSIP 
 
 preserve
+* for each month, keep the latest value information
 sort ISSUER_CUSIP datadate trd_exctn_dt
-by ISSUER_CUSIP datadate: keep if 
+
+by ISSUER_CUSIP datadate: keep if _n=_N
+save `"${bonddir}/bondv_f_mth_latest.dta"', replace
+restore
+
+preserve
+* for each month, calculate the equal-weighted average
+foreach var in price_* yield_* value_* *_abn{
+    
+}
