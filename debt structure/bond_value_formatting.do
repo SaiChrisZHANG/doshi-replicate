@@ -93,4 +93,8 @@ replace datadate_lag= datadate_lag+1
 
 * do the range merge: 
 * for each month from datadate_lag to datadate, find all bond value information
-rangejoin trd_exctn_dt datadate_lag datadate using `"${bonddir}/bond_value_f.dta"', by(ISSUER_CUSIP)
+rangejoin trd_exctn_dt datadate_lag datadate using `"${bonddir}/bond_value_f.dta"', by(ISSUER_CUSIP) keepusing(CONVERTIBLE COUPON PRINCIPAL_AMT price_* yield_* value_* *_abn)
+
+preserve
+sort ISSUER_CUSIP datadate trd_exctn_dt
+by ISSUER_CUSIP datadate: keep if 
