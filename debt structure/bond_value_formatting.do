@@ -101,7 +101,7 @@ save `fullid', replace
 *** filtered value
 rangejoin trd_exctn_dt datadate_lag datadate using `"${bonddir}/bond_value_f.dta"', by(ISSUER_CUSIP) keepusing(ISSUE_ID CONVERTIBLE COUPON PRINCIPAL_AMT price_* yield_* value_* *_abn)
 drop if mi(trd_exctn_dt)
-sort ISSUER_CUSIP 
+sort ISSUER_CUSIP ISSUE_ID trd_exctn_dt
 
 preserve
 * for each month, keep the latest value information
