@@ -31,7 +31,7 @@ global bonddir = `"${analysisdir}/debt structure/bond debt"'
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
 * 1437798 observations uniquely defined by ISSUE_IDXhist_effective_dt
 
-global issue_vars1 = "ISSUE_ID ISSUER_CUSIP COMPLETE_CUSIP hist_effective_dt"
+global issue_vars1 = "ISSUE_ID ISSUER_CUSIP COMPLETE_CUSIP hist_effective_dt MATURITY"
 global issue_vars2 = "CONVERTIBLE ACTIVE_ISSUE hist_amt_out PRINCIPAL_AMT OFFERING_YIELD COUPON"
 keep $issue_vars1 $issue_vars2
 
@@ -105,9 +105,12 @@ drop if mi(ISSUE_ID)
 preserve
 * for each bond, in each month, keep the latest value information
 sort gvkey ISSUE_ID datadate trd_exctn_dt
-by gvkey ISSUED_ID datadate: keep if _n=N
+by gvkey ISSUE_ID datadate: keep if _n==_N
+* 383311 gvkey-by-datadate-by-ISSUE_ID 
+
+sort gvkey datadate ISSUE_ID
 * for each bond issuer, aggregate all bonds
-bys: ISSUER_CUSIP 
+bys: gvkey datadate: 
 save `"${bonddir}/bondv_f_mth_latest.dta"', replace
 restore
 
