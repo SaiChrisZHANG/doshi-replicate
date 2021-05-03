@@ -139,7 +139,7 @@ clear
 use `fullid', clear
 * do the range merge: for each month from datadate_lag to datadate, find all bond value information
 *** filtered value
-rangejoin trd_exctn_dt datadate_lag datadate using `"${bonddir}/bond_value.dta"', by(ISSUER_CUSIP) keepusing(ISSUE_ID CONVERTIBLE COUPON PRINCIPAL_AMT MATURITY price_* yield_* value_*)
+rangejoin trd_exctn_dt datadate_lag datadate using `"${bonddir}/bond_value.dta"', by(ISSUER_CUSIP) keepusing(ISSUE_ID CONVERTIBLE COUPON PRINCIPAL_AMT OFFERING_AMT MATURITY quant_total price_* yield_* value_*)
 drop if mi(ISSUE_ID)
 
 preserve
