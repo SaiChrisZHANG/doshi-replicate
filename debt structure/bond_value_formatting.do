@@ -32,7 +32,7 @@ use `"${mergentdir}/mergent_amtinfo.dta"', clear
 * 1437798 observations uniquely defined by ISSUE_IDXhist_effective_dt
 
 global issue_vars1 = "ISSUE_ID ISSUER_CUSIP COMPLETE_CUSIP hist_effective_dt MATURITY"
-global issue_vars2 = "CONVERTIBLE ACTIVE_ISSUE hist_amt_out PRINCIPAL_AMT OFFERING_YIELD COUPON"
+global issue_vars2 = "CONVERTIBLE ACTIVE_ISSUE hist_amt_out PRINCIPAL_AMT OFFERING_YIELD OFFERING_AMT COUPON"
 keep $issue_vars1 $issue_vars2
 
 * filtered: price information of big transactions (>100000) only
