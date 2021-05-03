@@ -103,10 +103,10 @@ rangejoin trd_exctn_dt datadate_lag datadate using `"${bonddir}/bond_value_f.dta
 drop if mi(ISSUE_ID)
 
 preserve
-* for each month, keep the latest value information
-sort ISSUER_CUSIP datadate ISSUE_ID: 
-
-by ISSUER_CUSIP datadate: keep if _n=_N
+* for each bond, in each month, keep the latest value information
+sort ISSUER_CUSIP ISSUE_ID datadate trd_exctn_dt
+by ISSUER_CUSIP ISSUED_ID datadate: keep if _n=N
+* for each bond issuer, aggregate 
 save `"${bonddir}/bondv_f_mth_latest.dta"', replace
 restore
 
