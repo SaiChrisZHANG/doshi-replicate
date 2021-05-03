@@ -104,9 +104,10 @@ drop if mi(ISSUE_ID)
 
 preserve
 * for each bond, in each month, keep the latest value information
-sort ISSUER_CUSIP ISSUE_ID datadate trd_exctn_dt
-by ISSUER_CUSIP ISSUED_ID datadate: keep if _n=N
-* for each bond issuer, aggregate 
+sort gvkey ISSUE_ID datadate trd_exctn_dt
+by gvkey ISSUED_ID datadate: keep if _n=N
+* for each bond issuer, aggregate all bonds
+bys: ISSUER_CUSIP 
 save `"${bonddir}/bondv_f_mth_latest.dta"', replace
 restore
 
