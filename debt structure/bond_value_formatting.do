@@ -149,5 +149,6 @@ foreach var in price yield value{
 * drop trading-date level bond information
 drop trd_exctn_dt price_latest yield_latest price_largest yield_largest price_avg yield_avg price_avg_w yield_avg_w value_latest value_largest value_avg value_avg_w
 duplicates drop gvkey ISSUE_ID datadate, force
+sort gvkey datdate ISSUE_ID
 save `"${bonddir}/bondv_mth_mean.dta"', replace
 clear
