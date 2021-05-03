@@ -45,7 +45,8 @@ drop _merge
 * merge with the largest transaction's price on a trading day
 merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${fpricedir}/largest.dta"', keepusing(price_largest yield_largest) nogen
 * merge with the average (value-weighted/equal-weighted) transaction day price
-merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${fpricedir}/average.dta"', keepusing(price_avg yield_avg price_avg_w yield_avg_w) nogen
+merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${fpricedir}/average.dta"', keepusing(quant_avg price_avg yield_avg price_avg_w yield_avg_w) nogen
+rename quant_avg quant_total
 
 sort ISSUE_ID hist_effective_dt trd_exctn_dt 
 save `"${bonddir}/bond_value_f.dta"', replace
@@ -61,7 +62,7 @@ drop _merge
 merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${pricedir}/largest.dta"', keepusing(price_largest yield_largest) nogen
 * merge with the average (value-weighted/equal-weighted) transaction day price
 merge 1:1 ISSUE_ID hist_effective_dt trd_exctn_dt using `"${pricedir}/average.dta"', keepusing(quant_avg price_avg yield_avg price_avg_w yield_avg_w) nogen
-rename quant_avg 
+rename quant_avg quant_total
 
 sort ISSUE_ID hist_effective_dt trd_exctn_dt
 save `"${bonddir}/bond_value.dta"', replace
