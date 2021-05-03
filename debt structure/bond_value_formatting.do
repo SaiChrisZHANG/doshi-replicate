@@ -100,11 +100,11 @@ save `fullid', replace
 * do the range merge: for each month from datadate_lag to datadate, find all bond value information
 *** filtered value
 rangejoin trd_exctn_dt datadate_lag datadate using `"${bonddir}/bond_value_f.dta"', by(ISSUER_CUSIP) keepusing(ISSUE_ID CONVERTIBLE COUPON PRINCIPAL_AMT price_* yield_* value_* *_abn)
-sort ISSUER_CUSIP ISSUE_ID trd_exctn_dt
+drop if mi(ISSUE_ID)
 
 preserve
 * for each month, keep the latest value information
-sort ISSUER_CUSIP datadate trd_exctn_dt
+sort ISSUER_CUSIP datadate ISSUE_ID: 
 
 by ISSUER_CUSIP datadate: keep if _n=_N
 save `"${bonddir}/bondv_f_mth_latest.dta"', replace
