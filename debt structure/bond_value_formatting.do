@@ -101,7 +101,7 @@ save `fullid', replace
 
 * do the range merge: for each month from datadate_lag to datadate, find all bond value information
 *** filtered value
-rangejoin trd_exctn_dt datadate_lag datadate using `"${bonddir}/bond_value_f.dta"', by(ISSUER_CUSIP) keepusing(ISSUE_ID CONVERTIBLE COUPON PRINCIPAL_AMT MATURITY price_* yield_* value_* *_abn)
+rangejoin trd_exctn_dt datadate_lag datadate using `"${bonddir}/bond_value_f.dta"', by(ISSUER_CUSIP) keepusing(ISSUE_ID CONVERTIBLE COUPON PRINCIPAL_AMT OFFERING_AMT MATURITY quant_total price_* yield_* value_* *_abn)
 drop if mi(ISSUE_ID)
 
 preserve
@@ -112,6 +112,16 @@ by gvkey ISSUE_ID datadate: keep if _n==_N
 sort gvkey datadate ISSUE_ID
 drop trd_exctn_dt
 save `"${bonddir}/bondv_f_mth_latest.dta"', replace
+restore
+
+preserve
+* for each bond, in each month, keep the value information of the largest transaction
+sort gvkey ISSUE_ID datadate quant_total
+by gvkey ISSUE_ID datadate: keep if _n==_N
+* 383311 gvkey-by-datadate-by-ISSUE_ID 
+sort gvkey datadate ISSUE_ID
+drop trd_exctn_dt
+save `"${bonddir}/bondv_f_mth_largest.dta"', replace
 restore
 
 * for each month, calculate the equal-weighted average
@@ -140,6 +150,16 @@ by gvkey ISSUE_ID datadate: keep if _n==_N
 sort gvkey datadate ISSUE_ID
 drop trd_exctn_dt
 save `"${bonddir}/bondv_mth_latest.dta"', replace
+restore
+
+preserve
+* for each bond, in each month, keep the latest value information
+sort gvkey ISSUE_ID datadate quant_total
+by gvkey ISSUE_ID datadate: keep if _n==_N
+* 414570 gvkey-by-datadate-by-ISSUE_ID 
+sort gvkey datadate ISSUE_ID
+drop trd_exctn_dt
+save `"${bonddir}/bondv_mth_largest.dta"', replace
 restore
 
 * for each month, calculate the equal-weighted average
