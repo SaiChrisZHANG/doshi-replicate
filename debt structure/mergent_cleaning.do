@@ -343,7 +343,6 @@ sort ISSUE_ID hist_effective_dt trd_exctn_dt trd_exctn_tm
 **** the latest one transaction
 preserve
 keep $varlist
-by ISSUE_ID hist_effective_dt trd_exctn_dt: vol_total = total(entrd_vol_qt)
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
 rename entrd_vol_qt quant_latest
 rename rptd_pr price_latest
@@ -419,7 +418,6 @@ forvalues i = 3/19{
         **** the latest one transaction
         preserve
         keep $varlist
-        by ISSUE_ID hist_effective_dt trd_exctn_dt: vol_total = total(entrd_vol_qt)
         by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
         rename entrd_vol_qt quant_latest
         rename rptd_pr price_latest
@@ -530,7 +528,6 @@ drop drop
 sort ISSUE_ID hist_effective_dt trd_exctn_dt trd_exctn_tm
 **** the latest one transaction
 preserve
-by ISSUE_ID hist_effective_dt trd_exctn_dt: vol_total = total(entrd_vol_qt)
 by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
 keep $varlist mean_abn seq_abn
 rename entrd_vol_qt quant_latest
@@ -628,7 +625,6 @@ forvalues i = 3/19{
         sort ISSUE_ID hist_effective_dt trd_exctn_dt trd_exctn_tm
         **** the latest one transaction
         preserve
-        by ISSUE_ID hist_effective_dt trd_exctn_dt: vol_total = total(entrd_vol_qt)
         by ISSUE_ID hist_effective_dt trd_exctn_dt: keep if _n==_N
         keep $varlist mean_abn seq_abn
         rename entrd_vol_qt quant_latest
