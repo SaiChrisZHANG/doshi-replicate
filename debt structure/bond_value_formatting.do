@@ -134,10 +134,10 @@ preserve
 * for each bond, in each month, keep the latest value information
 sort gvkey ISSUE_ID datadate trd_exctn_dt
 by gvkey ISSUE_ID datadate: keep if _n==_N
-* 383311 gvkey-by-datadate-by-ISSUE_ID 
+* 414570 gvkey-by-datadate-by-ISSUE_ID 
 sort gvkey datadate ISSUE_ID
 drop trd_exctn_dt
-save `"${bonddir}/bondv_f_mth_latest.dta"', replace
+save `"${bonddir}/bondv_mth_latest.dta"', replace
 restore
 
 * for each month, calculate the equal-weighted average
@@ -147,7 +147,7 @@ foreach var in price yield value{
     }
 }
 * drop trading-date level bond information
-drop trd_exctn_dt price_latest yield_latest mean_abn seq_abn price_largest yield_largest price_avg yield_avg price_avg_w yield_avg_w value_latest value_largest value_avg value_avg_w
+drop trd_exctn_dt price_latest yield_latest price_largest yield_largest price_avg yield_avg price_avg_w yield_avg_w value_latest value_largest value_avg value_avg_w
 duplicates drop gvkey ISSUE_ID datadate, force
-save `"${bonddir}/bondv_f_mth_mean.dta"', replace
+save `"${bonddir}/bondv_mth_mean.dta"', replace
 clear
