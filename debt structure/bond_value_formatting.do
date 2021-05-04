@@ -174,3 +174,8 @@ duplicates drop gvkey ISSUE_ID datadate, force
 sort gvkey datadate ISSUE_ID
 save `"${bonddir}/bondv_mth_mean.dta"', replace
 clear
+
+*===============================================================================
+* Merge them back to firm information
+*===============================================================================
+use `"${analysisdir}/full_data.dta"', clear
