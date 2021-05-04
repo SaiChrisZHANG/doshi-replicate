@@ -179,6 +179,8 @@ clear
 * Merge them back to firm information
 *===============================================================================
 use `"${analysisdir}/full_data.dta"', clear
+drop if datadate < 15522
+* 560958 gvkey-by-datadate observations left
 merge 1:m gvkey datadate using `"${bonddir}/bondv_f_mth_latest.dta"'
 keep if _merge==3
 drop _merge
