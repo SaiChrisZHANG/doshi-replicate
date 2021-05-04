@@ -14,6 +14,7 @@ global bonddir = `"${analysisdir}/debt structure/bond debt"'
 *===============================================================================
 * Merging face value
 *===============================================================================
+* This only requires merging the mergent historical amount oustanding data
 
 
 *===============================================================================
