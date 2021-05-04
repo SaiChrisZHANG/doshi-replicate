@@ -179,3 +179,28 @@ clear
 * Merge them back to firm information
 *===============================================================================
 use `"${analysisdir}/full_data.dta"', clear
+merge 1:m gvkey datadate using `"${bonddir}/bondv_f_mth_latest.dta"'
+keep if _merge==3
+drop _merge
+
+* change the 
+foreach var in value_latest value_largest value_avg value_avg_w{
+
+}
+
+* generate 
+gen dlcq_perc = dlcq/lctq
+label variable dlcq_perc "Debt in Current Liabilities in %"
+
+gen dlttq_perc = dlttq/lltq
+label variable dlttq_perc "Debt in Long-term Liabilities in %"
+
+gen lctq_perc = lctq/ltq
+label variable lctq_perc "Current Liabilities in Total in %"
+
+gen lltq_perc = lltq/ltq
+label variable lltq_perc "Long-Term Liabilities in Total in %"
+
+gen ltq_perc = ltq/lseq
+label variable ltq_perc "Liabilities in Asset in %"
+
