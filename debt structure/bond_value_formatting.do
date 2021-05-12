@@ -15,7 +15,10 @@ global bonddir = `"${analysisdir}/debt structure/bond debt"'
 * Merging face value
 *===============================================================================
 * This only requires merging the mergent historical amount oustanding data
-
+*++++++++++++++++++++++++++++++++++++++
+* Merging strategy:
+* merge ${mergentdir}/mergent_amtinfo.dta 
+*++++++++++++++++++++++++++++++++++++++
 
 
 *===============================================================================
