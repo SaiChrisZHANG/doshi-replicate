@@ -18,8 +18,15 @@ global bonddir = `"${analysisdir}/debt structure/bond debt"'
 *++++++++++++++++++++++++++++++++++++++
 * Merging strategy:
 * merge ${mergentdir}/mergent_amtinfo.dta to firm information
-* aggregate the quantity 
+* aggregate the quantity of all bonds in a given month
 *++++++++++++++++++++++++++++++++++++++
+use `"${analysisdir}/full_data.dta"', clear
+drop if datadate < 15522
+* 560958 gvkey-by-datadate observations left
+merge 1:m gvkey datadate using `"${bonddir}/bondv_f_mth_latest.dta"'
+keep if _merge==3
+drop _merge
+
 
 
 *===============================================================================
