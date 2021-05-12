@@ -21,12 +21,19 @@ global bonddir = `"${analysisdir}/debt structure/bond debt"'
 * aggregate the quantity of all bonds in a given month
 *++++++++++++++++++++++++++++++++++++++
 use `"${analysisdir}/full_data.dta"', clear
+* generate firm CUSIP ids
+gen ISSUER_CUSIP = substr(cusip,1,6)
+* generate the month beginning date
+egen datadate_lag = eomd(datadate), f(%td) lag(1)
+replace datadate_lag= datadate_lag+1
+
 drop if datadate < 15522
 * 560958 gvkey-by-datadate observations left
-merge 1:m gvkey datadate using `"${bonddir}/bondv_f_mth_latest.dta"'
-keep if _merge==3
-drop _merge
 
+* do the range merge: for each month from datadate_lag to datadate, find all bond value information
+*** filtered value
+rangejoin trd_exctn_dt datadate_lag datadate using `"${mergentdir}/mergent_amtinfo.dta"', by(ISSUER_CUSIP) keepusing(ISSUE_ID CONVERTIBLE COUPON PRINCIPAL_AMT OFFERING_AMT MATURITY quant_total price_* yield_* value_* *_abn)
+drop if mi(ISSUE_ID)
 
 
 *===============================================================================
