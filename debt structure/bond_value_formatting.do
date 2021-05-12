@@ -17,7 +17,8 @@ global bonddir = `"${analysisdir}/debt structure/bond debt"'
 * This only requires merging the mergent historical amount oustanding data
 *++++++++++++++++++++++++++++++++++++++
 * Merging strategy:
-* merge ${mergentdir}/mergent_amtinfo.dta 
+* merge ${mergentdir}/mergent_amtinfo.dta to firm information
+* aggregate the quantity 
 *++++++++++++++++++++++++++++++++++++++
 
 
