@@ -214,7 +214,7 @@ drop if _merge==2
 drop _merge
 
 * merge coupon/principal information
-merge m:1 ISSUE_ID using mergent_fixrate
+merge m:1 ISSUE_ID using mergent_name, keepusing(CUSIP_NAME)
 drop if _merge==2
 drop _merge
 
