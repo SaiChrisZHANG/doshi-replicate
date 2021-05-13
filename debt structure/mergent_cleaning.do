@@ -206,17 +206,17 @@ drop _merge
 * merge coupon/principal information
 merge m:1 ISSUE_ID using mergent_fixrate
 drop if _merge==2
-drop _merges
+drop _merge
+
+* merge coupon/principal information
+merge m:1 ISSUE_ID using mergent_currency, keepusing(CURRENCY)
+drop if _merge==2
+drop _merge
 
 * merge coupon/principal information
 merge m:1 ISSUE_ID using mergent_fixrate
 drop if _merge==2
-drop _merges
-
-* merge coupon/principal information
-merge m:1 ISSUE_ID using mergent_fixrate
-drop if _merge==2
-drop _merges
+drop _merge
 
 * save the final ouput
 save mergent_amtinfo, replace
