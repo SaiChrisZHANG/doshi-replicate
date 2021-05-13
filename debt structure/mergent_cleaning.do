@@ -198,22 +198,19 @@ label values dt_type date_type_l
 * drop the intermediary columns
 drop current offering maturity
 
-* merge coupon/principal information
+* merge coupon/principal/currency/issuer name information
 merge m:1 ISSUE_ID using mergent_coupon
 drop if _merge==2
 drop _merge
 
-* merge coupon/principal information
 merge m:1 ISSUE_ID using mergent_fixrate
 drop if _merge==2
 drop _merge
 
-* merge coupon/principal information
 merge m:1 ISSUE_ID using mergent_currency, keepusing(CURRENCY)
 drop if _merge==2
 drop _merge
 
-* merge coupon/principal information
 merge m:1 ISSUE_ID using mergent_name, keepusing(CUSIP_NAME)
 drop if _merge==2
 drop _merge
