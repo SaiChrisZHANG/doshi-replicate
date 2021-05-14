@@ -28,7 +28,10 @@ use `"${analysisdir}/full_data.dta"', clear
 gen ISSUER_CUSIP = substr(cusip,1,6)
 keep gvkey ISSUER_CUSIP datadate
 save `"${analysisdir}/full_id.dta"', replace
+
+* first merge gvkey to cusip
 drop datadate
+duplicates 
 
 
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
