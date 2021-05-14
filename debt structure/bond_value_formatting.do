@@ -50,7 +50,6 @@ drop if mi(ISSUE_ID)
 * Step 1: merge ${mergentdir}/mergent_amtinfo.dta to price information 
 *         in ${pricedir} and ${fpricedir}
 * Step 2: generate the value information of bonds
-* Step 3: merge the value information back to firm information
 
 * Different spcifications will be tested:
 *++++ 1. three types of daily price information: the largest, the latest, the average (equal-weighted/value-weighted)
