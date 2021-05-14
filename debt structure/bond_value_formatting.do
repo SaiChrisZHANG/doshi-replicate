@@ -27,6 +27,7 @@ sort ISSUE_ID hist_effective_dt
 by ISSUE_ID: gen hist_effective_dt_lead = hist_effective_dt[_n+1]
 format hist_effective_dt_lead %td
 replace hist_effective_dt_lead= hist_effective_dt_lead-1
+* any month 
 
 use `"${analysisdir}/full_data.dta"', clear
 * generate firm CUSIP ids
