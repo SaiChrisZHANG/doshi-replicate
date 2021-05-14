@@ -215,6 +215,8 @@ merge m:1 ISSUE_ID using mergent_name, keepusing(CUSIP_NAME)
 drop if _merge==2
 drop _merge
 
+* merge some filter variables from Lorenzo's paper
+
 * save the final ouput
 save mergent_amtinfo, replace
 
