@@ -22,7 +22,7 @@ global bonddir = `"${analysisdir}/debt structure/bond debt"'
 * aggregate the quantity of all bonds in a given month
 *++++++++++++++++++++++++++++++++++++++
 
-
+use `"${mergentdir}/mergent_amtinfo.dta"', clear
 
 
 
