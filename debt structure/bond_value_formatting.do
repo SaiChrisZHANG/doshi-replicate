@@ -29,15 +29,6 @@ format hist_effective_dt_lead %td
 replace hist_effective_dt_lead= hist_effective_dt_lead-1
 * any month 
 
-use `"${analysisdir}/full_data.dta"', clear
-* generate firm CUSIP ids
-gen ISSUER_CUSIP = substr(cusip,1,6)
-* generate the month beginning date
-egen datadate_lag = eomd(datadate), f(%td) lag(1)
-replace datadate_lag= datadate_lag+1
-
-drop if datadate < 15522
-* 560958 gvkey-by-datadate observations left
 
 * do the range merge: for each month from datadate_lag to datadate, find all bond value information
 *** filtered value
