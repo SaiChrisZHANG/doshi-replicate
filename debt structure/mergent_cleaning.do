@@ -227,7 +227,8 @@ replace DROP = 1 if !mi(CURRENCY) & CURRENCY!="USD"
 foreach var in CONVERTIBLE YANKEE PUTABLE PERPETUAL CALLABLE SINKING_FUND{
     replace DROP = 1 if `var'=="Y"
 }
-
+tab DROP
+* 908082 to be dropped 
 
 * save the final ouput
 save mergent_amtinfo, replace
