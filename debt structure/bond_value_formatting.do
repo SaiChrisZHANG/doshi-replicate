@@ -23,7 +23,8 @@ global bonddir = `"${analysisdir}/debt structure/bond debt"'
 *++++++++++++++++++++++++++++++++++++++
 
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
-
+sort ISSUE_ID hist_effective_dt
+by ISSUE_ID: 
 
 
 use `"${analysisdir}/full_data.dta"', clear
