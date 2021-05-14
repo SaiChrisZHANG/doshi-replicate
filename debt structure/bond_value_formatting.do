@@ -27,7 +27,7 @@ use `"${analysisdir}/full_data.dta"', clear
 * generate firm CUSIP ids
 gen ISSUER_CUSIP = substr(cusip,1,6)
 keep gvkey ISSUER_CUSIP datadate
-tempfile fullid
+save `"${analysisdir}/full_id.dta"', replace
 save `fullid', replace
 
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
