@@ -23,7 +23,7 @@ global bonddir = `"${analysisdir}/debt structure/bond debt"'
 *++++++++++++++++++++++++++++++++++++++
 
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
-gen 
+
 
 
 use `"${analysisdir}/full_data.dta"', clear
