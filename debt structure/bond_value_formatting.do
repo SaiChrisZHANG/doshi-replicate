@@ -17,9 +17,15 @@ global bonddir = `"${analysisdir}/debt structure/bond debt"'
 * This only requires merging the mergent historical amount oustanding data
 *++++++++++++++++++++++++++++++++++++++
 * Merging strategy:
-* merge ${mergentdir}/mergent_amtinfo.dta to firm information
+* merge firm information to ${mergentdir}/mergent_amtinfo.dta
+* For each hist_effective_dt in mergent_amtinfo.dta, all months before the next hist_effective_dt will be matched to firm data
 * aggregate the quantity of all bonds in a given month
 *++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
 use `"${analysisdir}/full_data.dta"', clear
 * generate firm CUSIP ids
 gen ISSUER_CUSIP = substr(cusip,1,6)
