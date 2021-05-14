@@ -218,8 +218,9 @@ drop _merge
 * merge some filter variables from Lorenzo's paper: 
 *** NO callable, sinking fund provisions (from FISD_REDEMPTION)
 *** NO convertible, putable, perpetual, Yankee, foreign denomination (from FISD_ISSUE)
-
-
+merge m:1 ISSUE_ID using mergent_filter
+drop if _merge==2
+drop _merge
 
 * save the final ouput
 save mergent_amtinfo, replace
