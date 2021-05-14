@@ -128,7 +128,9 @@ drop if datadate < 15522
 
 tempfile fullid
 save `fullid', replace
-
+*************************
+* RE DO! from here below*
+*************************
 * do the range merge: for each month from datadate_lag to datadate, find all bond value information
 *** filtered value
 rangejoin trd_exctn_dt datadate_lag datadate using `"${bonddir}/bond_value_f.dta"', by(ISSUER_CUSIP) keepusing(ISSUE_ID CONVERTIBLE COUPON PRINCIPAL_AMT OFFERING_AMT MATURITY quant_total price_* yield_* value_* *_abn)
@@ -214,11 +216,6 @@ drop if datadate < 15522
 merge 1:m gvkey datadate using `"${bonddir}/bondv_f_mth_latest.dta"'
 keep if _merge==3
 drop _merge
-
-* change the 
-foreach var in value_latest value_largest value_avg value_avg_w{
-
-}
 
 * generate 
 gen dlcq_perc = dlcq/lctq
