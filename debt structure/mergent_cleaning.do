@@ -216,7 +216,7 @@ drop if _merge==2
 drop _merge
 
 * merge some filter variables from Lorenzo's paper: 
-*** NO callable, convert
+*** NO callable, sinking fund provisions
 
 * save the final ouput
 save mergent_amtinfo, replace
