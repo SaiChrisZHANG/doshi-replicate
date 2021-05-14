@@ -221,6 +221,13 @@ drop _merge
 merge m:1 ISSUE_ID using mergent_filter
 drop if _merge==2
 drop _merge
+* generate a dummy of filter
+gen DROP = 0
+replace DROP = 1 if !mi(CURRENCY) & CURRENCY!="USD"
+foreach var in CONVERTIBLE YANKEE PUTABLE PERPETUAL CALLABLE SINKING_FUND{
+    replace DROP = 1 if `var'=="Y"
+}
+
 
 * save the final ouput
 save mergent_amtinfo, replace
