@@ -219,6 +219,8 @@ drop _merge
 *** NO callable, sinking fund provisions (from FISD_REDEMPTION)
 *** NO convertible, putable, perpetual, Yankee, foreign denomination (from FISD_ISSUE)
 
+
+
 * save the final ouput
 save mergent_amtinfo, replace
 
