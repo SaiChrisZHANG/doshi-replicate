@@ -22,6 +22,14 @@ global bonddir = `"${analysisdir}/debt structure/bond debt"'
 * aggregate the quantity of all bonds in a given month
 *++++++++++++++++++++++++++++++++++++++
 
+* generate an intermediary data set, containing only gvkey cusip6 and datadate from full_data.dta
+use `"${analysisdir}/full_data.dta"', clear
+* generate firm CUSIP ids
+gen ISSUER_CUSIP = substr(cusip,1,6)
+keep gvkey ISSUER_CUSIP datadate
+tempfile fullid
+save `fullid', replace
+
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
 sort ISSUE_ID hist_effective_dt
 by ISSUE_ID: gen hist_effective_dt_lead = hist_effective_dt[_n+1]
