@@ -28,7 +28,8 @@ use `"${analysisdir}/full_data.dta"', clear
 gen ISSUER_CUSIP = substr(cusip,1,6)
 keep gvkey ISSUER_CUSIP datadate
 save `"${analysisdir}/full_id.dta"', replace
-save `fullid', replace
+drop datadate
+
 
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
 sort ISSUE_ID hist_effective_dt
