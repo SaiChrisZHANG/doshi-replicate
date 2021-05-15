@@ -31,8 +31,9 @@ save `"${analysisdir}/full_id.dta"', replace
 
 * first merge gvkey to cusip
 drop datadate
-duplicates 
-
+duplicates drop gvkey, force
+tempfile idlist
+save `idlist', replace
 
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
 sort ISSUE_ID hist_effective_dt
