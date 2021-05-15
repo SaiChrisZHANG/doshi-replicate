@@ -50,7 +50,9 @@ replace hist_effective_dt_lead= hist_effective_dt_lead-1
 * merge gvkey ids first: ISSUER_CUSIP is NOT uniquely defined in firm data
 merge m:m ISSUER_CUSIP using `idlist'
 keep if _merge == 3
-foreach 
+qui{
+    gen shit 
+}
 
 * do the range merge: for each month from datadate_lag to datadate, find all bond value information
 *** filtered value
