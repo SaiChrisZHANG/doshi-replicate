@@ -32,6 +32,12 @@ save `"${analysisdir}/full_id.dta"', replace
 * first merge gvkey to cusip
 drop datadate
 duplicates drop gvkey, force
+duplicates tag ISSUER_CUSIP, gen(dup)
+qui{
+    levelsof gvkey if dup>0, l(gvkey_dup)
+    levelsof ISSUER_CUSIP if dup>0, l(cusip6_dup)
+    drop dup
+}
 tempfile idlist
 save `idlist', replace
 
