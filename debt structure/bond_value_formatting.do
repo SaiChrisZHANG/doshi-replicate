@@ -53,13 +53,13 @@ keep if _merge == 3
 qui{
     gen tag = 0
     foreach var of local gvkey_dup{
-        qui replace tag = 1 if (registeredowner == "`var'")
+        qui replace tag = 1 if (gvkey == "`var'")
     }
 }
 
 * do the range merge: for each month from datadate_lag to datadate, find all bond value information
 *** filtered value
-rangejoin datadate datadate_lag datadate using `"${mergentdir}/mergent_amtinfo.dta"', by(ISSUER_CUSIP) keepusing(ISSUE_ID CONVERTIBLE COUPON PRINCIPAL_AMT OFFERING_AMT MATURITY quant_total price_* yield_* value_* *_abn)
+rangejoin datadate hist_effective_dt hist_effective_dt_lead using `"${analysisdir}/full_id.dta"', by(ISSUER_CUSIP)
 drop if mi(ISSUE_ID)
 
 
