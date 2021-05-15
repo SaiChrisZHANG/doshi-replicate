@@ -40,12 +40,14 @@ sort ISSUE_ID hist_effective_dt
 by ISSUE_ID: gen hist_effective_dt_lead = hist_effective_dt[_n+1]
 format hist_effective_dt_lead %td
 replace hist_effective_dt_lead= hist_effective_dt_lead-1
-* any month 
 
+* merge gvkey ids first: ISSUER_CUSIP is NOT uniquely defined in firm data
+merge m:m ISSUER_CUSIP using `idlist'
+keep if _merge == 3
 
 * do the range merge: for each month from datadate_lag to datadate, find all bond value information
 *** filtered value
-rangejoin trd_exctn_dt datadate_lag datadate using `"${mergentdir}/mergent_amtinfo.dta"', by(ISSUER_CUSIP) keepusing(ISSUE_ID CONVERTIBLE COUPON PRINCIPAL_AMT OFFERING_AMT MATURITY quant_total price_* yield_* value_* *_abn)
+rangejoin datadate datadate_lag datadate using `"${mergentdir}/mergent_amtinfo.dta"', by(ISSUER_CUSIP) keepusing(ISSUE_ID CONVERTIBLE COUPON PRINCIPAL_AMT OFFERING_AMT MATURITY quant_total price_* yield_* value_* *_abn)
 drop if mi(ISSUE_ID)
 
 
