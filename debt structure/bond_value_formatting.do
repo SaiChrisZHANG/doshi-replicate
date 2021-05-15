@@ -51,7 +51,10 @@ replace hist_effective_dt_lead= hist_effective_dt_lead-1
 merge m:m ISSUER_CUSIP using `idlist'
 keep if _merge == 3
 qui{
-    gen shit 
+    gen tag = 0
+    foreach var of local gvkey_dup{
+        qui replace tag = 1 if (registeredowner == "`var'")
+    }
 }
 
 * do the range merge: for each month from datadate_lag to datadate, find all bond value information
