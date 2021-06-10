@@ -126,7 +126,8 @@ foreach pr in latest largest avg avg_w{
     gen value_`pr' = hist_amt_out*price_`pr'/100
 }
 save, replace
-
+* for each month, keep one transaction
+gen yyyymm = year(trd_exctn_dt)*100+month(trd_exctn_dt)
 
 
 use `"${bonddir}/bond_value.dta"', clear
