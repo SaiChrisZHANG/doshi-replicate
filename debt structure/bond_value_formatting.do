@@ -66,7 +66,7 @@ save`"${analysisdir}/full_bond.dta"', replace
 * 1708736 observations. For each firm (gvkey), in each month (datadate), the information of each bond (ISSUE_ID)
 
 *===============================================================================
-* Merging price information
+* Generate Value information
 *===============================================================================
 *++++++++++++++++++++++++++++++++++++++
 * Merging strategy:
