@@ -123,18 +123,19 @@ save `"${bonddir}/bond_value.dta"', replace
 * Step 2: Generate monthly bond value ==========================================
 use `"${bonddir}/bond_value_f.dta"', clear
 foreach pr in latest largest avg avg_w{
-    gen value_`pr' = hist_amt_out*price_`pr'/100
+    gen value_`pr' = hist_amt_out*price_`pr'*10
+    * price is a percent (/100), principal is 1000.
 }
 save, replace
 * for each month, keep one transaction
-gen yyyymm = year(trd_exctn_dt)*100+month(trd_exctn_dt)
+gen yyyymm = year(trd_exctn_dt)*100 + month(trd_exctn_dt)
 * keep the latest transaction day of the month
 sort ISSUE_ID yyyymm trd_exctn_dt
 by ISSUE_ID yyyymm: keep if _n==_N
 
 use `"${bonddir}/bond_value.dta"', clear
 foreach pr in latest largest avg avg_w{
-    gen value_`pr' = hist_amt_out*price_`pr'/100
+    gen value_`pr' = hist_amt_out*price_`pr'*10
 }
 save, replace
 clear
