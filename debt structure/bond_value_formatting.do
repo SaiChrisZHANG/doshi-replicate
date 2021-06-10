@@ -26,7 +26,7 @@ global bonddir = `"${analysisdir}/debt structure/bond debt"'
 use `"${analysisdir}/full_data.dta"', clear
 * generate firm CUSIP ids
 gen ISSUER_CUSIP = substr(cusip,1,6)
-keep gvkey ISSUER_CUSIP datadate
+keep gvkey ISSUER_CUSIP datadate yyyymm
 save `"${analysisdir}/full_id.dta"', replace
 
 * first merge gvkey to cusip
@@ -132,6 +132,7 @@ gen yyyymm = year(trd_exctn_dt)*100 + month(trd_exctn_dt)
 * keep the latest transaction day of the month
 sort ISSUE_ID yyyymm trd_exctn_dt
 by ISSUE_ID yyyymm: keep if _n==_N
+save `"${bonddir}/bond_value_f.dta"', clear
 
 use `"${bonddir}/bond_value.dta"', clear
 foreach pr in latest largest avg avg_w{
