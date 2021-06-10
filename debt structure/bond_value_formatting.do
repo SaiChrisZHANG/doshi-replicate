@@ -120,12 +120,14 @@ rename quant_avg quant_total
 sort ISSUE_ID hist_effective_dt trd_exctn_dt
 save `"${bonddir}/bond_value.dta"', replace
 
-* Step 2: Generate bond value ==================================================
+* Step 2: Generate monthly bond value ==========================================
 use `"${bonddir}/bond_value_f.dta"', clear
 foreach pr in latest largest avg avg_w{
     gen value_`pr' = hist_amt_out*price_`pr'/100
 }
 save, replace
+
+
 
 use `"${bonddir}/bond_value.dta"', clear
 foreach pr in latest largest avg avg_w{
