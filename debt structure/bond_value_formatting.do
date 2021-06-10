@@ -43,6 +43,7 @@ save `idlist', replace
 
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
 sort ISSUE_ID hist_effective_dt
+gen dt_begin = hist_effective_dt + 1
 by ISSUE_ID: gen hist_effective_dt_lead = hist_effective_dt[_n+1]
 format hist_effective_dt_lead %td
 replace hist_effective_dt_lead= hist_effective_dt_lead-1
