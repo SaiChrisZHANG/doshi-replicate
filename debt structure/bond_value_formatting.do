@@ -17,11 +17,11 @@ global bonddir = `"${analysisdir}/debt structure/bond debt"'
 * This only requires merging the mergent historical amount oustanding data
 *++++++++++++++++++++++++++++++++++++++
 * Merging strategy:
-* merge firm information to ${mergentdir}/mergent_amtinfo.dta
-* For each hist_effective_dt in mergent_amtinfo.dta, all months before the next hist_effective_dt will be matched to firm data
-* aggregate the quantity of all bonds in a given month
+* merge firm id to ${mergentdir}/mergent_amtinfo.dta, to build a base data set for further merging
+* For each hist_effective_dt in mergent_amtinfo.dta, all months before the next hist_effective_dt will be extracted from firm data
+*
+* This data set will be used to merge with firm information, with bond price information and other data sets 
 *++++++++++++++++++++++++++++++++++++++
-
 * generate an intermediary data set, containing only gvkey cusip6 and datadate from full_data.dta
 use `"${analysisdir}/full_data.dta"', clear
 * generate firm CUSIP ids
@@ -40,6 +40,8 @@ qui{
 }
 tempfile idlist
 save `idlist', replace
+
+keep gvkey datadate
 
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
 sort ISSUE_ID hist_effective_dt
@@ -62,7 +64,7 @@ qui{
 
 * do the range merge: for each month from dt_begin to dt_end, find all bond value information
 *+++ filtered value
-rangejoin datadate dt_begin dt_end using `"${analysisdir}/full_data.dta"', by(gvkey)
+rangejoin datadate dt_begin dt_end using `"${analysisdir}/full_id.dta"', by(gvkey)
 drop if mi(ISSUE_ID)
 
 
