@@ -30,7 +30,7 @@ keep gvkey ISSUER_CUSIP datadate yyyymm
 save `"${analysisdir}/full_id.dta"', replace
 
 * first merge gvkey to cusip
-drop datadate
+drop datadate yyyymm
 duplicates drop gvkey, force
 duplicates tag ISSUER_CUSIP, gen(dup)
 qui{
@@ -48,7 +48,7 @@ by ISSUE_ID: gen dt_end = hist_effective_dt[_n+1]
 format dt_begin dt_end %td
 
 * merge gvkey ids first: ISSUER_CUSIP is NOT uniquely defined in firm data
-merge m:m ISSUER_CUSIP using `idlist'
+merge m:m ISSUER_CUSIP using `idlist',
 keep if _merge == 3
 * only 64982 observations kept
 drop _merge
@@ -61,7 +61,7 @@ qui{
 }
 
 * do the range merge: for each month from dt_begin to dt_end, find all firm id
-rangejoin datadate dt_begin dt_end using `"${analysisdir}/full_id.dta"', by(gvkey) keepusing(datadate gvkey)
+rangejoin datadate dt_begin dt_end using `"${analysisdir}/full_id.dta"', by(gvkey) keepusing(yyyymm)
 save`"${analysisdir}/full_bond.dta"', replace
 * 1708736 observations. For each firm (gvkey), in each month (datadate), the information of each bond (ISSUE_ID)
 
