@@ -44,22 +44,24 @@ save `idlist', replace
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
 sort ISSUE_ID hist_effective_dt
 gen dt_begin = hist_effective_dt + 1
-by ISSUE_ID: gen hist_effective_dt_lead = hist_effective_dt[_n+1]
-format hist_effective_dt_lead %td
-replace hist_effective_dt_lead= hist_effective_dt_lead-1
+by ISSUE_ID: gen dt_end = hist_effective_dt[_n+1]
+format dt_begin dt_end %td
 
 * merge gvkey ids first: ISSUER_CUSIP is NOT uniquely defined in firm data
 merge m:m ISSUER_CUSIP using `idlist'
 keep if _merge == 3
+* only 64982 observations kept
+drop _merge
+
 qui{
     gen tag = 0
     foreach var of local gvkey_dup{
-        qui replace tag = 1 if (gvkey == "`var'")
+        qui replace tag = 1 if (gvkey == `var')
     }
 }
 
-* do the range merge: for each month from datadate_lag to datadate, find all bond value information
-*** filtered value
+* do the range merge: for each month from dt_begin to dt_end, find all bond value information
+*+++ filtered value
 rangejoin datadate hist_effective_dt hist_effective_dt_lead using `"${analysisdir}/full_id.dta"', by(ISSUER_CUSIP)
 drop if mi(ISSUE_ID)
 
