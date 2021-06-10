@@ -62,6 +62,7 @@ qui{
 
 * do the range merge: for each month from dt_begin to dt_end, find all firm id
 rangejoin datadate dt_begin dt_end using `"${analysisdir}/full_id.dta"', by(gvkey) keepusing(datadate gvkey)
+save`"${analysisdir}/full_bond.dta"', replace
 
 *===============================================================================
 * Merging price information
