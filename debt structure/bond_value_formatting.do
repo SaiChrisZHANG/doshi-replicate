@@ -38,6 +38,7 @@ qui{
     levelsof ISSUER_CUSIP if dup>0, l(cusip6_dup)
     drop dup
 }
+drop 
 tempfile idlist
 save `idlist', replace
 
@@ -62,7 +63,7 @@ qui{
 
 * do the range merge: for each month from dt_begin to dt_end, find all bond value information
 *+++ filtered value
-rangejoin datadate hist_effective_dt hist_effective_dt_lead using `"${analysisdir}/full_id.dta"', by(ISSUER_CUSIP)
+rangejoin datadate dt_begin dt_end using `"${analysisdir}/full_id.dta"', by(ISSUER_CUSIP)
 drop if mi(ISSUE_ID)
 
 
