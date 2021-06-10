@@ -228,6 +228,7 @@ foreach var in CONVERTIBLE YANKEE PUTABLE PERPETUAL CALLABLE SINKING_FUND{
     replace DROP = 1 if `var'=="Y"
 }
 tab DROP
+label variable DROP "drop by Lorenzo's paper"
 * 908082 to be dropped 
 
 * save the final ouput
