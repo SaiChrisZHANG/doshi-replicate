@@ -35,7 +35,6 @@ duplicates drop gvkey, force
 duplicates tag ISSUER_CUSIP, gen(dup)
 qui{
     levelsof gvkey if dup>0, l(gvkey_dup)
-    levelsof ISSUER_CUSIP if dup>0, l(cusip6_dup)
     drop dup
 }
 tempfile idlist
@@ -146,20 +145,7 @@ clear
 * Step 3: Merge the bond value to firm information =============================
 * to save memory, used a sub set of only gvkey + datadate + cusip6
 
-use `"${analysisdir}/full_data.dta"', clear
-keep gvkey datadate cusip
-* generate firm CUSIP ids
-gen ISSUER_CUSIP = substr(cusip,1,6)
-drop cusip
-* generate the month beginning date
-egen datadate_lag = eomd(datadate), f(%td) lag(1)
-replace datadate_lag= datadate_lag+1
 
-* drop information before July 1, 2002
-drop if datadate < 15522
-
-tempfile fullid
-save `fullid', replace
 *************************
 * RE DO! from here below*
 *************************
