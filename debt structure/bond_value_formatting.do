@@ -126,19 +126,21 @@ foreach pr in latest largest avg avg_w{
     gen value_`pr' = hist_amt_out*price_`pr'*10
     * price is a percent (/100), principal is 1000.
 }
-save, replace
 * for each month, keep one transaction
 gen yyyymm = year(trd_exctn_dt)*100 + month(trd_exctn_dt)
 * keep the latest transaction day of the month
 sort ISSUE_ID yyyymm trd_exctn_dt
 by ISSUE_ID yyyymm: keep if _n==_N
-save `"${bonddir}/bond_value_f.dta"', clear
+save `"${bonddir}/bond_value_f.dta"', replace
 
 use `"${bonddir}/bond_value.dta"', clear
 foreach pr in latest largest avg avg_w{
     gen value_`pr' = hist_amt_out*price_`pr'*10
 }
-save, replace
+gen yyyymm = year(trd_exctn_dt)*100 + month(trd_exctn_dt)
+sort ISSUE_ID yyyymm trd_exctn_dt
+by ISSUE_ID yyyymm: keep if _n==_N
+save `"${bonddir}/bond_value.dta"', replace
 clear
 
 * Step 3: Merge the bond value to firm information =============================
