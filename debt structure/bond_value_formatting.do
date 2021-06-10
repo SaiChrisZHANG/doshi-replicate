@@ -41,8 +41,6 @@ qui{
 tempfile idlist
 save `idlist', replace
 
-keep gvkey datadate
-
 use `"${mergentdir}/mergent_amtinfo.dta"', clear
 sort ISSUE_ID hist_effective_dt
 gen dt_begin = hist_effective_dt + 1
@@ -56,15 +54,15 @@ keep if _merge == 3
 drop _merge
 
 qui{
-    gen tag = 0
+    gen cusipdup_tag = 0
     foreach var of local gvkey_dup{
-        qui replace tag = 1 if (gvkey == `var')
+        qui replace cusipdup_tag = 1 if (gvkey == `var')
     }
 }
 
 * do the range merge: for each month from dt_begin to dt_end, find all bond value information
 *+++ filtered value
-rangejoin datadate dt_begin dt_end using `"${analysisdir}/full_id.dta"', by(gvkey)
+rangejoin datadate dt_begin dt_end using `"${analysisdir}/full_id.dta"', by(gvkey) keepusing(datadate gvkey)
 drop if mi(ISSUE_ID)
 
 
