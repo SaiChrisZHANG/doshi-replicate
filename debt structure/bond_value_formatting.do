@@ -125,7 +125,7 @@ foreach pr in latest largest avg avg_w{
     gen value_f_`pr' = hist_amt_out*price_`pr'*10
     * price is a percent (/100), principal is 1000.
 }
-* for each month, keep one transaction
+* generate a year-month 6 digit indicator for merge
 gen yyyymm = year(trd_exctn_dt)*100 + month(trd_exctn_dt)
 * keep the latest transaction day of the month
 sort ISSUE_ID yyyymm trd_exctn_dt
