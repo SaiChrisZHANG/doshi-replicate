@@ -60,11 +60,8 @@ qui{
     }
 }
 
-* do the range merge: for each month from dt_begin to dt_end, find all bond value information
-*+++ filtered value
+* do the range merge: for each month from dt_begin to dt_end, find all firm id
 rangejoin datadate dt_begin dt_end using `"${analysisdir}/full_id.dta"', by(gvkey) keepusing(datadate gvkey)
-drop if mi(ISSUE_ID)
-
 
 *===============================================================================
 * Merging price information
