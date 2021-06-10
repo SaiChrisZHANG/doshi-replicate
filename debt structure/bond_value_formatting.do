@@ -128,7 +128,9 @@ foreach pr in latest largest avg avg_w{
 save, replace
 * for each month, keep one transaction
 gen yyyymm = year(trd_exctn_dt)*100+month(trd_exctn_dt)
-
+* keep the latest transaction day of the month
+sort ISSUE_ID yyyymm trd_exctn_dt
+by ISSUE_ID yyyymm: keep if _n==_N
 
 use `"${bonddir}/bond_value.dta"', clear
 foreach pr in latest largest avg avg_w{
