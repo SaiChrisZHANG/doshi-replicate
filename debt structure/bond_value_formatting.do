@@ -145,7 +145,7 @@ save `"${bonddir}/bond_value.dta"', replace
 clear
 
 *===============================================================================
-* Step 3: Merge the bond value to firm information
+* Step 3: Merge bond value (value & face value) to firm data
 *===============================================================================
 * to save memory, used a sub set of only gvkey + datadate + cusip6
 
