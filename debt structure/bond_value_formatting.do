@@ -147,7 +147,7 @@ clear
 *===============================================================================
 * Step 3: Merge bond value (value & face value) to firm data
 *===============================================================================
-* to save memory, used a sub set of only gvkey + datadate + cusip6
+use`"${analysisdir}/full_bond.dta"', clear
 
 
 *************************
