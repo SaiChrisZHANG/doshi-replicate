@@ -132,6 +132,8 @@ gen yyyymm = year(trd_exctn_dt)*100 + month(trd_exctn_dt)
 * keep the latest transaction day of the month
 sort ISSUE_ID yyyymm trd_exctn_dt
 by ISSUE_ID yyyymm: keep if _n==_N
+merge m:m ISSUER_CUSIP using `idlist'
+keep if _merge == 3
 save `"${bonddir}/bond_value_f.dta"', replace
 
 use `"${bonddir}/bond_value.dta"', clear
