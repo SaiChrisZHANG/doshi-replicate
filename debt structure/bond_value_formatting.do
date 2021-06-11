@@ -160,7 +160,12 @@ merge 1:1 ISSUE_ID yyyymm using `"${bonddir}/bond_value_f.dta"', keepusing(value
 rename _merge mergewith_MV_f
 label define mergewith_MV 1 "Only face value" 2 "Only market value" 3 "Both", replace
 label values mergewith_MV_f mergewith_MV
+* merge unfiltered market values
+merge 1:1 ISSUE_ID yyyymm using `"${bonddir}/bond_value.dta"', keepusing(value_latest value_largest value_avg value_avg_w)
+rename _merge mergewith_MV
+label values mergewith_MV mergewith_MV
 
+save 
 
 *************************
 * RE DO! from here below*
