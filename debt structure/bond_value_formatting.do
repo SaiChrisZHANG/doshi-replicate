@@ -65,6 +65,7 @@ drop if mi(datadate)
 save`"${analysisdir}/full_bond.dta"', replace
 * 1687637 observations. For each firm (gvkey), in each month (datadate), the information of each bond (ISSUE_ID)
 * uniquely defined by ISSUE_ID by datadate
+
 *===============================================================================
 * Generate Value information
 *===============================================================================
@@ -143,7 +144,9 @@ by ISSUE_ID yyyymm: keep if _n==_N
 save `"${bonddir}/bond_value.dta"', replace
 clear
 
-* Step 3: Merge the bond value to firm information =============================
+*===============================================================================
+* Step 3: Merge the bond value to firm information
+*===============================================================================
 * to save memory, used a sub set of only gvkey + datadate + cusip6
 
 
