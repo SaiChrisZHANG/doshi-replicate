@@ -143,6 +143,8 @@ foreach pr in latest largest avg avg_w{
 gen yyyymm = year(trd_exctn_dt)*100 + month(trd_exctn_dt)
 sort ISSUE_ID yyyymm trd_exctn_dt
 by ISSUE_ID yyyymm: keep if _n==_N
+merge m:m ISSUER_CUSIP using `idlist'
+keep if _merge == 3
 save `"${bonddir}/bond_value.dta"', replace
 clear
 
@@ -155,7 +157,9 @@ gen face_value = hist_amt_out * 1000
 
 * merge filtered market values
 merge 1:1 ISSUE_ID yyyymm using `"${bonddir}/bond_value_f.dta"', keepusing(value_f_latest value_f_largest value_f_avg value_f_avg_w)
-
+rename _merge mergewith_MV_f
+label define mergewith_MV 1 "Only face value" 2 "Only market value" 3 "Both", replace
+label values mergewith_MV_f mergewith_MV
 
 
 *************************
