@@ -151,7 +151,7 @@ clear
 *===============================================================================
 * Step 3: Merge bond value (value & face value) to firm data
 *===============================================================================
-use`"${analysisdir}/full_bond.dta"', clear
+use `"${analysisdir}/full_bond.dta"', clear
 keep ISSUE_ID ISSUER_CUSIP hist_amt_out CURRENCY DROP gvkey datadate yyyymm
 gen face_value = hist_amt_out * 1000
 
