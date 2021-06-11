@@ -47,7 +47,7 @@ by ISSUE_ID: gen dt_end = hist_effective_dt[_n+1]
 format dt_begin dt_end %td
 
 * merge gvkey ids first: ISSUER_CUSIP is NOT uniquely defined in firm data
-merge m:m ISSUER_CUSIP using `idlist',
+merge m:m ISSUER_CUSIP using `idlist'
 keep if _merge == 3
 * only 64982 observations kept
 drop _merge
@@ -151,7 +151,8 @@ use`"${analysisdir}/full_bond.dta"', clear
 keep ISSUE_ID ISSUER_CUSIP hist_amt_out CURRENCY DROP gvkey datadate yyyymm
 gen face_value = hist_amt_out * 1000
 
-
+* merge filtered market values
+merge 1:1 ISSUE_ID yyyymm using `"${bonddir}/bond_value_f.dta"', keepusing(value_f_latest value_f_largest value_f_avg value_f_avg_w)
 
 
 
