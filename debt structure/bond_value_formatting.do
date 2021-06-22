@@ -152,7 +152,7 @@ clear
 * Step 3: Merge bond value (value & face value) to firm data
 *===============================================================================
 use `"${analysisdir}/full_bond.dta"', clear
-keep ISSUE_ID ISSUER_CUSIP hist_amt_out CURRENCY DROP gvkey datadate yyyymm
+keep ISSUE_ID ISSUER_CUSIP hist_amt_out CURRENCY DROP CONVERTIBLE gvkey datadate yyyymm
 gen face_value = hist_amt_out * 1000
 
 * merge filtered market values
@@ -164,8 +164,9 @@ label values mergewith_MV_f mergewith_MV
 merge 1:1 ISSUE_ID yyyymm using `"${bonddir}/bond_value.dta"', keepusing(value_latest value_largest value_avg value_avg_w gvkey)
 rename _merge mergewith_MV
 label values mergewith_MV mergewith_MV
+* merge currency information: exchange rate are retrieved from Factset
 
-save 
+
 
 *************************
 * RE DO! from here below*
