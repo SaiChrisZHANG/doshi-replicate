@@ -165,8 +165,12 @@ merge 1:1 ISSUE_ID yyyymm using `"${bonddir}/bond_value.dta"', keepusing(value_l
 rename _merge mergewith_MV
 label values mergewith_MV mergewith_MV
 * merge currency information: exchange rate are retrieved from Factset
+merge m:1 CURRENCY yyyymm using `"${analysisdir}/currency.dta"', keepusing(Mid)
+drop if _merge==2
+drop _merge
 
-
+sort gvkey datadate ISSUE_ID
+save, replace
 
 *************************
 * RE DO! from here below*
