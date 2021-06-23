@@ -173,12 +173,14 @@ save replace
 * cleaning and aggregate bonds for each firm
 drop if mi(datadate)
 * 101,861 obs dropped 
-
 drop if CONVERTIBLE=="Y"
 * 289,566 obs dropped
 
 * aggregate by firm, calculate firm level bond debt in million dollars
 sort gvkey datadate ISSUE_ID
+* generate the maturity structure
+
+
 foreach var in f_latest f_largest f_avg f_avg_w latest largest avg avg_w{
     replace value_`var' = face_value if mi(value_`var')
     replace value_`var' = value_`var'/Mid if !mi(Mid)
