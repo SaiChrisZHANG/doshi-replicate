@@ -168,8 +168,7 @@ label values mergewith_MV mergewith_MV
 merge m:1 CURRENCY yyyymm using `"${analysisdir}/currency.dta"', keepusing(Mid)
 drop if _merge==2
 drop _merge
-
-save, replace
+save replace
 
 * cleaning and aggregate bonds for each firm
 drop if mi(datadate)
@@ -189,19 +188,13 @@ foreach var in f_latest f_largest f_avg f_avg_w latest largest avg avg_w{
 keep gvkey datadate bonddebt_f_latest bonddebt_f_largest bonddebt_f_avg bonddebt_f_avg_w bonddebt_latest bonddebt_largest bonddebt_avg bonddebt_avg_w
 duplicates drop gvkey datadate, force
 * 221946 unique information left
-
+save `"${analysisdir}/bond_debt.dta"', replace
 
 *===============================================================================
 * Merge them back to firm information
 *===============================================================================
-
-
 use `"${analysisdir}/full_data.dta"', clear
-drop if datadate < 15522
-* 560958 gvkey-by-datadate observations left
-merge 1:m gvkey datadate using `"${bonddir}/bondv_f_mth_latest.dta"'
-keep if _merge==3
-drop _merge
+merge 1:1 gvkey datadate using `"${analysisdir}/bond_debt.dta"', nogen
 
 * generate 
 gen dlcq_perc = dlcq/lctq
