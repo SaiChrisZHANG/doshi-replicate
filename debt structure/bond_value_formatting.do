@@ -186,8 +186,8 @@ foreach var in f_latest f_largest f_avg f_avg_w latest largest avg avg_w{
     bys gvkey datadate: egen bonddebt_`var' = total(value_`var')
     replace bonddebt_`var' = bonddebt_`var'/1000000
 }
-
-
+keep gvkey datadate bonddebt_f_latest bonddebt_f_largest bonddebt_f_avg bonddebt_f_avg_w bonddebt_latest bonddebt_largest bonddebt_avg bonddebt_avg_w
+duplicates drop gvkey datadate, force
 
 *===============================================================================
 * Merge them back to firm information
