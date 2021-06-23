@@ -169,6 +169,8 @@ merge m:1 CURRENCY yyyymm using `"${analysisdir}/currency.dta"', keepusing(Mid)
 drop if _merge==2
 drop _merge
 
+save, replace
+
 * cleaning and aggregate bonds for each firm
 drop if mi(datadate)
 * 101,861 obs dropped 
@@ -176,7 +178,11 @@ drop if mi(datadate)
 drop if CONVERTIBLE=="Y"
 * 289,566 obs dropped
 
-sort gvkey 
+sort gvkey datadate ISSUE_ID
+foreach var in value_f_latest value_f_largest value_f_avg value_f_avg_w value_latest value_largest value_avg value_avg_w{
+    replace `var' = face_value if mi(`var')
+}
+
 
 
 *===============================================================================
