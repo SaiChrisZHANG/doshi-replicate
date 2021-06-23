@@ -169,91 +169,14 @@ merge m:1 CURRENCY yyyymm using `"${analysisdir}/currency.dta"', keepusing(Mid)
 drop if _merge==2
 drop _merge
 
-sort gvkey datadate ISSUE_ID
-save, replace
-
-*************************
-* RE DO! from here below*
-*************************
-* do the range merge: for each month from datadate_lag to datadate, find all bond value information
-*** filtered value
-rangejoin trd_exctn_dt datadate_lag datadate using `"${bonddir}/bond_value_f.dta"', by(ISSUER_CUSIP) keepusing(ISSUE_ID CONVERTIBLE COUPON PRINCIPAL_AMT OFFERING_AMT MATURITY quant_total price_* yield_* value_* *_abn)
-drop if mi(ISSUE_ID)
-
-preserve
-* for each bond, in each month, keep the latest value information
-sort gvkey ISSUE_ID datadate trd_exctn_dt
-by gvkey ISSUE_ID datadate: keep if _n==_N
-* 383311 gvkey-by-datadate-by-ISSUE_ID 
-sort gvkey datadate ISSUE_ID
-drop trd_exctn_dt
-save `"${bonddir}/bondv_f_mth_latest.dta"', replace
-restore
-
-preserve
-* for each bond, in each month, keep the value information of the largest transaction
-sort gvkey ISSUE_ID datadate quant_total
-by gvkey ISSUE_ID datadate: keep if _n==_N
-* 383311 gvkey-by-datadate-by-ISSUE_ID 
-sort gvkey datadate ISSUE_ID
-drop trd_exctn_dt
-save `"${bonddir}/bondv_f_mth_largest.dta"', replace
-restore
-
-* for each month, calculate the equal-weighted average
-foreach var in price yield value{
-    foreach spec in latest largest avg avg_w{
-        bys gvkey ISSUE_ID datadate: egen `var'_`spec'_mean = mean(`var'_`spec')
-    }
-}
-* drop trading-date level bond information
-drop trd_exctn_dt price_latest yield_latest mean_abn seq_abn price_largest yield_largest price_avg yield_avg price_avg_w yield_avg_w value_latest value_largest value_avg value_avg_w
-duplicates drop gvkey ISSUE_ID datadate, force
-save `"${bonddir}/bondv_f_mth_mean.dta"', replace
-clear
-
-use `fullid', clear
-* do the range merge: for each month from datadate_lag to datadate, find all bond value information
-*** filtered value
-rangejoin trd_exctn_dt datadate_lag datadate using `"${bonddir}/bond_value.dta"', by(ISSUER_CUSIP) keepusing(ISSUE_ID CONVERTIBLE COUPON PRINCIPAL_AMT OFFERING_AMT MATURITY quant_total price_* yield_* value_*)
-drop if mi(ISSUE_ID)
-
-preserve
-* for each bond, in each month, keep the latest value information
-sort gvkey ISSUE_ID datadate trd_exctn_dt
-by gvkey ISSUE_ID datadate: keep if _n==_N
-* 414570 gvkey-by-datadate-by-ISSUE_ID 
-sort gvkey datadate ISSUE_ID
-drop trd_exctn_dt
-save `"${bonddir}/bondv_mth_latest.dta"', replace
-restore
-
-preserve
-* for each bond, in each month, keep the latest value information
-sort gvkey ISSUE_ID datadate quant_total
-by gvkey ISSUE_ID datadate: keep if _n==_N
-* 414570 gvkey-by-datadate-by-ISSUE_ID 
-sort gvkey datadate ISSUE_ID
-drop trd_exctn_dt
-save `"${bonddir}/bondv_mth_largest.dta"', replace
-restore
-
-* for each month, calculate the equal-weighted average
-foreach var in price yield value{
-    foreach spec in latest largest avg avg_w{
-        bys gvkey ISSUE_ID datadate: egen `var'_`spec'_mean = mean(`var'_`spec')
-    }
-}
-* drop trading-date level bond information
-drop trd_exctn_dt price_latest yield_latest price_largest yield_largest price_avg yield_avg price_avg_w yield_avg_w value_latest value_largest value_avg value_avg_w
-duplicates drop gvkey ISSUE_ID datadate, force
-sort gvkey datadate ISSUE_ID
-save `"${bonddir}/bondv_mth_mean.dta"', replace
-clear
+* cleaning and aggregate bonds for each firm
+drop if CONVERTIBLE=="Y"
 
 *===============================================================================
 * Merge them back to firm information
 *===============================================================================
+
+
 use `"${analysisdir}/full_data.dta"', clear
 drop if datadate < 15522
 * 560958 gvkey-by-datadate observations left
