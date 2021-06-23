@@ -173,6 +173,7 @@ drop _merge
 drop if mi(datadate)
 * 101,861 obs dropped 
 
+
 drop if CONVERTIBLE=="Y"
 * 289,566 obs dropped
 
