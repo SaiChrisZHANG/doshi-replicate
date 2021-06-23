@@ -170,8 +170,11 @@ drop if _merge==2
 drop _merge
 
 * cleaning and aggregate bonds for each firm
-drop if CONVERTIBLE=="Y"
+drop if mi(datadate)
+* 101,861 
 
+drop if CONVERTIBLE=="Y"
+* 289,566
 *===============================================================================
 * Merge them back to firm information
 *===============================================================================
