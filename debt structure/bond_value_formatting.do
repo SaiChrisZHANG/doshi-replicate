@@ -190,6 +190,7 @@ keep gvkey datadate bonddebt_f_latest bonddebt_f_largest bonddebt_f_avg bonddebt
 duplicates drop gvkey datadate, force
 * 221946 unique information left
 
+
 *===============================================================================
 * Merge them back to firm information
 *===============================================================================
