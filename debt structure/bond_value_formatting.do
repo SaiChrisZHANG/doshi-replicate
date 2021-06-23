@@ -171,10 +171,11 @@ drop _merge
 
 * cleaning and aggregate bonds for each firm
 drop if mi(datadate)
-* 101,861 
+* 101,861 obs dropped 
 
 drop if CONVERTIBLE=="Y"
-* 289,566
+* 289,566 obs dropped
+
 *===============================================================================
 * Merge them back to firm information
 *===============================================================================
