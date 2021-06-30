@@ -131,7 +131,7 @@ gen yyyymm = year(trd_exctn_dt)*100 + month(trd_exctn_dt)
 sort ISSUE_ID yyyymm trd_exctn_dt
 by ISSUE_ID yyyymm: keep if _n==_N
 joinby ISSUER_CUSIP using `idlist', unmatched(none)
-keep if _merge == 3
+* 467316 observations, uniquely defined by gvkey-yyyymm-ISSUE_ID
 save `"${bonddir}/bond_value_f.dta"', replace
 
 use `"${bonddir}/bond_value.dta"', clear
@@ -141,8 +141,8 @@ foreach pr in latest largest avg avg_w{
 gen yyyymm = year(trd_exctn_dt)*100 + month(trd_exctn_dt)
 sort ISSUE_ID yyyymm trd_exctn_dt
 by ISSUE_ID yyyymm: keep if _n==_N
-merge m:m ISSUER_CUSIP using `idlist'
-keep if _merge == 3
+joinby ISSUER_CUSIP using `idlist', unmatched(none)
+* 518675 observations, uniquely defined by gvkey-yyyymm-ISSUE_ID
 save `"${bonddir}/bond_value.dta"', replace
 clear
 
@@ -150,29 +150,27 @@ clear
 * Step 3: Merge bond value (value & face value) to firm data
 *===============================================================================
 use `"${analysisdir}/full_bond.dta"', clear
-keep ISSUE_ID ISSUER_CUSIP hist_amt_out CURRENCY DROP CONVERTIBLE gvkey datadate yyyymm
+keep ISSUE_ID ISSUER_CUSIP hist_amt_out CURRENCY DROP MATURITY CONVERTIBLE gvkey datadate yyyymm
 gen face_value = hist_amt_out * 1000
 
 * merge filtered market values
-merge 1:1 ISSUE_ID yyyymm using `"${bonddir}/bond_value_f.dta"', keepusing(value_f_latest value_f_largest value_f_avg value_f_avg_w gvkey)
+merge 1:1 gvkey ISSUE_ID yyyymm using `"${bonddir}/bond_value_f.dta"', keepusing(value_f_latest value_f_largest value_f_avg value_f_avg_w gvkey)
 rename _merge mergewith_MV_f
 label define mergewith_MV 1 "Only face value" 2 "Only market value" 3 "Both", replace
 label values mergewith_MV_f mergewith_MV
 * merge unfiltered market values
-merge 1:1 ISSUE_ID yyyymm using `"${bonddir}/bond_value.dta"', keepusing(value_latest value_largest value_avg value_avg_w gvkey)
+merge 1:1 gvkey ISSUE_ID yyyymm using `"${bonddir}/bond_value.dta"', keepusing(value_latest value_largest value_avg value_avg_w gvkey)
 rename _merge mergewith_MV
 label values mergewith_MV mergewith_MV
 * merge currency information: exchange rate are retrieved from Factset
 merge m:1 CURRENCY yyyymm using `"${analysisdir}/currency.dta"', keepusing(Mid)
 drop if _merge==2
 drop _merge
-save replace
 
 * cleaning and aggregate bonds for each firm
 drop if mi(datadate)
-* 101,861 obs dropped 
+* 104,256 obs dropped 
 drop if CONVERTIBLE=="Y"
-* 289,566 obs dropped
 
 * aggregate by firm, calculate firm level bond debt in million dollars
 sort gvkey datadate ISSUE_ID
