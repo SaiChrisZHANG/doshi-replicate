@@ -169,8 +169,11 @@ drop _merge
 
 * cleaning and aggregate bonds for each firm
 drop if mi(datadate)
-* 104,256 obs dropped 
+* 104256 obs dropped 
+
 drop if CONVERTIBLE=="Y"
+* 291633 obs dropped
+
 * drop the bond that has non-zero value information even after maturity (ISSUE_ID==103507)
 drop if MATURITY<datadate & face_value>0
 * 55 observations deleted
