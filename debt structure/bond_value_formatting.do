@@ -172,7 +172,8 @@ drop if mi(datadate)
 * 104,256 obs dropped 
 drop if CONVERTIBLE=="Y"
 * drop the bond that has non-zero value information even after maturity (ISSUE_ID==103507)
-
+drop if MATURITY<datadate & face_value>0
+* 55 observations deleted
 
 * aggregate by firm, calculate firm level bond debt in million dollars
 sort gvkey datadate ISSUE_ID
