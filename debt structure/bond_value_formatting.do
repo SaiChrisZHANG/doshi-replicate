@@ -47,10 +47,8 @@ by ISSUE_ID: gen dt_end = hist_effective_dt[_n+1]
 format dt_begin dt_end %td
 
 * merge gvkey ids first: ISSUER_CUSIP is NOT uniquely defined in firm data
-merge m:m ISSUER_CUSIP using `idlist'
-keep if _merge == 3
-* only 64982 observations kept
-drop _merge
+joinby ISSUER_CUSIP using `idlist', unmatched(none)
+* only 65845 observations kept
 
 qui{
     gen cusipdup_tag = 0
@@ -63,8 +61,8 @@ qui{
 rangejoin datadate dt_begin dt_end using `"${analysisdir}/full_id.dta"', by(gvkey) keepusing(yyyymm)
 drop if mi(datadate)
 save`"${analysisdir}/full_bond.dta"', replace
-* 1687637 observations. For each firm (gvkey), in each month (datadate), the information of each bond (ISSUE_ID)
-* uniquely defined by ISSUE_ID by datadate
+* 1700432 observations. For each firm (gvkey), in each month (datadate), the information of each bond (ISSUE_ID)
+* uniquely defined by ISSUE_ID by gvkey by datadate
 
 *===============================================================================
 * Generate Value information
