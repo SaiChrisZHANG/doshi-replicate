@@ -175,17 +175,18 @@ drop if CONVERTIBLE=="Y"
 * 291633 obs dropped
 
 * drop the bond that has non-zero value information even after maturity (ISSUE_ID==103507)
-drop if MATURITY<datadate & face_value>0
+gen days_to_mature = MATURITY-datadate
+drop if days_to_mature<0 & face_value>0
 * 55 observations deleted
 
 * aggregate by firm, calculate firm level bond debt in million dollars
 sort gvkey datadate ISSUE_ID
 
 * generate the maturity structure indicator
-gen matured_less1yr = 1 if 
-gen matured_1to2yr
-gen matured_3to5yr
-gen matured_5to10yr
+gen matured_less1yr = 1 if days_to_mature < 365 & !mi(days_to_mature)
+gen matured_1to2yr = 1 if inrange(days_to_mature,365,730) & !mi(days_to_mature)
+gen matured_3to5yr = 1 if inrange(days_to_mature,731,365*5) & !mi(days_to_mature)
+gen matured_5to10yr = 
 gen matured_more10yr
 
 foreach var in f_latest f_largest f_avg f_avg_w latest largest avg avg_w{
