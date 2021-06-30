@@ -60,7 +60,7 @@ qui{
 * do the range merge: for each month from dt_begin to dt_end, find all firm id
 rangejoin datadate dt_begin dt_end using `"${analysisdir}/full_id.dta"', by(gvkey) keepusing(yyyymm)
 drop if mi(datadate)
-save`"${analysisdir}/full_bond.dta"', replace
+save `"${analysisdir}/full_bond.dta"', replace
 * 1700432 observations. For each firm (gvkey), in each month (datadate), the information of each bond (ISSUE_ID)
 * uniquely defined by ISSUE_ID by gvkey by datadate
 
