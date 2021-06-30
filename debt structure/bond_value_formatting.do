@@ -30,7 +30,7 @@ keep gvkey ISSUER_CUSIP datadate yyyymm
 save `"${analysisdir}/full_id.dta"', replace
 
 * first merge gvkey to cusip
-drop datadate yyyymm
+keep gvkey ISSUER_CUSIP
 duplicates drop gvkey, force
 duplicates tag ISSUER_CUSIP, gen(dup)
 qui{
