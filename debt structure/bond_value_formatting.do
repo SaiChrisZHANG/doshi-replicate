@@ -171,11 +171,18 @@ drop _merge
 drop if mi(datadate)
 * 104,256 obs dropped 
 drop if CONVERTIBLE=="Y"
+* drop the bond that has non-zero value information even after maturity (ISSUE_ID==103507)
+
 
 * aggregate by firm, calculate firm level bond debt in million dollars
 sort gvkey datadate ISSUE_ID
-* generate the maturity structure
 
+* generate the maturity structure indicator
+gen matured_less1yr = 1 if 
+gen matured_1to2yr
+gen matured_3to5yr
+gen matured_5to10yr
+gen matured_more10yr
 
 foreach var in f_latest f_largest f_avg f_avg_w latest largest avg avg_w{
     replace value_`var' = face_value if mi(value_`var')
