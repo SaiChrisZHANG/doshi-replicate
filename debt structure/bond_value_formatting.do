@@ -215,7 +215,7 @@ replace bonddebt_facevalue = bonddebt_facevalue/1000000
 
 keep gvkey datadate bonddebt_*
 duplicates drop gvkey datadate, force
-* 221946 unique information left
+* 222790 unique information left
 save `"${analysisdir}/bond_debt.dta"', replace
 
 *===============================================================================
@@ -223,6 +223,7 @@ save `"${analysisdir}/bond_debt.dta"', replace
 *===============================================================================
 use `"${analysisdir}/full_data.dta"', clear
 merge 1:1 gvkey datadate using `"${analysisdir}/bond_debt.dta"', nogen
+
 
 * generate 
 gen dlcq_perc = dlcq/lctq
