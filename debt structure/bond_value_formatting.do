@@ -218,6 +218,10 @@ duplicates drop gvkey datadate, force
 * 222790 unique information left
 save `"${analysisdir}/bond_debt.dta"', replace
 
+*===============================================================================
+* Clean WRDS bond return data set, as a calibration
+*===============================================================================
+
 
 
 *===============================================================================
