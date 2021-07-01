@@ -218,12 +218,13 @@ duplicates drop gvkey datadate, force
 * 222790 unique information left
 save `"${analysisdir}/bond_debt.dta"', replace
 
+
+
 *===============================================================================
 * Merge them back to firm information
 *===============================================================================
 use `"${analysisdir}/full_data.dta"', clear
 merge 1:1 gvkey datadate using `"${analysisdir}/bond_debt.dta"', nogen
-
 
 * generate 
 gen dlcq_perc = dlcq/lctq
