@@ -183,11 +183,11 @@ drop if days_to_mature<0 & face_value>0
 sort gvkey datadate ISSUE_ID
 
 * generate the maturity structure indicator
-gen matured_less1yr = 1 if days_to_mature < 365 & !mi(days_to_mature)
+gen matured_1yrless = 1 if days_to_mature < 365 & !mi(days_to_mature)
 gen matured_1to2yr = 1 if inrange(days_to_mature,365,730) & !mi(days_to_mature)
 gen matured_3to5yr = 1 if inrange(days_to_mature,731,1825) & !mi(days_to_mature)
 gen matured_5to10yr = 1 if inrange(days_to_mature,1826,3650) & !mi(days_to_mature)
-gen matured_more10yr = 1 if days_to_mature > 3650 & !mi(days_to_mature)
+gen matured_10yrmore = 1 if days_to_mature > 3650 & !mi(days_to_mature)
 
 * for 707+164 observations, bonds matured in the middle of the month, impute 0s with face values
 replace face_value = face_value[_n-1] if days_to_mature<0 & !mi(value_f_latest) & value_f_latest>0
