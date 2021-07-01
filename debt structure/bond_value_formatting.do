@@ -185,16 +185,24 @@ sort gvkey datadate ISSUE_ID
 * generate the maturity structure indicator
 gen matured_less1yr = 1 if days_to_mature < 365 & !mi(days_to_mature)
 gen matured_1to2yr = 1 if inrange(days_to_mature,365,730) & !mi(days_to_mature)
-gen matured_3to5yr = 1 if inrange(days_to_mature,731,365*5) & !mi(days_to_mature)
-gen matured_5to10yr = 
-gen matured_more10yr
+gen matured_3to5yr = 1 if inrange(days_to_mature,731,1825) & !mi(days_to_mature)
+gen matured_5to10yr = 1 if inrange(days_to_mature,1826,3650) & !mi(days_to_mature)
+gen matured_more10yr = 1 if days_to_mature > 3650 & !mi(days_to_mature)
 
+* for 707+164 observations, bonds matured in the middle of the month, impute 0s with face values
+replace face_value = face_value[_n-1] if days_to_mature<0 & !mi(value_f_latest) & value_f_latest>0
+replace face_value = face_value[_n-1] if days_to_mature<0 & !mi(value_latest) & value_latest>0 & face_value==0
+
+* generate bond debt value for each firm
 foreach var in f_latest f_largest f_avg f_avg_w latest largest avg avg_w{
     replace value_`var' = face_value if mi(value_`var')
     replace value_`var' = value_`var'/Mid if !mi(Mid)
     bys gvkey datadate: egen bonddebt_`var' = total(value_`var')
     replace bonddebt_`var' = bonddebt_`var'/1000000
 }
+bys gvkey datadate: egen bonddebt_facevalue = total(face_value)
+replace bonddebt_facevalue = bonddebt_facevalue/1000000
+
 keep gvkey datadate bonddebt_f_latest bonddebt_f_largest bonddebt_f_avg bonddebt_f_avg_w bonddebt_latest bonddebt_largest bonddebt_avg bonddebt_avg_w
 duplicates drop gvkey datadate, force
 * 221946 unique information left
