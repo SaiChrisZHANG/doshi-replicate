@@ -197,8 +197,15 @@ replace face_value = face_value[_n-1] if days_to_mature<0 & !mi(value_latest) & 
 foreach var in f_latest f_largest f_avg f_avg_w latest largest avg avg_w{
     replace value_`var' = face_value if mi(value_`var')
     replace value_`var' = value_`var'/Mid if !mi(Mid)
+    * total bond value
     bys gvkey datadate: egen bonddebt_`var' = total(value_`var')
     replace bonddebt_`var' = bonddebt_`var'/1000000
+    
+    * bond value by maturity group
+    foreach matvar in less1yr 1to2yr 3to5yr 5to10yr more10yr{
+        gen value_m_`matvar' = value_`var' if 
+    }
+
 }
 bys gvkey datadate: egen bonddebt_facevalue = total(face_value)
 replace bonddebt_facevalue = bonddebt_facevalue/1000000
