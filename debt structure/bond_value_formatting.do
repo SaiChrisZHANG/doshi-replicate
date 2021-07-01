@@ -203,14 +203,17 @@ foreach var in f_latest f_largest f_avg f_avg_w latest largest avg avg_w{
     
     * bond value by maturity group
     foreach matvar in less1yr 1to2yr 3to5yr 5to10yr more10yr{
-        gen value_m_`matvar' = value_`var' if 
+        gen value_`var'_`matvar' = value_`var' if matured_`matvar'==1
+        bys gvkey datadate: egen bonddebt_`var'_`matvar' = total(value_`var'_`matvar'),missing
+        replace bonddebt_`var'_`matvar' = bonddebt_`var'_`matvar'/1000000
+        drop value_`var'_`matvar'
     }
-
+    drop value_`var'
 }
 bys gvkey datadate: egen bonddebt_facevalue = total(face_value)
 replace bonddebt_facevalue = bonddebt_facevalue/1000000
 
-keep gvkey datadate bonddebt_f_latest bonddebt_f_largest bonddebt_f_avg bonddebt_f_avg_w bonddebt_latest bonddebt_largest bonddebt_avg bonddebt_avg_w
+keep gvkey datadate bonddebt_*
 duplicates drop gvkey datadate, force
 * 221946 unique information left
 save `"${analysisdir}/bond_debt.dta"', replace
