@@ -202,7 +202,7 @@ foreach var in f_latest f_largest f_avg f_avg_w latest largest avg avg_w{
     replace bonddebt_`var' = bonddebt_`var'/1000000
     
     * bond value by maturity group
-    foreach matvar in less1yr 1to2yr 3to5yr 5to10yr more10yr{
+    foreach matvar in 1yrless 1to2yr 3to5yr 5to10yr 10yrmore{
         gen value_`var'_`matvar' = value_`var' if matured_`matvar'==1
         bys gvkey datadate: egen bonddebt_`var'_`matvar' = total(value_`var'_`matvar'),missing
         replace bonddebt_`var'_`matvar' = bonddebt_`var'_`matvar'/1000000
