@@ -222,7 +222,9 @@ save `"${analysisdir}/bond_debt.dta"', replace
 * Clean WRDS bond return data set, as a calibration
 *===============================================================================
 use `"${mergentdir}/wrds_bond_return.dta"', clear
-
+keep DATE ISSUE_ID CUSIP CONV PRINCIPAL_AMT AMOUNT_OUTSTANDING PRICE_EOM TMT
+gen ISSUER_CUSIP = substr(CUSIP,1,6)
+joinby ISSUER_CUSIP using `idlist', unmatched(none)
 
 *===============================================================================
 * Merge them back to firm information
