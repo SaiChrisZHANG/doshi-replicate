@@ -175,6 +175,11 @@ label values mergewith_MV_f mergewith_MV
 merge 1:1 gvkey ISSUE_ID yyyymm using `"${bonddir}/bond_value.dta"', keepusing(value_latest value_largest value_avg value_avg_w gvkey)
 rename _merge mergewith_MV
 label values mergewith_MV mergewith_MV
+* merge WRDS values
+merge 1:1 gvkey ISSUE_ID yyyymm using `"${bonddir}/bond_value_wrds.dta"', keepusing(value_wrds)
+rename _merge mergewith_WRDS
+label define mergewith_WRDS 1 "No WRDS bond return data" 3 "WRDS bond return data"
+label values mergewith_WRDS mergewith_WRDS
 * merge currency information: exchange rate are retrieved from Factset
 merge m:1 CURRENCY yyyymm using `"${analysisdir}/currency.dta"', keepusing(Mid)
 drop if _merge==2
