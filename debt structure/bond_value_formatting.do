@@ -245,21 +245,24 @@ save `"${analysisdir}/bond_debt.dta"', replace
 * Merge them back to firm information
 *===============================================================================
 use `"${analysisdir}/full_data.dta"', clear
+
+* merge extra annual debt information
+merge m:1 gvkey compustat_dt using "F:/Stephen/separate/compustat_debt_annual.dta", keepusing(cdt_mth)
+drop if _merge==2
+drop _merge
+sort gvkey datadate
+by gvkey: replace cdt_mth = cdt_mth[_n-1] if cdt_mth==.
+replace cdt_mth =. if mofd(compustat_dt)-cdt_mth>=12
+merge m:1 gvkey cdt_mth using "F:/Stephen/separate/compustat_debt_annual.dta", keepusing(dclo dd1 dd2 dd3 dd4 dd5 dn)
+drop if _merge==2
+drop _merge
+
 merge 1:1 gvkey datadate using `"${analysisdir}/bond_debt.dta"', nogen
 
-* generate 
-gen dlcq_perc = dlcq/lctq
-label variable dlcq_perc "Debt in Current Liabilities in %"
+* long-term debt of all
+gen perc_dlttq_ltq_f
+gen perc_dlttq_ltq_f_intpl
+label variable perc_dlttq_ltq_f "Long-term Debt in Liabilities in %"
+label variable perc_dlttq_ltq_f_intpl "Long-term Debt in Liabilities in %"
 
-gen dlttq_perc = dlttq/lltq
-label variable dlttq_perc "Debt in Long-term Liabilities in %"
-
-gen lctq_perc = lctq/ltq
-label variable lctq_perc "Current Liabilities in Total in %"
-
-gen lltq_perc = lltq/ltq
-label variable lltq_perc "Long-Term Liabilities in Total in %"
-
-gen ltq_perc = ltq/lseq
-label variable ltq_perc "Liabilities in Asset in %"
-
+gen perc_
