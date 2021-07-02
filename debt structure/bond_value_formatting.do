@@ -260,9 +260,9 @@ drop _merge
 merge 1:1 gvkey datadate using `"${analysisdir}/bond_debt.dta"', nogen
 
 * long-term debt of all
-gen perc_dlttq_ltq_f
-gen perc_dlttq_ltq_f_intpl
+gen perc_dlttq_ltq_f = dlttq/ltq_f
+gen perc_dlttq_ltq_f_intpl = dlttq_intpl/ltq_f_intpl
 label variable perc_dlttq_ltq_f "Long-term Debt in Liabilities in %"
 label variable perc_dlttq_ltq_f_intpl "Long-term Debt in Liabilities in %"
 
-gen perc_
+gen perc_bond_facevalue_longterm = 
