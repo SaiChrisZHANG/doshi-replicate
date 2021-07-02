@@ -283,6 +283,12 @@ gen perc_bond_FV_intpl = bonddebt_facevalue/ltq_f_intpl
 label variable perc_bond_FV "Bond in Liabilities in %"
 label variable perc_bond_FV_intpl "Bond in Liabilities in %"
 
+* capitalized leases out of total liability
+gen perc_dclo = dclo/ltq_f
+gen perc_dclo_intpl = dclo/ltq_f_intpl
+label variable perc_dclo "Capitalized leases in Liabilities in %"
+label variable perc_dclo_intpl "Capitalized leases in Liabilities in %"
+
 * bond maturity structure
 foreach var in 1yrless 1to2yr 3to5yr 5to10yr 10yrmore{
     replace bonddebt_face_`var' = 0 if mi(bonddebt_face_`var') & !mi(bonddebt_facevalue)
@@ -291,7 +297,7 @@ foreach var in 1yrless 1to2yr 3to5yr 5to10yr 10yrmore{
 
 * generate BtM quintile portfolio based summary statistics
 global bondvar = "perc_bond_FV_lt perc_bond_FV_lt_intpl perc_bond_FV_cur perc_bond_FV_cur_intpl perc_bond_FV perc_bond_FV_intpl bond_ratio_1yrless bond_ratio_1to2yr bond_ratio_3to5yr bond_ratio_5to10yr bond_ratio_10yrmore"
-foreach var in $bondvar ME Lev Lev_intpl{
+foreach var in $bondvar ME Lev Lev_intpl perc_dclo perc_dclo_intpl{
     bys datadate QUINTILEmth_BtM: egen `var'_mean = mean(`var')
     bys datadate QUINTILEmth_BtM: egen `var'_med = median(`var')
 }
