@@ -283,4 +283,8 @@ gen perc_bond_facevalue_intpl = bonddebt_facevalue/ltq_f_intpl
 label variable perc_bond_facevalue "Bond in Liabilities in %"
 label variable perc_bond_facevalue_intpl "Bond in Liabilities in %"
 
-* 
+* bond maturity structure
+foreach var in 1yrless 1to2yr 3to5yr 5to10yr 10yrmore{
+    replace bonddebt_face_`var' = 0 if mi(bonddebt_face_`var') & !mi(bonddebt_facevalue)
+    gen bonddebt_ratio_`var' = bonddebt_face_`var'/bonddebt_facevalue
+}
