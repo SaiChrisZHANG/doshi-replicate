@@ -164,7 +164,7 @@ save `"${bonddir}/bond_value_wrds.dta"', replace
 
 use `"${analysisdir}/full_bond.dta"', clear
 keep ISSUE_ID ISSUER_CUSIP hist_amt_out CURRENCY DROP MATURITY CONVERTIBLE gvkey datadate yyyymm
-gen face_value = hist_amt_out * 1000
+gen value_face = hist_amt_out * 1000
 
 * merge filtered market values
 merge 1:1 gvkey ISSUE_ID yyyymm using `"${bonddir}/bond_value_f.dta"', keepusing(value_f_latest value_f_largest value_f_avg value_f_avg_w gvkey)
@@ -176,9 +176,9 @@ merge 1:1 gvkey ISSUE_ID yyyymm using `"${bonddir}/bond_value.dta"', keepusing(v
 rename _merge mergewith_MV
 label values mergewith_MV mergewith_MV
 * merge WRDS values
-merge 1:1 gvkey ISSUE_ID yyyymm using `"${bonddir}/bond_value_wrds.dta"', keepusing(value_wrds)
+merge 1:1 gvkey ISSUE_ID yyyymm using `"${bonddir}/bond_value_wrds.dta"', keepusing(value_wrds TMT)
 rename _merge mergewith_WRDS
-label define mergewith_WRDS 1 "No WRDS bond return data" 3 "WRDS bond return data"
+label define mergewith_WRDS 1 "No WRDS bond return data" 3 "WRDS bond return data", replace
 label values mergewith_WRDS mergewith_WRDS
 * merge currency information: exchange rate are retrieved from Factset
 merge m:1 CURRENCY yyyymm using `"${analysisdir}/currency.dta"', keepusing(Mid)
@@ -194,11 +194,8 @@ drop if CONVERTIBLE=="Y"
 
 * drop the bond that has non-zero value information even after maturity (ISSUE_ID==103507)
 gen days_to_mature = MATURITY-datadate
-drop if days_to_mature<0 & face_value>0
+drop if days_to_mature<0 & value_face>0
 * 55 observations deleted
-
-* aggregate by firm, calculate firm level bond debt in million dollars
-sort gvkey datadate ISSUE_ID
 
 * generate the maturity structure indicator
 gen matured_1yrless = 1 if days_to_mature < 365 & !mi(days_to_mature)
@@ -208,12 +205,13 @@ gen matured_5to10yr = 1 if inrange(days_to_mature,1826,3650) & !mi(days_to_matur
 gen matured_10yrmore = 1 if days_to_mature > 3650 & !mi(days_to_mature)
 
 * for 707+164 observations, bonds matured in the middle of the month, impute 0s with face values
-replace face_value = face_value[_n-1] if days_to_mature<0 & !mi(value_f_latest) & value_f_latest>0
-replace face_value = face_value[_n-1] if days_to_mature<0 & !mi(value_latest) & value_latest>0 & face_value==0
+sort gvkey ISSUE_ID datadate
+replace value_face = value_face[_n-1] if days_to_mature<0 & !mi(value_f_latest) & value_f_latest>0
+replace value_face = value_face[_n-1] if days_to_mature<0 & !mi(value_latest) & value_latest>0 & value_face==0
 
-* generate bond debt value for each firm
-foreach var in f_latest f_largest f_avg f_avg_w latest largest avg avg_w{
-    replace value_`var' = face_value if mi(value_`var')
+* generat market bond value for each firm
+foreach var in f_latest f_largest f_avg f_avg_w latest largest avg avg_w wrds{
+    *replace value_`var' = value_face if mi(value_`var')
     replace value_`var' = value_`var'/Mid if !mi(Mid)
     * total bond value
     bys gvkey datadate: egen bonddebt_`var' = total(value_`var')
@@ -228,23 +226,20 @@ foreach var in f_latest f_largest f_avg f_avg_w latest largest avg avg_w{
     }
     drop value_`var'
 }
-bys gvkey datadate: egen bonddebt_facevalue = total(face_value)
+* bond face value for each firm
+bys gvkey datadate: egen bonddebt_facevalue = total(value_face)
 replace bonddebt_facevalue = bonddebt_facevalue/1000000
+foreach matvar in 1yrless 1to2yr 3to5yr 5to10yr 10yrmore{
+    gen value_face_`matvar' = value_face if matured_`matvar'==1
+    bys gvkey datadate: egen bonddebt_face_`matvar' = total(value_face_`matvar'),missing
+    replace bonddebt_face_`matvar' = bonddebt_face_`matvar'/1000000
+    drop value_face_`matvar'
+}
 
 keep gvkey datadate bonddebt_*
 duplicates drop gvkey datadate, force
 * 222790 unique information left
 save `"${analysisdir}/bond_debt.dta"', replace
-
-*===============================================================================
-* Clean WRDS bond return data set, as a calibration
-*===============================================================================
-use `"${mergentdir}/wrds_bond_return.dta"', clear
-keep DATE ISSUE_ID CUSIP CONV PRINCIPAL_AMT AMOUNT_OUTSTANDING PRICE_EOM TMT
-gen ISSUER_CUSIP = substr(CUSIP,1,6)
-joinby ISSUER_CUSIP using `idlist', unmatched(none)
-
-* 
 
 *===============================================================================
 * Merge them back to firm information
