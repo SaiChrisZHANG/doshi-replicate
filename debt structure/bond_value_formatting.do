@@ -266,25 +266,32 @@ label variable perc_dlttq_ltq_f "Long-term Debt in Liabilities in %"
 label variable perc_dlttq_ltq_f_intpl "Long-term Debt in Liabilities in %"
 
 * Long-term portion of bond out of long-term debt
-gen perc_bond_facevalue_lt = (bonddebt_facevalue-bonddebt_face_1yrless)/dlttq
-gen perc_bond_facevalue_lt_intpl = (bonddebt_facevalue-bonddebt_face_1yrless)/dlttq_intpl
-label variable perc_bond_facevalue_lt "Bond (long-term) in Long-term Debt in %"
-label variable perc_bond_facevalue_lt_intpl "Bond (long-term) in Long-term Debt in %"
+gen perc_bond_FV_lt = (bonddebt_facevalue-bonddebt_face_1yrless)/dlttq
+gen perc_bond_FV_lt_intpl = (bonddebt_facevalue-bonddebt_face_1yrless)/dlttq_intpl
+label variable perc_bond_FV_lt "Bond (long-term) in Long-term Debt in %"
+label variable perc_bond_FV_lt_intpl "Bond (long-term) in Long-term Debt in %"
 
 * current portaion of bond out of current debt
-gen perc_bond_facevalue_cur = bonddebt_face_1yrless/dlcq
-gen perc_bond_facevalue_cur_intpl = bonddebt_face_1yrless/dlcq_intpl
-label variable perc_bond_facevalue_cur "Bond (current) in Current Debt in %"
-label variable perc_bond_facevalue_cur_intpl "Bond (current) in Current Debt in %"
+gen perc_bond_FV_cur = bonddebt_face_1yrless/dlcq
+gen perc_bond_FV_cur_intpl = bonddebt_face_1yrless/dlcq_intpl
+label variable perc_bond_FV_cur "Bond (current) in Current Debt in %"
+label variable perc_bond_FV_cur_intpl "Bond (current) in Current Debt in %"
 
 * bond out of total liability
-gen perc_bond_facevalue = bonddebt_facevalue/ltq_f
-gen perc_bond_facevalue_intpl = bonddebt_facevalue/ltq_f_intpl
-label variable perc_bond_facevalue "Bond in Liabilities in %"
-label variable perc_bond_facevalue_intpl "Bond in Liabilities in %"
+gen perc_bond_FV = bonddebt_facevalue/ltq_f
+gen perc_bond_FV_intpl = bonddebt_facevalue/ltq_f_intpl
+label variable perc_bond_FV "Bond in Liabilities in %"
+label variable perc_bond_FV_intpl "Bond in Liabilities in %"
 
 * bond maturity structure
 foreach var in 1yrless 1to2yr 3to5yr 5to10yr 10yrmore{
     replace bonddebt_face_`var' = 0 if mi(bonddebt_face_`var') & !mi(bonddebt_facevalue)
-    gen bonddebt_ratio_`var' = bonddebt_face_`var'/bonddebt_facevalue
+    gen bond_ratio_`var' = bonddebt_face_`var'/bonddebt_facevalue
+}
+
+* generate BtM quintile portfolio based summary statistics
+global bondvar = "perc_bond_FV_lt perc_bond_FV_lt_intpl perc_bond_FV_cur perc_bond_FV_cur_intpl perc_bond_FV perc_bond_FV_intpl bond_ratio_1yrless bond_ratio_1to2yr bond_ratio_3to5yr bond_ratio_5to10yr bond_ratio_10yrmore"
+foreach var in $bondvar ME Lev Lev_intpl{
+    bys datadate QUINTILEmth_BtM: egen `var'_mean = mean(`var')
+    bys datadate QUINTILEmth_BtM: egen `var'_med = median(`var')
 }
