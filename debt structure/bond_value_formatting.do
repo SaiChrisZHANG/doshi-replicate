@@ -150,10 +150,13 @@ clear
 use `"${mergentdir}/wrds_bond_return.dta"', clear
 keep DATE ISSUE_ID CUSIP CONV PRINCIPAL_AMT AMOUNT_OUTSTANDING PRICE_EOM TMT
 gen ISSUER_CUSIP = substr(CUSIP,1,6)
+gen yyyymm = year(DATE)*100+month(DATE)
 joinby ISSUER_CUSIP using `idlist', unmatched(none)
 * 434910 observations, uniquely defined by gvkey-yyyymm-ISSUE_ID
+drop if mi(AMOUNT_OUTSTANDING)
+* 156 observations dropped
 gen value_wrds = AMOUNT_OUTSTANDING*PRICE_EOM*PRINCIPAL_AMT/100
-
+save `"${bonddir}/bond_value_wrds.dta"', replace
 
 *===============================================================================
 * Step 3: Merge bond value (value & face value) to firm data
