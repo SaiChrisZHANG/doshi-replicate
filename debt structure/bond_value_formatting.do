@@ -10,6 +10,7 @@ global fpricedir = `"${mergentdir}/output/filtered version"'
 
 global analysisdir = `"F:/Stephen/analysis"'
 global bonddir = `"${analysisdir}/debt structure/bond debt"'
+global figdir = `"${analysisdir}/debt structure/bond descriptive"'
 
 *===============================================================================
 * Merging face value
@@ -304,9 +305,28 @@ foreach var in $bondvar ME Lev Lev_intpl perc_dclo perc_dclo_intpl{
 
 preserve
 duplicates drop datadate QUINTILEmth_BtM, force
-twoway line perc_bond_FV_lt datadate if QUINTILEmth_BtM==1 & !mi(perc_bond_FV_lt), lw(thin) lc(navy) || ///
-line perc_bond_FV_lt datadate if QUINTILEmth_BtM==2 & !mi(perc_bond_FV_lt), lw(thin) lc(dkorange)|| ///
-line perc_bond_FV_lt datadate if QUINTILEmth_BtM==3 & !mi(perc_bond_FV_lt), lw(thin) lc(dkorange)|| ///
-line perc_bond_FV_lt datadate if QUINTILEmth_BtM==4 & !mi(perc_bond_FV_lt), lw(thin) lc(dkorange)|| ///
-line perc_bond_FV_lt datadate if QUINTILEmth_BtM==5 & !mi(perc_bond_FV_lt), lw(thin) lc(dkorange)|| ///
- xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Percentage of Bonds (Maturity > 1 Year) in Long-Term Debt (Monthly)", size(medsmall)) title("Percentage of Face Value: Average",size(medlarge)) legend(order(1 "BtM Quintile: 1" 2 "BtM Quintile: 2") size(small)) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/2port/apq_1.gph", replace)
+
+* percentage of bond in long-term debt
+* median: no absurd outliers
+twoway line perc_bond_FV_lt_med datadate if QUINTILEmth_BtM==1 & !mi(perc_bond_FV_lt_med), lw(thin) lc(navy%20) || ///
+line perc_bond_FV_lt_med datadate if QUINTILEmth_BtM==2 & !mi(perc_bond_FV_lt_med), lw(thin) lc(navy%40)|| ///
+line perc_bond_FV_lt_med datadate if QUINTILEmth_BtM==3 & !mi(perc_bond_FV_lt_med), lw(thin) lc(navy%60)|| ///
+line perc_bond_FV_lt_med datadate if QUINTILEmth_BtM==4 & !mi(perc_bond_FV_lt_med), lw(thin) lc(navy%80)|| ///
+line perc_bond_FV_lt_med datadate if QUINTILEmth_BtM==5 & !mi(perc_bond_FV_lt_med), lw(thin) lc(navy%100) ///
+xlabel(#4, labs(small)) xtitle("Date", size(small)) ///
+ylabel(0(.2)1) ytitle("Percentage of Bond Face Value: Average", size(small)) ///
+title("Percentage of Bonds (Maturity > 1 Year) in Long-Term Debt (Monthly)",size(medsmall)) ///
+legend(order(1 "BtM Quintile: 1" 2 "BtM Quintile: 2" 3 "BtM Quintile: 3" 4 "BtM Quintile: 4" 5 "BtM Quintile: 5") size(small)) ///
+note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/perc_bond_FV_lt_med.gph", replace)
+* mean: outliers dropped
+twoway line perc_bond_FV_lt_mean datadate if QUINTILEmth_BtM==1 & perc_bond_FV_lt_mean<1, lw(thin) lc(navy%20) || ///
+line perc_bond_FV_lt_mean datadate if QUINTILEmth_BtM==2 & perc_bond_FV_lt_mean<1, lw(thin) lc(navy%40)|| ///
+line perc_bond_FV_lt_mean datadate if QUINTILEmth_BtM==3 & perc_bond_FV_lt_mean<1, lw(thin) lc(navy%60)|| ///
+line perc_bond_FV_lt_mean datadate if QUINTILEmth_BtM==4 & perc_bond_FV_lt_mean<1, lw(thin) lc(navy%80)|| ///
+line perc_bond_FV_lt_mean datadate if QUINTILEmth_BtM==5 & perc_bond_FV_lt_mean<1, lw(thin) lc(navy%100) ///
+xlabel(#4, labs(small)) xtitle("Date", size(small)) ///
+ylabel(0(.2)1) ytitle("Percentage of Bond Face Value: Mean", size(small)) ///
+title("Mean Percentage of Bonds (Maturity > 1 Year) in Long-Term Debt (Monthly)",size(medsmall)) ///
+legend(order(1 "BtM Quintile: 1" 2 "BtM Quintile: 2" 3 "BtM Quintile: 3" 4 "BtM Quintile: 4" 5 "BtM Quintile: 5") size(small)) ///
+note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/perc_bond_FV_lt_mean.gph", replace)
+
