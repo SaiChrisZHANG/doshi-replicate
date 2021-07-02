@@ -146,9 +146,19 @@ joinby ISSUER_CUSIP using `idlist', unmatched(none)
 save `"${bonddir}/bond_value.dta"', replace
 clear
 
+* clean WRDS bond return data, for calibration
+use `"${mergentdir}/wrds_bond_return.dta"', clear
+keep DATE ISSUE_ID CUSIP CONV PRINCIPAL_AMT AMOUNT_OUTSTANDING PRICE_EOM TMT
+gen ISSUER_CUSIP = substr(CUSIP,1,6)
+joinby ISSUER_CUSIP using `idlist', unmatched(none)
+* 434910 observations, uniquely defined by gvkey-yyyymm-ISSUE_ID
+gen value_wrds = AMOUNT_OUTSTANDING*PRICE_EOM*PRINCIPAL_AMT/100
+
+
 *===============================================================================
 * Step 3: Merge bond value (value & face value) to firm data
 *===============================================================================
+
 use `"${analysisdir}/full_bond.dta"', clear
 keep ISSUE_ID ISSUER_CUSIP hist_amt_out CURRENCY DROP MATURITY CONVERTIBLE gvkey datadate yyyymm
 gen face_value = hist_amt_out * 1000
@@ -225,6 +235,8 @@ use `"${mergentdir}/wrds_bond_return.dta"', clear
 keep DATE ISSUE_ID CUSIP CONV PRINCIPAL_AMT AMOUNT_OUTSTANDING PRICE_EOM TMT
 gen ISSUER_CUSIP = substr(CUSIP,1,6)
 joinby ISSUER_CUSIP using `idlist', unmatched(none)
+
+* 
 
 *===============================================================================
 * Merge them back to firm information
