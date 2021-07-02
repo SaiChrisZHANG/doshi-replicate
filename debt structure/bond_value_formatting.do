@@ -301,3 +301,12 @@ foreach var in $bondvar ME Lev Lev_intpl perc_dclo perc_dclo_intpl{
     bys datadate QUINTILEmth_BtM: egen `var'_mean = mean(`var')
     bys datadate QUINTILEmth_BtM: egen `var'_med = median(`var')
 }
+
+preserve
+duplicates drop datadate QUINTILEmth_BtM, force
+twoway line perc_bond_FV_lt datadate if QUINTILEmth_BtM==1 & !mi(perc_bond_FV_lt), lw(thin) lc(navy) || ///
+line perc_bond_FV_lt datadate if QUINTILEmth_BtM==2 & !mi(perc_bond_FV_lt), lw(thin) lc(dkorange)|| ///
+line perc_bond_FV_lt datadate if QUINTILEmth_BtM==3 & !mi(perc_bond_FV_lt), lw(thin) lc(dkorange)|| ///
+line perc_bond_FV_lt datadate if QUINTILEmth_BtM==4 & !mi(perc_bond_FV_lt), lw(thin) lc(dkorange)|| ///
+line perc_bond_FV_lt datadate if QUINTILEmth_BtM==5 & !mi(perc_bond_FV_lt), lw(thin) lc(dkorange)|| ///
+ xlabel(#4, labs(small)) xtitle("Date", size(medsmall)) ytitle("Percentage of Bonds (Maturity > 1 Year) in Long-Term Debt (Monthly)", size(medsmall)) title("Percentage of Face Value: Average",size(medlarge)) legend(order(1 "BtM Quintile: 1" 2 "BtM Quintile: 2") size(small)) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/2port/apq_1.gph", replace)
