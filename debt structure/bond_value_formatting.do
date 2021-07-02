@@ -259,10 +259,28 @@ drop _merge
 
 merge 1:1 gvkey datadate using `"${analysisdir}/bond_debt.dta"', nogen
 
-* long-term debt of all
+* long-term debt out of total liability
 gen perc_dlttq_ltq_f = dlttq/ltq_f
 gen perc_dlttq_ltq_f_intpl = dlttq_intpl/ltq_f_intpl
 label variable perc_dlttq_ltq_f "Long-term Debt in Liabilities in %"
 label variable perc_dlttq_ltq_f_intpl "Long-term Debt in Liabilities in %"
 
-gen perc_bond_facevalue_longterm = 
+* Long-term portion of bond out of long-term debt
+gen perc_bond_facevalue_lt = (bonddebt_facevalue-bonddebt_face_1yrless)/dlttq
+gen perc_bond_facevalue_lt_intpl = (bonddebt_facevalue-bonddebt_face_1yrless)/dlttq_intpl
+label variable perc_bond_facevalue_lt "Bond (long-term) in Long-term Debt in %"
+label variable perc_bond_facevalue_lt_intpl "Bond (long-term) in Long-term Debt in %"
+
+* current portaion of bond out of current debt
+gen perc_bond_facevalue_cur = bonddebt_face_1yrless/dlcq
+gen perc_bond_facevalue_cur_intpl = bonddebt_face_1yrless/dlcq_intpl
+label variable perc_bond_facevalue_cur "Bond (current) in Current Debt in %"
+label variable perc_bond_facevalue_cur_intpl "Bond (current) in Current Debt in %"
+
+* bond out of total liability
+gen perc_bond_facevalue = bonddebt_facevalue/ltq_f
+gen perc_bond_facevalue_intpl = bonddebt_facevalue/ltq_f_intpl
+label variable perc_bond_facevalue "Bond in Liabilities in %"
+label variable perc_bond_facevalue_intpl "Bond in Liabilities in %"
+
+* 
