@@ -420,3 +420,7 @@ twoway rarea sum0 bond_ratio_1yrless_mean datadate if QUINTILEmth_BtM==4, col(dk
 *** BtM 5
 twoway rarea sum0 bond_ratio_1yrless_mean datadate if QUINTILEmth_BtM==5, col(maroon%20) lw(none) || rarea bond_ratio_1yrless_mean sum1 datadate if QUINTILEmth_BtM==5, col(maroon%40) lw(none) || rarea sum1 sum2 datadate if QUINTILEmth_BtM==5, col(maroon%60) lw(none) || rarea sum2 sum3 datadate if QUINTILEmth_BtM==5, col(maroon%80) lw(none) || rarea sum3 sum4 datadate if QUINTILEmth_BtM==5, col(maroon) lw(none) xlabel(#4, labs(small)) xtitle("Date", size(small)) ytitle("Percentage of Bond Face Value: Mean", size(small)) ylabel(0(0.2)1) title("Mean Percentage of Bonds in Total (Monthly): By Maturity, BtM 5",size(medsmall)) legend(order(1 "Maturity < 1 Year" 2 "Maturity 1-2 Years" 3 "Maturity 3-5 Years" 4 "Maturity 5-10 Years" 5 "Maturity > 10 Years") size(small)) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/bond_ratio_BtM5.gph", replace)
 
+* export figures to .png format
+figlist_bondratio1 = "bond_ratio_1yrless_mean bond_ratio_1to2yr_mean bond_ratio_3to5yr_mean bond_ratio_5to10yr_mean bond_ratio_10yrmore_mean"
+figlist_bondratio2 = "bond_ratio_BtM1 bond_ratio_BtM2 bond_ratio_BtM3 bond_ratio_BtM4 bond_ratio_BtM5"
+figlist_bondperc = ""
