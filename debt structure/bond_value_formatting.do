@@ -423,4 +423,8 @@ twoway rarea sum0 bond_ratio_1yrless_mean datadate if QUINTILEmth_BtM==5, col(ma
 * export figures to .png format
 figlist_bondratio1 = "bond_ratio_1yrless_mean bond_ratio_1to2yr_mean bond_ratio_3to5yr_mean bond_ratio_5to10yr_mean bond_ratio_10yrmore_mean"
 figlist_bondratio2 = "bond_ratio_BtM1 bond_ratio_BtM2 bond_ratio_BtM3 bond_ratio_BtM4 bond_ratio_BtM5"
-figlist_bondperc = ""
+figlist_bondperc = "perc_bond_FV_cur_mean perc_bond_FV_cur_med perc_bond_FV_lt_mean perc_bond_FV_lt_med perc_bond_FV_mean perc_bond_FV_med perc_dclo_mean perc_dclo_med"
+
+foreach fig in $figlist_bondperc $figlist_bondratio1 $figlist_bondratio2{
+    
+}
