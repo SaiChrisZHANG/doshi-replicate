@@ -510,9 +510,9 @@ foreach var in $bondvar ME Lev Lev_intpl perc_dclo perc_dclo_intpl{
     qui{
         bys QUINTILEmth_BtM: egen `var'_mean = mean(`var')
         bys QUINTILEmth_BtM: egen `var'_se = sd(`var')
-        gen `var'_d = `var' if `var'<=`var'_mean+2.33*`var'_se
+        gen `var'_d = `var' if `var'<=`var'_mean+2.33*`var'_se & `var'>=`var'_mean+2.33*`var'_se
         drop `var'_mean
         bys QUINTILEmth_BtM: egen `var'_mean = mean(`var')
-        drop `var'_se
+        drop `var'_se `var'_d
     }
 }
