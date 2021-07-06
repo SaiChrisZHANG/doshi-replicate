@@ -443,10 +443,13 @@ twoway lfit bond_ratio_5to10yr_mean ME_mean if QUINTILEmth_BtM==1 & inrange(bond
 twoway lfit bond_ratio_10yrmore_mean ME_mean if QUINTILEmth_BtM==1 & inrange(bond_ratio_10yrmore_mean,0,1), clc(navy%20) || lfit bond_ratio_10yrmore_mean ME_mean if QUINTILEmth_BtM==2 & inrange(bond_ratio_10yrmore_mean,0,1), clc(navy%40) || lfit bond_ratio_10yrmore_mean ME_mean if QUINTILEmth_BtM==3 & inrange(bond_ratio_10yrmore_mean,0,1), clc(navy%60) || lfit bond_ratio_10yrmore_mean ME_mean if QUINTILEmth_BtM==4 & inrange(bond_ratio_10yrmore_mean,0,1), clc(navy%80) || lfit bond_ratio_10yrmore_mean ME_mean if QUINTILEmth_BtM==5 & inrange(bond_ratio_10yrmore_mean,0,1), clc(navy) xlabel(#4, labs(small)) xtitle("Market Capitalization", size(small)) ytitle("Percentage of Bond Face Value: Mean", size(small)) title("Mean Percentage of Bonds (Maturity >10 Years) in Total Bonds (Monthly)",size(medsmall)) legend(order(1 "BtM Quintile: 1" 2 "BtM Quintile: 2" 3 "BtM Quintile: 3" 4 "BtM Quintile: 4" 5 "BtM Quintile: 5") size(small)) note("(BtM-sorted quintile portfolios are built following Fama and French (1992))") saving("${figdir}/ratio_10yrmore-on-ME.gph", replace)
 
 * export figures to .png format
-figlist_bondratio1 = "bond_ratio_1yrless_mean bond_ratio_1to2yr_mean bond_ratio_3to5yr_mean bond_ratio_5to10yr_mean bond_ratio_10yrmore_mean"
-figlist_bondratio2 = "bond_ratio_BtM1 bond_ratio_BtM2 bond_ratio_BtM3 bond_ratio_BtM4 bond_ratio_BtM5"
-figlist_bondperc = "perc_bond_FV_cur_mean perc_bond_FV_cur_med perc_bond_FV_lt_mean perc_bond_FV_lt_med perc_bond_FV_mean perc_bond_FV_med perc_dclo_mean perc_dclo_med"
+global figlist_bondratio1 = "bond_ratio_1yrless_mean bond_ratio_1to2yr_mean bond_ratio_3to5yr_mean bond_ratio_5to10yr_mean bond_ratio_10yrmore_mean"
+global figlist_bondratio2 = "bond_ratio_BtM1 bond_ratio_BtM2 bond_ratio_BtM3 bond_ratio_BtM4 bond_ratio_BtM5"
+global figlist_bondperc = "perc_bond_FV_cur_mean perc_bond_FV_cur_med perc_bond_FV_lt_mean perc_bond_FV_lt_med perc_bond_FV_mean perc_bond_FV_med perc_dclo_mean perc_dclo_med"
+global figlist_onLev = "perc_bond_FV_cur-on-Lev perc_bond_FV_lt-on-Lev perc_bond_FV-on-Lev perc_dclo-on-Lev ratio_1yrless-on-Lev ratio_1to2yr-on-Lev ratio_3to5yr-on-Lev ratio_5to10yr-on-Lev ratio_10yrmore-on-Lev"
+global figlist_onME = "perc_bond_FV_cur-on-ME perc_bond_FV_lt-on-ME perc_bond_FV-on-ME perc_dclo-on-ME ratio_1yrless-on-ME ratio_1to2yr-on-ME ratio_3to5yr-on-ME ratio_5to10yr-on-ME ratio_10yrmore-on-ME"
 
-foreach fig in $figlist_bondperc $figlist_bondratio1 $figlist_bondratio2{
-    graph use 
+foreach fig in $figlist_bondperc $figlist_bondratio1 $figlist_bondratio2 $figlist_onLev $figlist_onME{
+    gr use "${figdir}/`fig'.gph"
+    gr export "${figdir}/png version/`fig'.png", replace
 }
