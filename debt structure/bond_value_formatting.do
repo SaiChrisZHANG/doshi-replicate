@@ -505,6 +505,14 @@ foreach fig in $figlist_bondperc $figlist_bondratio1{
 restore
 * Summary statistics =================================
 preserve
+* 
 foreach var in $bondvar ME Lev Lev_intpl perc_dclo perc_dclo_intpl{
-    bys QUINTILEmth_BtM: egen `var'_mean = mean(`var')
+    qui{
+        bys QUINTILEmth_BtM: egen `var'_mean = mean(`var')
+        bys QUINTILEmth_BtM: egen `var'_se = sd(`var')
+        gen `var'_d = `var' if `var'<=`var'_mean+2.33*`var'_se
+        drop `var'_mean
+        bys QUINTILEmth_BtM: egen `var'_mean = mean(`var')
+        drop `var'_se
+    }
 }
