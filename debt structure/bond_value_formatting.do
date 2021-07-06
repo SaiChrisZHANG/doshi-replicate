@@ -506,5 +506,5 @@ restore
 * Summary statistics =================================
 preserve
 foreach var in $bondvar ME Lev Lev_intpl perc_dclo perc_dclo_intpl{
-    bys data_yr QUINTILEmth_BtM: egen `var'_mean = mean(`var')
+    bys QUINTILEmth_BtM: egen `var'_mean = mean(`var')
 }
