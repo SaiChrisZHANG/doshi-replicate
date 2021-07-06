@@ -298,12 +298,12 @@ foreach var in 1yrless 1to2yr 3to5yr 5to10yr 10yrmore{
 
 * generate BtM quintile portfolio based summary statistics
 global bondvar = "perc_bond_FV_lt perc_bond_FV_lt_intpl perc_bond_FV_cur perc_bond_FV_cur_intpl perc_bond_FV perc_bond_FV_intpl bond_ratio_1yrless bond_ratio_1to2yr bond_ratio_3to5yr bond_ratio_5to10yr bond_ratio_10yrmore"
+
+preserve
 foreach var in $bondvar ME Lev Lev_intpl perc_dclo perc_dclo_intpl{
     bys datadate QUINTILEmth_BtM: egen `var'_mean = mean(`var')
     bys datadate QUINTILEmth_BtM: egen `var'_med = median(`var')
 }
-
-preserve
 duplicates drop datadate QUINTILEmth_BtM, force
 
 * percentage of bond in long-term debt
@@ -453,3 +453,5 @@ foreach fig in $figlist_bondperc $figlist_bondratio1 $figlist_bondratio2 $figlis
     gr use "${figdir}/`fig'.gph"
     gr export "${figdir}/png version/`fig'.png", replace
 }
+
+restore
